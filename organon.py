@@ -23,17 +23,16 @@ if len(sys.argv) == 1:
 	parser.print_help()
 
 else:
-	install = args.i
-	remove = args.r
-	search = args.s
-	listar = args.l
-
-	if install:
+	if args.i:
 		for package in install:
 			os.system("src/%s.*" % package)
-	elif remove:
+
+	elif args.r:
 		print("remove")
-	elif search:
-		print("search")
-	elif listar:
-		print("list")
+
+	elif args.s:
+		print args.s
+		result = db_content.action("SELECT nome, versao, descricao FROM programas WHERE nome LIKE '%s'" % args.s)
+
+	elif args.l:
+		db_content.action("SELECT nome, versao, descricao FROM programas")
