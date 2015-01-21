@@ -34,7 +34,7 @@ else:
 		
 		args.i = "".join(args.i)
 		print("src/%s" % args.i)		
-		os.system("src/%s" % args.i)
+		os.system("src/%s.*" % args.i)
 
 	elif args.r:
 		print("remove")
