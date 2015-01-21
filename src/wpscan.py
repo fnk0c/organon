@@ -11,7 +11,7 @@ __DATE__	=	"Germany/Brazil/15"     #2014 World Cup game result (7 x 1)
 import os
 
 comandos = [
-	"sudo apt-get install git ruby ruby-dev libcurl4-gnutls-dev make git bundler -y",
+	"sudo apt-get install ruby ruby-dev libcurl4-gnutls-dev make git bundler -y",
 	"git clone https://github.com/wpscanteam/wpscan.git",
 	"sudo gem install json -v '1.8.1' ",
 	"sudo gem install nokogiri -v '1.6.5' ",

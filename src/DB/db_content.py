@@ -40,10 +40,10 @@ def install(command):
 				row = cur.fetchone()
 				dep = "sudo apt-get install " + row[1] + "-y"
 				print " [!] Installing dependencies\n %s" % dep
-#				os.system(dep)
+				os.system(dep)
 				get = "wget " + row[0]
 				print " [!] Downloading source\n %s" % get
-#				os.system(get)
+				os.system(get)
 
 	except mdb.Error, e:
 		print e
