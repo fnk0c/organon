@@ -1,8 +1,13 @@
 #!/usr/bin/python
 #coding=utf-8
 
+__AUTHOR__	= "Fnkoc"
+__VERSION__	= "0.1.3"
+__DATE__	= "21/01/2015"
+
 import sys
-sys.path.append("src/")
+sys.path.append("src/DB")
+import db_content
 import argparse
 import os
 
@@ -24,15 +29,19 @@ if len(sys.argv) == 1:
 
 else:
 	if args.i:
-		for package in install:
-			os.system("src/%s.*" % package)
+		for package in args.i:
+			db_content.install("SELECT url, dependencias FROM programas WHERE nome LIKE '%s'" % package)
+		
+		args.i = "".join(args.i)
+		print("src/%s" % args.i)		
+#		os.system("src/%s" % args.i)
 
 	elif args.r:
 		print("remove")
 
 	elif args.s:
 		print args.s
-		result = db_content.action("SELECT nome, versao, descricao FROM programas WHERE nome LIKE '%s'" % args.s)
+		result = db_content.listar("SELECT nome, versao, descricao FROM programas WHERE nome LIKE '%s'" % args.s)
 
 	elif args.l:
-		db_content.action("SELECT nome, versao, descricao FROM programas")
+		db_content.listar("SELECT nome, versao, descricao FROM programas")
