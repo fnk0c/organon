@@ -1,7 +1,11 @@
 #!/usr/bin/python
 #coding=utf-8
 
-import MySQLdb as mdb
+try:
+	import MySQLdb as mdb
+except:
+	print(" [!] MySQLdb is required")
+	print(" sudo apt-get install python-mysqldb")
 import sys
 import os
 

@@ -11,31 +11,11 @@ __DATE__	=	"26/12/2014"
 import os
 
 comandos = [
-	"sudo apt-get install git python-mechanize -y",
 	"git clone https://github.com/fnk0c/cangibrina.git",
 	"cd cangibrina && sh linux_install.sh"]
 
-try:
-   input = raw_input
-except NameError:
-   pass
-
-print("\n Install Cangibrina and its dependencies?\n [Y]es [N]o [V]iew dependencies")
-answer = input("\n>> ").lower()
-
-if answer == "y":
-	for action in comandos:
-		os.system(action)
-elif answer == "n":
-	exit()
-
-elif answer == "v":
-	print(comandos[0].replace("sudo apt-get install", "").replace("-y", ""))
-	exit()
-
-else:
-	print("Invalid option")
-	exit()
+for a in comandos:
+	os.system(a)
 
 print("\n\n")
 print("-"*80)
