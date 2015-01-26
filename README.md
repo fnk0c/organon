@@ -1,5 +1,5 @@
 # organon
-This tool focus in automates the download, compile and install of other tools from source
+This program focuses on automating the download, installation and compilation of pentest tools from source
 
 # ATTENTION!
 This tool is in development phase and does not work yet
