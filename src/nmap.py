@@ -11,7 +11,6 @@ __DATE__	=	"20/12/2014"
 import os
 
 comandos = [
-	"wget nmap.org/dist/nmap-6.47.tar.bz2",
 	"tar xpvf nmap-6.47.tar.bz2",
 	"cd nmap-6.47 && ./configure && make && sudo make install"]
 

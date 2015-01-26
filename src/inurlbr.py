@@ -11,8 +11,6 @@ __DATE__	=	"28/12/2014"
 import os
 
 comandos = [
-	"sudo apt-get install php5 php5-curl php5-cli -y",
-	"git clone https://github.com/googleinurl/SCANNER-INURLBR.git",
 	"chmod -R 555 SCANNER-INURLBR",
 	"cd SCANNER-INURLBR && chmod +x inurlbr.php",
 	"sudo mv SCANNER-INURLBR /opt",
@@ -20,28 +18,8 @@ comandos = [
 	"sudo sh -c 'echo exec php /opt/SCANNER-INURLBR/inurlbr.php \$@ >> /usr/bin/inurlbr'",
 	"sudo chmod +x /usr/bin/inurlbr"]
 
-try:
-   input = raw_input
-except NameError:
-   pass
-
-print("\n Install Scanner Inurlbr and its dependencies?\n [Y]es [N]o [V]iew dependencies")
-answer = input("\n>> ").lower()
-
-if answer == "y":
-	for action in comandos:
-		os.system(action)
-
-elif answer == "n":
-	exit()
-
-elif answer == "v":
-	print(comandos[0].replace("sudo apt-get install", "").replace("-y", ""))
-	exit()
-
-else:
-	print("Invalid option")
-	exit()
+for a in comandos:
+	os.system(a)
 
 print("\n\n")
 print("-"*80)

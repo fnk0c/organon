@@ -11,7 +11,6 @@ __DATE__	=	"26/12/2014"
 import os
 
 comandos = [
-	"git clone https://github.com/fnk0c/cangibrina.git",
 	"cd cangibrina && sh linux_install.sh"]
 
 for a in comandos:

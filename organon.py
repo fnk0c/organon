@@ -2,7 +2,7 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.1.3"
+__VERSION__	= "0.1.4"
 __DATE__	= "21/01/2015"
 
 import sys
@@ -11,11 +11,13 @@ import db_content
 import argparse
 import os
 
-parser = argparse.ArgumentParser(description = "Package manager that focus on Pentest")
+parser = argparse.ArgumentParser(description = "Package manager that focus on Pentest tools")
 parser.add_argument("-i", nargs = "+",
 	help = "Install packages")
 parser.add_argument("-r", nargs = "+",
 	help = "Remove packages")
+parser.add_argument("-u", action = "store_true",
+	help = "Update Organon")
 parser.add_argument("-s",
 	help = "Search for package")
 parser.add_argument("-l", action = "store_true",
@@ -28,7 +30,10 @@ if len(sys.argv) == 1:
 	parser.print_help()
 
 else:
-	if args.i:
+	if args.u:
+		os.system("git fetch && git pull")
+
+	elif args.i:
 		for package in args.i:
 			db_content.install("SELECT url, dependencias FROM programas WHERE nome LIKE '%s'" % package)
 		
@@ -40,7 +45,7 @@ else:
 		print("remove")
 
 	elif args.s:
-		print args.s
+		print(args.s)
 		result = db_content.listar("SELECT nome, versao, descricao FROM programas WHERE nome LIKE '%s'" % args.s)
 
 	elif args.l:
