@@ -15,7 +15,7 @@ import os
 
 def listar(command):
 	try:
-		con = mdb.connect("186.222.226.68", "root", "organon", "organon")
+		con = mdb.connect("104.236.105.209", "organonuser", "organon", "organon")
 
 		with con:
 			cur = con.cursor()
@@ -38,7 +38,7 @@ def listar(command):
 
 def install(command):
 	try:
-		con = mdb.connect("186.222.226.68", "root", "organon", "organon")
+		con = mdb.connect("104.236.105.209", "organonuser", "organon", "organon")
 
 		with con:
 			cur = con.cursor()
