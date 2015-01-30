@@ -11,6 +11,17 @@ import db_content
 import argparse
 import os
 
+banner = """
+   
+   ████▄ █▄▄▄▄   ▄▀  ██      ▄   ████▄    ▄   
+   █   █ █  ▄▀ ▄▀    █ █      █  █   █     █  
+   █   █ █▀▀▌  █ ▀▄  █▄▄█ ██   █ █   █ ██   █ 
+   ▀████ █  █  █   █ █  █ █ █  █ ▀████ █ █  █ 
+           █    ███     █ █  █ █       █  █ █ 
+          ▀            █  █   ██       █   ██ 
+                      ▀                       
+"""
+
 parser = argparse.ArgumentParser(description = "Package manager that focus on Pentest tools")
 parser.add_argument("-i", nargs = "+",
 	help = "Install packages")
@@ -27,6 +38,7 @@ args = parser.parse_args()
 
 if len(sys.argv) == 1:
 	os.system("clear")
+	print(banner)
 	parser.print_help()
 
 else:
