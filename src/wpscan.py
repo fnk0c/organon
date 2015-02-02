@@ -11,8 +11,8 @@ __DATE__	=	"Germany/Brazil/15"     #2014 World Cup game result (7 x 1)
 import os
 
 comandos = [
-	"sudo mv wpscan /opt",
 	"cd wpscan && gem install bundler && bundle install --without test development"
+	"sudo mv wpscan /opt",
 	"sudo sh -c 'echo \#\!/bin/bash >> /usr/bin/wpscan'",
 	"sudo sh -c 'echo cd /opt/wpscan >> /usr/bin/wpscan'",
 	"sudo sh -c 'echo exec ruby wpscan.rb \$\@ >> /usr/bin/wpscan'",
