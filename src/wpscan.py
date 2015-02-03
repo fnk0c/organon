@@ -13,15 +13,12 @@ import os
 comandos = [
 	"cd wpscan && sudo gem install json -v '1.8.1'",
 	"cd wpscan && sudo gem install nokogiri -v '1.6.5'",
-	"cd wpscan && bundle install --without test --path vendor",
-	"sudo mv wpscan /opt",
-	"sudo sh -c 'echo \#\!/bin/bash >> /usr/bin/wpscan'",
-	"sudo sh -c 'echo cd /opt/wpscan >> /usr/bin/wpscan'",
-	"sudo sh -c 'echo exec ruby wpscan.rb \$\@ >> /usr/bin/wpscan'",
-	"sudo chmod +x /usr/bin/wpscan"]
+	"cd wpscan && bundle install --without test --path vendor"]
 
 for a in comandos:
 	os.system(a)
+
+os.system("./generator wpscan ruby wpscan.rb")
 
 print("\n\n")
 print("-"*80)

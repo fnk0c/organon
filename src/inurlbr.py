@@ -12,14 +12,12 @@ import os
 
 comandos = [
 	"chmod -R 555 SCANNER-INURLBR",
-	"cd SCANNER-INURLBR && chmod +x inurlbr.php",
-	"sudo mv SCANNER-INURLBR /opt",
-	"sudo sh -c 'echo \#\!/bin/bash >> /usr/bin/inurlbr'",
-	"sudo sh -c 'echo exec php /opt/SCANNER-INURLBR/inurlbr.php \$@ >> /usr/bin/inurlbr'",
-	"sudo chmod +x /usr/bin/inurlbr"]
+	"cd SCANNER-INURLBR && chmod +x inurlbr.php"]
 
 for a in comandos:
 	os.system(a)
+
+os.system("./generator inurlbr php inurlbr.php")
 
 print("\n\n")
 print("-"*80)

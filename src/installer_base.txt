@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#Check if already installed
+if [ -e /opt/organon ]
+then
+	rm -rf /opt/organon
+fi
+
+if [ -e /usr/bin/organon ]
+then
+	rm /usr/bin/organon
+fi
+
+#end check
+
+#Move organon to opt
+cd .. && mv organon /opt/
+
+echo \#\!/bin/bash >> /usr/bin/organon
+echo cd /opt/organon >> /usr/bin/organon
+echo exec python organon.py \"\$\@\" >> /usr/bin/organon
+
+chmod +x /usr/bin/organon
+
+echo '[+] Complete!'
+echo 'Type \"organon\" in order to use it'
