@@ -25,7 +25,7 @@ def generator(prog):
 
 		installer.close()
 
-	os.system("sudo ./installer.sh")
+	os.system("sudo sh installer.sh")
 
 generator(prog)
 

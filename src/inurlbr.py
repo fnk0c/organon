@@ -17,7 +17,9 @@ comandos = [
 for a in comandos:
 	os.system(a)
 
-os.system("./generator inurlbr php inurlbr.php")
+os.system("mv SCANNER-INURLBR inurlbr")
+os.chdir("src")
+os.system("./generator.py inurlbr php inurlbr.php")
 
 print("\n\n")
 print("-"*80)

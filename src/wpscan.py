@@ -18,7 +18,8 @@ comandos = [
 for a in comandos:
 	os.system(a)
 
-os.system("./generator wpscan ruby wpscan.rb")
+os.chdir("src/")
+os.system("./generator.py wpscan ruby wpscan.rb")
 
 print("\n\n")
 print("-"*80)
