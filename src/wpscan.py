@@ -11,13 +11,8 @@ __DATE__	=	"Germany/Brazil/15"     #2014 World Cup game result (7 x 1)
 import os
 
 comandos = [
-	"sudo gem install json -v '1.8.1' ",
-	"sudo gem install nokogiri -v '1.6.5' ",
-	"sudo gem install typhoeus",
-	"sudo gem install --user-install terminal-table",
-	"sudo gem install --user-install ruby-progressbar"
 	"sudo mv wpscan /opt",
-	"cd /opt/wpscan && bundle install --without test --path vendor",
+	"cd wpscan && gem install bundler && bundle install --without test development"
 	"sudo sh -c 'echo \#\!/bin/bash >> /usr/bin/wpscan'",
 	"sudo sh -c 'echo cd /opt/wpscan >> /usr/bin/wpscan'",
 	"sudo sh -c 'echo exec ruby wpscan.rb \$\@ >> /usr/bin/wpscan'",
