@@ -46,9 +46,14 @@ def install(command):
 		
 			for i in range(cur.rowcount):
 				row = cur.fetchone()
-				dep = "sudo apt-get install " + row[1] + " -y"
-				print(" [!] Installing dependencies\n %s" % dep)
-				os.system(dep)
+				
+				if (row[1] is None) or (len(row[0]) == 0):
+					pass
+
+				else:
+					dep = "sudo apt-get install " + row[1] + " -y"
+					print(" [!] Installing dependencies\n %s" % dep)
+					os.system(dep)
 
 				if "https://github.com/" in row[0]:		#Caso a URL seja referente ao github
 					get = "git clone " + row[0]			#Deve ser utilizado o comando git

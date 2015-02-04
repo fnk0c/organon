@@ -48,10 +48,9 @@ else:
 	elif args.i:
 		for package in args.i:
 			db_content.install("SELECT url, dependencias FROM programas WHERE nome LIKE '%s'" % package)
-		
-		args.i = "".join(args.i)
-		print("src/%s" % args.i)		
-		os.system("src/%s.*" % args.i)
+
+			for a in args.i:		
+				os.system("src/%s.*" % a)
 
 	elif args.r:
 		print("remove")
