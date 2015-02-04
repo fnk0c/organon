@@ -19,8 +19,7 @@ fi
 #end check
 
 #Install Dependencies
-apt-get install ruby
-apt-get install python-mysqldb
+apt-get install ruby python python-mysqldb
 
 #Move organon to opt
 cd .. && mv organon /opt/
@@ -33,4 +32,4 @@ chmod +x /usr/bin/organon
 chmod +x /opt/organon/src/*
 
 echo '[+] Complete!'
-echo 'Type \"organon\" in order to use it'
+echo 'Type "organon" in order to use it'
