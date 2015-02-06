@@ -57,7 +57,7 @@ def install(command):
 
 				else:
 					dep = "sudo apt-get install " + row[1] + " -y"
-					print(yellow + " [!] Installing dependencies\n %s" + default % dep)
+					print(yellow + " [!] Installing dependencies\n %s" % dep + default )
 					os.system(dep)
 
 				if "https://github.com/" in row[0]:		#Caso a URL seja referente ao github
@@ -65,7 +65,7 @@ def install(command):
 				else:									#Ao invés de
 					get = "wget " + row[0]				#Wget
 
-				print(yellow + " [!] Downloading source\n %s" + default % get)
+				print(yellow + " [!] Downloading source\n %s" % get + default)
 				os.system(get)
 
 	except mdb.Error, e:

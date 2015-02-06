@@ -11,8 +11,8 @@ __DATE__	=	"06/02/2015"
 import os
 
 comandos = [
-   "mv sqlmap /opt/",
-   "./generator sqlmap python sqlmap.py"]
+   "sudo mv sqlmap /opt/",
+   "./generator.py sqlmap python sqlmap.py"]
 
 for a in comandos:
 	os.system(a)

@@ -12,9 +12,9 @@ import os
 
 comandos = [
    "tar xpvf bully-1.0.22-1-x86_64.pkg.tar.xz",
-   "mkdir /opt/bully",
-   "mv bully-1.0.22-1-x86_64.pkg/usr/bin/bully /opt/bully",
-   "./generator bully sh bully"]
+   "sudo mkdir /opt/bully",
+   "sudo mv bully-1.0.22-1-x86_64.pkg/usr/bin/bully /opt/bully",
+   "./generator.py bully sh bully"]
 
 for a in comandos:
 	os.system(a)
