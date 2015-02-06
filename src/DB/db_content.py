@@ -13,6 +13,11 @@ except:
 import sys
 import os
 
+red = "\033[31m"
+green = "\033[32m"
+yellow = "\033[33m"
+default = "\033[00m"
+
 def listar(command):
 	try:
 		con = mdb.connect("104.236.105.209", "organonuser", "organon", "organon")
@@ -24,7 +29,7 @@ def listar(command):
 			for i in range(cur.rowcount):
 				row = cur.fetchone()
 
-				print" [+] ", row[0], row[1]
+				print green + " [+] " + default, row[0], row[1]
 				print" ", row[2]
 				print""
 
@@ -52,7 +57,7 @@ def install(command):
 
 				else:
 					dep = "sudo apt-get install " + row[1] + " -y"
-					print(" [!] Installing dependencies\n %s" % dep)
+					print(yellow + " [!] Installing dependencies\n %s" + default % dep)
 					os.system(dep)
 
 				if "https://github.com/" in row[0]:		#Caso a URL seja referente ao github
@@ -60,7 +65,7 @@ def install(command):
 				else:									#Ao invés de
 					get = "wget " + row[0]				#Wget
 
-				print(" [!] Downloading source\n %s" % get)
+				print(yellow + " [!] Downloading source\n %s" + default % get)
 				os.system(get)
 
 	except mdb.Error, e:
