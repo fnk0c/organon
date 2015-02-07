@@ -10,7 +10,6 @@ __DATE__	=	"06/02/2015"
 
 import os
 
-os.system("sudo mv sqlmap /opt/")
 os.chdir("src/")
 os.system("sudo ./generator.py sqlmap python sqlmap.py")
 
