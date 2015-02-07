@@ -19,7 +19,7 @@ for a in comandos:
 	os.system(a)
 
 os.chdir("src/")
-os.system("./generator.py wpscan ruby wpscan.rb")
+os.system("sudo ./generator.py wpscan ruby wpscan.rb")
 
 print("\n\n")
 print("-"*80)
