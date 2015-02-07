@@ -23,6 +23,10 @@ banner = """
 """
 
 parser = argparse.ArgumentParser(description = "Package manager that focus on Pentest tools")
+parser.add_argument("-a", "--about", action = "store_true",
+	help = "About this tool")
+parser.add_argument("-v", "--version", action = "store_true",
+	help = "Show version and exit")
 parser.add_argument("-i", nargs = "+",
 	help = "Install packages")
 parser.add_argument("-r", nargs = "+",
@@ -61,3 +65,9 @@ else:
 
 	elif args.l:
 		db_content.listar("SELECT nome, versao, descricao FROM programas")
+
+	elif args.version:
+		print("Organon - Version 0.1.4")
+
+	elif args.about:
+		os.system("cat README.md")
