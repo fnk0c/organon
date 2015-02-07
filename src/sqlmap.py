@@ -10,12 +10,9 @@ __DATE__	=	"06/02/2015"
 
 import os
 
-comandos = [
-   "sudo mv sqlmap /opt/",
-   "./generator.py sqlmap python sqlmap.py"]
-
-for a in comandos:
-	os.system(a)
+os.system("sudo mv sqlmap /opt/")
+os.chdir("src/")
+os.system("sudo ./generator.py sqlmap python sqlmap.py")
 
 print("\n\n")
 print("-"*80)
