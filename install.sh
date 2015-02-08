@@ -19,7 +19,7 @@ fi
 #end check
 
 #Install Dependencies
-apt-get install ruby python python-mysqldb
+apt-get install ruby-full python python-mysqldb
 
 #Move organon to opt
 cd .. && mv organon /opt/
