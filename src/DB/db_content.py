@@ -52,7 +52,7 @@ def install(command):
 			for i in range(cur.rowcount):
 				row = cur.fetchone()
 				
-				if (row[1] is None) or (len(row[0]) == 0):
+				if (row[1] is None) or (len(row[1]) == 0):
 					pass
 
 				else:
