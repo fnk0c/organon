@@ -20,10 +20,11 @@ Authors:
 
 Requirements
 -------------
-1. Python 2.7
-2. Ruby 
-3. python-mysqldb
-3. GNU/Linux system based on Debian
+1. python     
+2. ruby        
+3. ruby Mysql
+4. rubygems
+5. GNU/Linux system based on Debian
 
 Install
 -------
@@ -33,7 +34,7 @@ Install
 
 BUGS
 ----
-Since it's still on development phase bugs are expected. Please, **report to us!**
+Since it's still on development phase bugs are expected. Please, **report to us!** or open an **Issue**
 * fb.com/fnkoc.a
 * fb.com/maxsecur1ty
 * fb.com/cienciahacker
