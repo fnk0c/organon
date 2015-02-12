@@ -19,7 +19,13 @@ fi
 #end check
 
 #Install Dependencies
-apt-get install ruby-full python libmysqlclient-dev rubygems
+if grep -Fxq "$Ubuntu" /etc/issue
+then
+	apt-get install ruby-full python libmysqlclient-dev rubygems-integration
+else
+	apt-get install ruby-full python libmysqlclient-dev rubygems
+fi
+
 gem install mysql
 
 #Move organon to opt
