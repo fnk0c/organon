@@ -19,7 +19,8 @@ fi
 #end check
 
 #Install Dependencies
-apt-get install ruby-full python python-mysqldb
+apt-get install ruby-full python libmysqlclient-dev rubygems
+gem install mysql
 
 #Move organon to opt
 cd .. && mv organon /opt/

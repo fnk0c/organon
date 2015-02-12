@@ -2,12 +2,10 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.1.4"
-__DATE__	= "21/01/2015"
+__VERSION__	= "0.1.5"
+__DATE__	= "12/02/2015"
 
 import sys
-sys.path.append("src/DB")
-import db_content
 import argparse
 import os
 
@@ -51,7 +49,7 @@ else:
 
 	elif args.i:
 		for package in args.i:
-			db_content.install("SELECT url, dependencias FROM programas WHERE nome LIKE '%s'" % package)
+			os.system("src/DB/database_connector.rb install \"SELECT url, dependencias FROM programas WHERE nome LIKE '%s'\"" % package)
 
 			for a in args.i:		
 				os.system("src/%s.*" % a)
@@ -61,13 +59,13 @@ else:
 
 	elif args.s:
 		print(args.s)
-		result = db_content.listar("SELECT nome, versao, descricao FROM programas WHERE nome LIKE '%s'" % args.s)
+		result = os.system("src/DB/database_connector.rb list \"SELECT nome, versao, descricao FROM programas WHERE nome LIKE '%s'\"" % args.s)
 
 	elif args.l:
-		db_content.listar("SELECT nome, versao, descricao FROM programas")
+		os.system("src/DB/database_connector.rb list \"SELECT nome, versao, descricao FROM programas\"")
 
 	elif args.version:
-		print("Organon - Version 0.1.4")
+		print("Organon - Version 0.1.5")
 
 	elif args.about:
 		os.system("cat README.md")
