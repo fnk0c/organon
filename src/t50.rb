@@ -8,14 +8,9 @@ It only automates the things.
 # 01/01/2015
 
 comandos = [
-	"wget https://downloads.sourceforge.net/project/t50/t50-5.4.1/t50-5.4.1.tar.gz",
 	"tar -xvf t50-5.4.1.tar.gz",
 	"sudo chmod -R 555 t50-5.4.1",
-	"cd t50-5.4.1 && sudo make -W Makefile",
-	"sudo mv t50-5.4.1 /opt",
-	"sudo sh -c 'echo \\#\!/bin/bash >> /usr/bin/t50'",
-	"sudo sh -c 'echo exec /opt/t50-5.4.1/t50 \"\\$@\" >> /usr/bin/t50'",
-	"sudo chmod +x /usr/bin/t50"]
+	"cd t50-5.4.1 && sudo make -W Makefile"]
 
 puts "[+] Installing t50....\n"
 
