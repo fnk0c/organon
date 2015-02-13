@@ -1,3 +1,5 @@
+#!/usr/bin/ruby
+
 =begin
 This script makes the download, compilation and installation of
 T50 on linux distributions.
