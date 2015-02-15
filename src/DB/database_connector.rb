@@ -19,10 +19,13 @@ class Resp
 				
 			# If eventually occur some error
 			rescue Mysql::Error => e
-			puts "Error code: #{e.errno}"
-			puts "Error message: #{e.error}"
-			puts "Error SQLSTATE: #{e.sqlstate}" if e.respond_to?("sqlstate")	
-			exit 1
+				puts "Error code: #{e.errno}"
+				puts "Error message: #{e.error}"
+				puts "Error SQLSTATE: #{e.sqlstate}" if e.respond_to?("sqlstate")	
+				exit 1
+			rescue Interrupt
+				puts "Você interrompeu o processo."
+				exit 1
 		end
 	end		
 
@@ -31,22 +34,23 @@ class Resp
 			# Requesting information from database as of a SQL command
 			result = $db.query(install_command)
 			result.each do |row|
-	
-				if row[1].nil?
-					next
-				else
-					dep = "sudo apt-get install " + row[1] + " -y"
-					puts " [!] Installing dependencies\n #{dep}"
-					system dep
-				end
-			
-				if row[0].include?("https://github.com/")   # Checking if the tool is 
-					get = "git clone " + row[0]	    # located on github or belongs 
-				else					    # to another source
-					get = "wget " + row[0]
-				end
-				puts " [!] Downloading source\n #{get}"
-				system get
+				
+					if row[0].include?("https://github.com/")   # Checking if the tool is 
+						get = "git clone #{row[0]}"	    		# located on github or belongs 
+					else					    				# to another source
+						get = "wget #{row[0]}"
+					end
+					puts " [!] Downloading source\n #{get}"
+					system get
+
+					if row[1].nil? == false	
+						dep = "sudo apt-get install #{row[1]} -y"
+						puts " [!] Installing dependencies\n #{dep}"
+						system dep
+					else
+						puts "[~] No necessary dependence"
+					end
+				
 			end
 		end
 		result.free
