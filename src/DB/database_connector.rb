@@ -35,21 +35,21 @@ class Resp
 			result = $db.query(install_command)
 			result.each do |row|
 				
-					if row[0].include?("https://github.com/")   # Checking if the tool is 
-						get = "git clone #{row[0]}"	    		# located on github or belongs 
-					else					    				# to another source
-						get = "wget #{row[0]}"
-					end
-					puts " [!] Downloading source\n #{get}"
-					system get
+				if row[0].include?("https://github.com/")   # Checking if the tool is 
+					get = "git clone #{row[0]}"	    # located on github or belongs 
+				else					    # to another source
+					get = "wget #{row[0]}"
+				end
+				puts " [!] Downloading source\n #{get}"
+				system get
 
-					if row[1].nil? == false	
-						dep = "sudo apt-get install #{row[1]} -y"
-						puts " [!] Installing dependencies\n #{dep}"
-						system dep
-					else
-						puts "[~] No necessary dependence"
-					end
+				if row[1].nil? == false	
+					dep = "sudo apt-get install #{row[1]} -y"
+					puts " [!] Installing dependencies\n #{dep}"
+					system dep
+				else
+					puts "[~] No necessary dependence"
+				end
 				
 			end
 		end
