@@ -2,11 +2,11 @@
 
 ###################################################################
 # This script makes the download, compilation and installation of #
-# g3m on linux distributions.							      #
-# It only automates the things.									  #
-#																  #
-# Maximoz Sec <maximozsec@outlook.com.br>						  #
-# 02/01/2015													  #
+# g3m on linux distributions.					  #
+# It only automates the things.			                  #
+#								  #
+# Maximoz Sec <maximozsec@outlook.com.br>	                  #
+# 02/01/2015							  #
 ###################################################################	
 
 comandos = [
