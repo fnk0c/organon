@@ -2,11 +2,11 @@
 
 ###################################################################
 # This script makes the download, compilation and installation of #
-# T50 on linux distributions.								      #
-# It only automates the things.									  #
-#																  #
-# Maximoz Sec <maximozsec@outlook.com.br>						  #
-# 01/01/2015													  #
+# T50 on linux distributions.					  #
+# It only automates the things.			                  #
+#								  #
+# Maximoz Sec <maximozsec@outlook.com.br>			  #
+# 01/01/2015						          #
 ###################################################################	
 
 comandos = [
