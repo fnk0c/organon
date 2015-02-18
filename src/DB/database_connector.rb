@@ -2,10 +2,10 @@
 
 ###################################################################
 # This script is responsible for making the connection to the     #
-# MySQL database											      #
-#																  #
-# Maximoz Sec <maximozsec@outlook.com.br>						  #
-# 01/02/2015													  #
+# MySQL database					          #
+#								  #								  #
+# Maximoz Sec <maximozsec@outlook.com.br>	       		  #
+# 01/02/2015							  #
 ###################################################################
 
 require 'mysql'
@@ -39,8 +39,8 @@ class Resp
 			result.each do |row|
 				
 				if row[0].include?("https://github.com/")   # Checking if the tool is 
-					get = "git clone #{row[0]}"	    		# located on github or belongs 
-				else					    				# to another source
+					get = "git clone #{row[0]}"         # located on github or belongs 
+				else				       	    # to another source
 					get = "wget #{row[0]}"
 				end
 				puts " [!] Downloading source\n #{get}"
