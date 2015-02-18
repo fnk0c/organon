@@ -26,7 +26,7 @@ else
 	apt-get install ruby-full python libmysqlclient-dev rubygems
 fi
 
-gem install mysql
+gem install mysql colorize
 
 #Move organon to opt
 cd .. && mv organon /opt/

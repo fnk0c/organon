@@ -1,5 +1,13 @@
 #!/usr/bin/ruby -w
 
+###################################################################
+# This script is responsible for making the connection to the     #
+# MySQL database											      #
+#																  #
+# Maximoz Sec <maximozsec@outlook.com.br>						  #
+# 01/02/2015													  #
+###################################################################
+
 require 'mysql'
 
 $server = "104.236.105.209"
@@ -14,17 +22,12 @@ class Resp
 		begin				
 			# Connect to the MySQL server
 			$db = Mysql.real_connect($server, $user, $pass, $database)
-			# Gettin the server version
-			puts "Connected to the server " + $db.get_server_info
 				
 			# If eventually occur some error
 			rescue Mysql::Error => e
 				puts "Error code: #{e.errno}"
 				puts "Error message: #{e.error}"
 				puts "Error SQLSTATE: #{e.sqlstate}" if e.respond_to?("sqlstate")	
-				exit 1
-			rescue Interrupt
-				puts "Você interrompeu o processo."
 				exit 1
 		end
 	end		
@@ -36,8 +39,8 @@ class Resp
 			result.each do |row|
 				
 				if row[0].include?("https://github.com/")   # Checking if the tool is 
-					get = "git clone #{row[0]}"	    # located on github or belongs 
-				else					    # to another source
+					get = "git clone #{row[0]}"	    		# located on github or belongs 
+				else					    				# to another source
 					get = "wget #{row[0]}"
 				end
 				puts " [!] Downloading source\n #{get}"

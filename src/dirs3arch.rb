@@ -13,7 +13,7 @@ Dir.chdir("src/")
 system "sudo ./generator.py dirs3arch python dirs3arch.py"
 
 require 'colorize'
-load 'spinner.rb'
+load 'lib/spinner.rb'
 
 print "[" + " ~~ ".red + "] Installing dirs3arch..."
 show_wait_spinner{
@@ -32,6 +32,6 @@ puts <<PNT
 [ #{"ok".green} ] Done!
 -------------------------------------------------------------------------------
 [ #{"ok".green} ] The tool is ready. Enjoy!
-[ #{"ok".green} ] Write 'g3m' without the quotes on your terminal to run the tool.
+[ #{"ok".green} ] Write 'dirs3arch' without the quotes on your terminal to run the tool.
 -------------------------------------------------------------------------------
 PNT
