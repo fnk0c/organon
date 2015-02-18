@@ -1,11 +1,13 @@
-=begin
-This script makes the download, compilation and installation of
-g3m on linux distributions.
-It only automates the things.
-=end
+#!/usr/bin/ruby
 
-# Maximoz Sec
-# 02/01/2015
+###################################################################
+# This script makes the download, compilation and installation of #
+# g3m on linux distributions.							      #
+# It only automates the things.									  #
+#																  #
+# Maximoz Sec <maximozsec@outlook.com.br>						  #
+# 02/01/2015													  #
+###################################################################	
 
 comandos = [
 	"wget https://sites.google.com/site/roxzinx/g3m/g3m.c https://sites.google.com/site/roxzinx/g3m/c4 https://sites.google.com/site/roxzinx/g3m/check.c https://sites.google.com/site/roxzinx/g3m/freak.c https://sites.google.com/site/roxzinx/g3m/juno.c",
@@ -16,12 +18,28 @@ comandos = [
 	"sudo sh -c 'echo exec /opt/g3m/g3m \"\\$@\" >> /usr/bin/g3m'",
 	"sudo chmod +x /usr/bin/g3m"]
 
-puts "[+] Installing g3m....\n"
-
 comandos.each { |x| system x }
 
-puts "\n"
-puts "-"*80
-puts "[+] The tool is ready. Enjoy!"
-puts "[+] Write \"g3m\" without the quotes on your terminal to run the application."
-puts "-"*80
+require 'colorize'
+load 'spinner.rb'
+
+print "[" + " ~~ ".red + "] Installing g3m..."
+show_wait_spinner{
+  sleep rand(4)+2 # Simulate a task taking an unknown amount of time
+}
+
+puts <<PNT
+
+
+,~~
+|'|#{">".yellow}		Penso,
+|U|		logo
+| |		programo.
+..>>
+
+[ #{"ok".green} ] Done!
+-------------------------------------------------------------------------------
+[ #{"ok".green} ] The tool is ready. Enjoy!
+[ #{"ok".green} ] Write 'g3m' without the quotes on your terminal to run the tool.
+-------------------------------------------------------------------------------
+PNT
