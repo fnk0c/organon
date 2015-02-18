@@ -2,11 +2,11 @@
 
 ###################################################################
 # This script makes the download, compilation and installation of #
-# dirs3arch on linux distributions.							      #
-# It only automates the things.									  #
-#																  #
-# Maximoz Sec <maximozsec@outlook.com.br>						  #
-# 15/02/2015													  #
+# dirs3arch on linux distributions.			          #
+# It only automates the things.			                  #
+#							          #
+# Maximoz Sec <maximozsec@outlook.com.br>	                  #
+# 15/02/2015					                  #
 ###################################################################	
 
 Dir.chdir("src/")
