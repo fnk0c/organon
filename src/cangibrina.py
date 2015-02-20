@@ -11,7 +11,7 @@ __DATE__	=	"26/12/2014"
 import os
 
 comandos = [
-	"cd cangibrina && sh linux_install.sh"]
+	"cd cangibrina && sudo sh linux_install.sh"]
 
 for a in comandos:
 	os.system(a)
