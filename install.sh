@@ -44,7 +44,7 @@ then
 	apt-get install libffi-dev
 	wget http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.0.tar.gz
 	tar xpvf ruby-2.2.0.tar.gz
-	cd ruby-2.2.0 && ./configure && make && make install
+	cd ruby-2.2.0 && ./configure && make && make install && cd ..
 else
 	echo "ruby 2 installed"
 fi
