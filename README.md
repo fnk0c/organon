@@ -20,10 +20,10 @@ Authors:
 
 Requirements
 -------------
-1. python     
-2. ruby        
+1. python 2 or 3     
+2. ruby 2.2        
 3. ruby Mysql
-4. rubygems
+4. rubygems    
 5. GNU/Linux system based on Debian
 
 Install
