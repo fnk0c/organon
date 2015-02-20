@@ -10,7 +10,7 @@
 ###################################################################	
 
 Dir.chdir("src/")
-system "sudo ./generator.py dirs3arch python dirs3arch.py"
+system "sudo ./generator.py dirs3arch ruby dirs3arch.rb"
 
 require 'colorize'
 load 'lib/spinner.rb'

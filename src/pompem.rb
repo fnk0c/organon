@@ -10,10 +10,10 @@
 ###################################################################	
 
 Dir.chdir("src/")
-system "sudo ./generator.py pompem python pompem.py"
+system "sudo ./generator.py pompem ruby pompem.rb"
 
 require 'colorize'
-load 'spinner.rb'
+load 'lib/spinner.rb'
 
 print "[" + " ~~ ".red + "] Installing Pompem..."
 show_wait_spinner{

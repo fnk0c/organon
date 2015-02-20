@@ -2,6 +2,7 @@
 
 # Maximoz Sec <maximozsec@outlook.com.br>
 # 12/02/2015
+# coded by: Phrogz <phrogz.net>
 
 def show_wait_spinner(fps=10)
   chars = %w[| / - \\]
