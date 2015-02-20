@@ -1,10 +1,16 @@
 #!/bin/bash
 
+#This script belongs to organons project
+#Author = Fnkoc
+#Project = https://github.com/maximozsec/organon
+
+#Check user permition
 if [ "$(id -u)" != "0" ]; then
 	clear
 	echo "This script must be run as root" 1>&2
 	exit
 fi
+
 #Check if already installed
 if [ -e /opt/organon ]
 then
@@ -19,11 +25,27 @@ fi
 #end check
 
 #Install Dependencies
-if grep -Fxq "$Ubuntu" /etc/issue
+sys=`cat /etc/issue | grep -i ubuntu`
+
+if [ ! -n "$sys" ]
 then
-	apt-get install ruby-full python libmysqlclient-dev rubygems-integration
-else
 	apt-get install ruby-full python libmysqlclient-dev rubygems
+else
+	echo "UBUNTU OS"
+	apt-get install ruby-full python libmysqlclient-dev rubygems-integration
+fi
+
+rubyversion=`ruby --version | cut -f1 -d. | grep -i "$ruby 2"`
+
+#Checking ruby version
+if [ ! -n "$rubyversion" ]
+then
+	echo "Installing Ruby 2"
+	wget http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.0.tar.gz
+	tar xpvf ruby-2.2.0.tar.gz
+	cd ruby-2.2.0 && ./configure && make && make install
+else
+	echo "ruby 2 installed"
 fi
 
 gem install mysql colorize
