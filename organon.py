@@ -2,7 +2,7 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.1.5"
+__VERSION__	= "0.1.6"
 __DATE__	= "12/02/2015"
 
 import sys
@@ -55,7 +55,8 @@ else:
 				os.system("src/%s.*" % a)
 
 	elif args.r:
-		print("remove")
+		for package in args.r:
+			os.system("src/%s.*" % package)
 
 	elif args.s:
 		print(args.s)
@@ -65,7 +66,7 @@ else:
 		os.system("src/DB/database_connector.rb list \"SELECT nome, versao, descricao FROM programas\"")
 
 	elif args.version:
-		print("Organon - Version 0.1.5")
+		print(__VERSION__)
 
 	elif args.about:
-		os.system("cat README.md")
+		os.system("cat README.md | more")
