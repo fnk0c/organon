@@ -29,10 +29,10 @@ sys=`cat /etc/issue | grep -i ubuntu`
 
 if [ ! -n "$sys" ]
 then
-	apt-get install ruby-full python libmysqlclient-dev rubygems
+	apt-get install ruby python libmysqlclient-dev rubygems
 else
 	echo "UBUNTU OS"
-	apt-get install ruby-full python libmysqlclient-dev rubygems-integration
+	apt-get install ruby python libmysqlclient-dev rubygems-integration
 fi
 
 rubyversion=`ruby --version | cut -f1 -d. | grep -i "$ruby 2"`
@@ -40,19 +40,20 @@ rubyversion=`ruby --version | cut -f1 -d. | grep -i "$ruby 2"`
 #Checking ruby version
 if [ ! -n "$rubyversion" ]
 then
-	echo "Installing Ruby 2"
+	echo " [!] Installing Ruby 2"
 	apt-get install libffi-dev
 	wget http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.0.tar.gz
 	tar xpvf ruby-2.2.0.tar.gz
-	cd ruby-2.2.0 && ./configure && make && make install && cd ..
+	cd ruby-2.2.0 && ./configure && make && make install
+	cd .. && cd ..
 else
-	echo "ruby 2 installed"
+	echo " [!] ruby 2 installed"
 fi
 
 gem install mysql colorize
 
 #Move organon to opt
-cd .. && mv organon /opt/
+mv organon /opt/
 
 echo \#\!/bin/bash >> /usr/bin/organon
 echo cd /opt/organon >> /usr/bin/organon
