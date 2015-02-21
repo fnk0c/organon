@@ -2,24 +2,25 @@
 
 ###################################################################
 # This script makes the download, compilation and installation of #
-# dirs3arch on linux distributions.			          #
+# XAMPP on linux distributions.			          	  #
 # It only automates the things.			                  #
 #							          #
 # Maximoz Sec <maximozsec@outlook.com.br>	                  #
-# 15/02/2015					                  #
-###################################################################	
+# 20/02/2015					                  #
+###################################################################
 
-Dir.chdir("src/")
-system "sudo ./generator.py dirs3arch python3 dirs3arch.py"
+system "chmod +x xampp-linux-x64-5.6.3-0-installer.run; sudo ./xampp-linux-x64-5.6.3-0-installer.run"
+
+Dir.chdir("/opt/lampp/")
+system "sudo ./generator.py xampp sh xampp"
 
 require 'colorize'
 load 'lib/spinner.rb'
 
 system "clear"
-print "[" + " ~~ ".red + "] Installing dirs3arch..."
+print "[" + " ~~ ".red + "] Installing XAMPP..."
 show_wait_spinner{
   sleep rand(4)+2 # Simulate a task taking an unknown amount of time
 }
-
 load 'lib/banner.rb'
-prog("dirs3arch")
+prog("xampp")

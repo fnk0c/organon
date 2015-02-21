@@ -1,14 +1,15 @@
-#!/usr/bin/ruby -w
+#!/usr/bin/ruby -W0
 
 ###################################################################
 # This script is responsible for making the connection to the     #
 # MySQL database					          #
-#								  #								  #
+#								  # #								  #
 # Maximoz Sec <maximozsec@outlook.com.br>	       		  #
 # 01/02/2015							  #
 ###################################################################
 
 require 'mysql'
+require 'colorize'
 
 $server = "104.236.105.209"
 $user = "organonuser"
@@ -25,9 +26,9 @@ class Resp
 				
 			# If eventually occur some error
 			rescue Mysql::Error => e
-				puts "Error code: #{e.errno}"
-				puts "Error message: #{e.error}"
-				puts "Error SQLSTATE: #{e.sqlstate}" if e.respond_to?("sqlstate")	
+				puts "[" + "!".red + "]" + " Error code: " + "#{e.errno}".yellow
+				puts "[" + "!".red + "]" + " Error message: " + "#{e.error}".yellow
+				puts "[" + "!".red + "]" + " Error SQLSTATE: " + "#{e.sqlstate}".yellow if e.respond_to?("sqlstate")	
 				exit 1
 		end
 	end		
@@ -43,15 +44,15 @@ class Resp
 				else				       	    # to another source
 					get = "wget #{row[0]}"
 				end
-				puts " [!] Downloading source\n #{get}"
+				puts " [" + "!".red + "] Downloading source\n #{get}"
 				system get
 
 				if row[1].nil? == false	
 					dep = "sudo apt-get install #{row[1]} -y"
-					puts " [!] Installing dependencies\n #{dep}"
+					puts " [" + "!".red + "] Installing dependencies\n #{dep}"
 					system dep
 				else
-					puts "[~] No necessary dependence"
+					puts "[" + "~".blue + "] No necessary dependence"
 				end
 				
 			end
@@ -68,7 +69,7 @@ class Resp
 	   		result.each do |row| # Listing each row
 	     		puts <<TOOLS
 
- [+] #{row[0]} #{row[1]}
+ #{"[" + " + ".green + "]"} #{row[0]} #{"v#{row[1]}".yellow}
  #{row[2]}
 
 TOOLS

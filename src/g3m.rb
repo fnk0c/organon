@@ -21,25 +21,13 @@ comandos = [
 comandos.each { |x| system x }
 
 require 'colorize'
-load 'spinner.rb'
+load 'lib/spinner.rb'
 
+system "clear"
 print "[" + " ~~ ".red + "] Installing g3m..."
 show_wait_spinner{
   sleep rand(4)+2 # Simulate a task taking an unknown amount of time
 }
 
-puts <<PNT
-
-
-,~~
-|'|#{">".yellow}		Penso,
-|U|		logo
-| |		programo.
-..>>
-
-[ #{"ok".green} ] Done!
--------------------------------------------------------------------------------
-[ #{"ok".green} ] The tool is ready. Enjoy!
-[ #{"ok".green} ] Write 'g3m' without the quotes on your terminal to run the tool.
--------------------------------------------------------------------------------
-PNT
+load 'lib/banner.rb'
+prog("g3m")
