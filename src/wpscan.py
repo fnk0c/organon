@@ -13,7 +13,7 @@ import os
 comandos = [
 	"cd wpscan && sudo gem install json -v '1.8.1'",
 	"cd wpscan && sudo gem install nokogiri -v '1.6.5'",
-	"cd wpscan && sudo gem install bundle",
+	"cd wpscan && sudo gem install bundler",
 	"cd wpscan && bundle install --without test --path vendor"]
 
 for a in comandos:
