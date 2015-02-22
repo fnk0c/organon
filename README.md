@@ -1,11 +1,4 @@
-
-	████▄ █▄▄▄▄   ▄▀  ██      ▄   ████▄    ▄   
-	█   █ █  ▄▀ ▄▀    █ █      █  █   █     █  
-	█   █ █▀▀▌  █ ▀▄  █▄▄█ ██   █ █   █ ██   █ 
-	▀████ █  █  █   █ █  █ █ █  █ ▀████ █ █  █ 
-		    █    ███     █ █  █ █       █  █ █ 
-		   ▀            █  █   ██       █   ██ 
-		               ▀                       
+![Image of organon](https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-xpf1/v/t35.0-12/11002371_372329906296403_1704596050_o.jpg?oh=9dfcb16d57c302e509f9fa675a33bf1e&oe=54EBC104&__gda__=1424749396_ce22593ed451d0127efb1c42b92b65d3)
 
 This program focuses on automating the download, installation and compilation of pentest tools from source
 
@@ -20,10 +13,10 @@ Authors:
 
 Requirements
 -------------
-1. python 2 or 3     
-2. ruby 2.2        
-3. ruby Mysql
-4. rubygems    
+1. Python 2 or 3    
+2. Ruby 2.2
+3. ruby rubygems
+4. Ruby modules: mysql, colorize
 5. GNU/Linux system based on Debian
 
 Install
