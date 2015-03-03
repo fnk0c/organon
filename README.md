@@ -13,9 +13,9 @@ Authors:
 
 Requirements
 -------------
-1. Python 2 or 3    
-2. Ruby 2.2
-3. ruby rubygems
+1. Python >=2.7 or >=3.4    
+2. Ruby >=2.0
+3. rubygems
 4. Ruby modules: mysql, colorize
 5. GNU/Linux system based on Debian
 
@@ -24,6 +24,11 @@ Install
 	git clone https://github.com/maximozsec/organon.git
 	cd organon
 	sudo ./install.sh
+
+Tested on:
+----------
+* Ubuntu 14.04 x86_64
+* Debian 7.8 Wheezy
 
 BUGS
 ----
