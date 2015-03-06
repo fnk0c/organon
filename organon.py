@@ -2,8 +2,8 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.1.6"
-__DATE__	= "12/02/2015"
+__VERSION__	= "0.1.7"
+__DATE__	= "06/03/2015"
 
 import sys
 import argparse
@@ -49,7 +49,7 @@ else:
 
 	elif args.i:
 		for package in args.i:
-			os.system("src/DB/database_connector.rb install \"SELECT url, dependencias FROM programas WHERE nome LIKE '%s'\"" % package)
+			os.system("ruby src/DB/database_connector.rb install \"SELECT url, dependencias FROM programas WHERE nome LIKE '%s'\"" % package)
 
 			for a in args.i:		
 				os.system("src/%s.*" % a)
@@ -60,10 +60,10 @@ else:
 
 	elif args.s:
 		print(args.s)
-		result = os.system("src/DB/database_connector.rb list \"SELECT nome, versao, descricao FROM programas WHERE nome LIKE '%s'\"" % args.s)
+		result = os.system("ruby src/DB/database_connector.rb list \"SELECT nome, versao, descricao FROM programas WHERE nome LIKE '%s'\"" % args.s)
 
 	elif args.l:
-		os.system("src/DB/database_connector.rb list \"SELECT nome, versao, descricao FROM programas\"")
+		os.system("ruby src/DB/database_connector.rb list \"SELECT nome, versao, descricao FROM programas\"")
 
 	elif args.version:
 		print(__VERSION__)
