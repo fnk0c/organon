@@ -24,17 +24,6 @@ fi
 
 #end check
 
-#Install Dependencies
-sys=`cat /etc/issue | grep -i ubuntu`
-
-if [ ! -n "$sys" ]
-then
-	apt-get install python libmysqlclient-dev rubygems
-else
-	echo -e "\033[32m [+]\033[00m UBUNTU OS"
-	apt-get install python libmysqlclient-dev rubygems-integration
-fi
-
 #Checking ruby version
 rubyversion=`ruby --version | cut -f1 -d. | grep -i "$ruby 2"`
 
@@ -49,8 +38,19 @@ then
 else
 	echo -e "\033[31m [!]\033[00m ruby 2 installed"
 fi
-
 #End Ruby check
+
+#Install Dependencies
+#sys=`cat /etc/issue | grep -i ubuntu`
+
+#if [ ! -n "$sys" ]
+#then
+#	apt-get install python libmysqlclient-dev rubygems
+#else
+#	echo -e "\033[32m [+]\033[00m UBUNTU OS"
+#	apt-get install python libmysqlclient-dev rubygems-integration
+#fi
+apt-get install python libmysqlclient-dev
 
 cd .. 	#Exits organon directory
 
