@@ -16,7 +16,7 @@ Requirements
 1. Python >=2.7 or >=3.4    
 2. Ruby >=2.0
 3. [**bundler**](http://bundler.io/)
-4. [**Rubygems**](https://rubygems.org/) - [mysql](https://rubygems.org/gems/mysql), [colorize](https://rubygems.org/gems/colorize)
+4. **Gems**: [mysql](https://rubygems.org/gems/mysql), [colorize](https://rubygems.org/gems/colorize)
 5. GNU/Linux system based on Debian
 
 Install
