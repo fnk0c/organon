@@ -34,6 +34,8 @@ fi
 #End Ruby check
 
 sudo apt-get install python libmysqlclient-dev bundler
+
+echo -e "\033[32m [+]\033[00m Bundling ruby gems"
 bundle install
 
 cd .. 	#Exits organon directory
@@ -45,7 +47,7 @@ sudo mv organon /opt/
 echo -e "\033[32m [+]\033[00m Creating symbolic link"
 sudo sh -c "echo \#\!/bin/bash >> /usr/bin/organon"
 sudo sh -c "echo cd /opt/organon >> /usr/bin/organon"
-sudo sh -c "echo exec python organon.py \"\$\@\" >> /usr/bin/organon"
+sudo sh -c "echo exec python organon.py \$\@\ >> /usr/bin/organon"
 
 echo -e "\033[32m [+]\033[00m Changing permitions"
 sudo chmod +x /usr/bin/organon
