@@ -9,7 +9,10 @@ import sys
 import argparse
 import os
 
-banner = """
+white = "\33[1;37m"
+default = "\33[1;00m"
+
+banner = """%s
    
    ████▄ █▄▄▄▄   ▄▀  ██      ▄   ████▄    ▄   
    █   █ █  ▄▀ ▄▀    █ █      █  █   █     █  
@@ -18,7 +21,7 @@ banner = """
            █    ███     █ █  █ █       █  █ █ 
           ▀            █  █   ██       █   ██ 
                       ▀                       
-"""
+%s""" % (white, default)
 
 parser = argparse.ArgumentParser(description = "Package manager that focus on Pentest tools")
 parser.add_argument("-a", "--about", action = "store_true",
@@ -50,13 +53,11 @@ else:
 	elif args.i:
 		for package in args.i:
 			os.system("ruby src/DB/database_connector.rb install \"SELECT url, dependencias FROM programas WHERE nome LIKE '%s'\"" % package)
-
-			for a in args.i:		
-				os.system("src/%s.*" % a)
+			os.system("src/%s.*" % package)
 
 	elif args.r:
 		for package in args.r:
-			os.system("src/%s.*" % package)
+			os.system("src/uninstall_%s.*" % package)
 
 	elif args.s:
 		print(args.s)
