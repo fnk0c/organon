@@ -49,7 +49,7 @@ sudo sh -c "echo \#\!/bin/bash >> /usr/bin/organon"
 sudo sh -c "echo cd /opt/organon >> /usr/bin/organon"
 sudo sh -c "echo exec python organon.py \$\@\ >> /usr/bin/organon"
 
-echo -e "\033[32m [+]\033[00m Changing permitions"
+echo -e "\033[32m [+]\033[00m Changing permissions"
 sudo chmod +x /usr/bin/organon
 sudo chmod +x /opt/organon/src/*
 
