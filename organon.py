@@ -2,8 +2,8 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.1.7"
-__DATE__	= "06/03/2015"
+__VERSION__	= "0.1.8"
+__DATE__	= "12/03/2015"
 
 import sys
 import argparse
