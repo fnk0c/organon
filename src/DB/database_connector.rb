@@ -46,6 +46,10 @@ class Resp
 				end
 				puts " [" + "!".red + "] Downloading source\n #{get}"
 				system get
+				
+				pkgconf = "wget http://104.236.105.209/organon/pkgconfig/#{row[2]}.conf"
+				puts pkgconf
+				system pkgconf
 
 				if row[1].nil? == false	
 					dep = "sudo apt-get install #{row[1]} -y"

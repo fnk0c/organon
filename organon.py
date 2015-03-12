@@ -52,8 +52,8 @@ else:
 
 	elif args.i:
 		for package in args.i:
-			os.system("ruby src/DB/database_connector.rb install \"SELECT url, dependencias FROM programas WHERE nome LIKE '%s'\"" % package)
-			os.system("src/%s.*" % package)
+			os.system("ruby src/DB/database_connector.rb install \"SELECT url, dependencias, nome FROM programas WHERE nome LIKE '%s'\"" % package)
+			os.system("python src/installer.py %s" % package)
 
 	elif args.r:
 		for package in args.r:
