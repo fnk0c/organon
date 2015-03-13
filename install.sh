@@ -54,7 +54,7 @@ if [ ! -e /usr/local/share/man/man8 ]
 then
 	sudo mkdir /usr/local/share/man/man8
 fi
-sudo mv organon.8 /usr/local/share/man/man8/
+sudo mv /opt/organon/organon.8 /usr/local/share/man/man8/
 
 echo -e "\033[32m [+]\033[00m Changing permissions"
 sudo chmod +x /usr/bin/organon
