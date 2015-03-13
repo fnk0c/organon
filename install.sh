@@ -49,7 +49,11 @@ sudo sh -c "echo \#\!/bin/bash >> /usr/bin/organon"
 sudo sh -c "echo cd /opt/organon >> /usr/bin/organon"
 sudo sh -c "echo exec python organon.py \$\@\ >> /usr/bin/organon"
 
-echo -e "\033[32m [+]\033[00m Creating MAN file"
+echo -e "\033[32m [+]\033[00m Creating MAN page"
+if [ ! -e /usr/local/share/man/man8 ]
+then
+	sudo mkdir /usr/local/share/man/man8
+fi
 sudo mv organon.8 /usr/local/share/man/man8/
 
 echo -e "\033[32m [+]\033[00m Changing permissions"
