@@ -43,7 +43,7 @@ pkg.close()
 #end
 
 #Generate shell script to install
-with open("installer.sh", "w") as l:	
+with open("pkgconfig.sh", "w") as l:	
 	l.write("#!/bin/bash\n\n")
 	l.write("#This file is generated automaticly by install.py\n\n")
 	for c in bash:
@@ -51,7 +51,7 @@ with open("installer.sh", "w") as l:
 #End
 
 #Exec shell script
-os.system("sh installer.sh")
+os.system("sh pkgconfig.sh")
 
 if install == True:
 	if "python" in a:
@@ -69,6 +69,6 @@ if install == True:
 	elif "php" in a:
 		lang = "php"
 		exe = ".php"
-	print("python generator.py %s %s %s" % (package_name, lang, exe))
 
-os.system("rm installer.sh %s.conf" % package_name)
+	os.system("cd src/ && python generator.py %s %s %s" % (lang, package_name, package_name + exe))
+	os.system("rm pkgconfig.sh %s.conf" % package_name)
