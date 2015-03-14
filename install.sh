@@ -18,11 +18,11 @@ fi
 #end check
 
 #Checking ruby version
-rubyversion=`ruby --version | cut -f1 -d. | grep -i "$ruby 2"`
+rubyversion=`ruby --version | cut -f1 -d. | grep -i "$ruby"`
 
 if [ ! -n "$rubyversion" ]
 then
-	echo -e "\033[31m [!]\033[00m Installing Ruby 2"
+	echo -e "\033[31m [!]\033[00m Installing Ruby 2.2"
 	sudo apt-get install libffi-dev libssl-dev libreadline-dev make g++ build-essential zlib1g-dev libyaml-dev
 	wget http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.0.tar.gz
 	tar xpvf ruby-2.2.0.tar.gz

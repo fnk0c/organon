@@ -13,7 +13,7 @@ pkg = open(package_name + ".conf", "r")				#Open config file
 
 for a in pkg:
 	if re.match("(.*)(T|t)ype(.*)", a):
-		pass
+		a = a.replace("type =", "").lower()
 pkg.close()
 
 pkg = open(package_name + ".conf", "r")				#Open config file
@@ -45,9 +45,10 @@ pkg.close()
 #Generate shell script to install
 with open("pkgconfig.sh", "w") as l:	
 	l.write("#!/bin/bash\n\n")
-	l.write("#This file is generated automaticly by install.py\n\n")
+	l.write("#This file is generated automatically by installer.py\n\n")
 	for c in bash:
 		l.write(str(c) + "\n")
+	l.write("\n#End")
 #End
 
 #Exec shell script
