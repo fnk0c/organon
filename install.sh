@@ -29,11 +29,20 @@ then
 	cd ruby-2.2.0 && ./configure && make && sudo make install
 	cd ..	#Exits ruby-2.2.0 directory
 else
-	echo -e "\033[31m [!]\033[00m ruby 2 installed"
+	echo -e "\033[31m [!]\033[00m ruby installed"
 fi
 #End Ruby check
 
-sudo apt-get install python libmysqlclient-dev bundler
+distro=`cat /etc/issue | grep -i "$Debian" | cut -d ' ' -f1`
+
+if [ "$distro" = "debian" ]
+then
+	echo -e "033[1m [!]\033[00m sudo apt-get install python libmysqlclient-dev bundler"
+	sudo apt-get install python libmysqlclient-dev bundler
+else
+	echo -e "033[31m [!]\033[00m sudo apt-get install python libmysqlclient-dev ruby-bundler"
+	sudo apt-get install python libmysqlclient-dev ruby-bundler
+fi
 
 echo -e "\033[32m [+]\033[00m Bundling ruby gems"
 bundle install
@@ -44,11 +53,13 @@ cd .. 	#Exits organon directory
 echo -e "\033[32m [+]\033[00m Moving organon to /opt"
 sudo mv organon /opt/
 
+#Create Symbolic Links
 echo -e "\033[32m [+]\033[00m Creating symbolic link"
 sudo sh -c "echo \#\!/bin/bash >> /usr/bin/organon"
 sudo sh -c "echo cd /opt/organon >> /usr/bin/organon"
 sudo sh -c "echo exec python organon.py \$\@\ >> /usr/bin/organon"
 
+#Move Man Page
 echo -e "\033[32m [+]\033[00m Creating MAN page"
 if [ ! -e /usr/local/share/man/man8 ]
 then
@@ -56,11 +67,12 @@ then
 fi
 sudo mv /opt/organon/organon.8 /usr/local/share/man/man8/
 
+#Change permission
 echo -e "\033[32m [+]\033[00m Changing permissions"
 sudo chmod +x /usr/bin/organon
-sudo chmod +x /opt/organon/src/*
 sudo chmod 644 /usr/local/share/man/man8/organon.8
 
+#Delete ruby file
 echo -e "\033[32m [+]\033[00m Cleaning directory"
 sudo rm -rf /opt/organon/ruby-2.2.0*
 
