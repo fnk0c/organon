@@ -18,16 +18,11 @@ fi
 #end check
 
 #Checking ruby version
-rubyversion=`ruby --version | cut -f1 -d. | grep -i "$ruby"`
+ruby=`ruby --version`
 
-if [ ! -n "$rubyversion" ]
+if [ ! -n "$ruby" ]
 then
-	echo -e "\033[31m [!]\033[00m Installing Ruby 2.2"
-	sudo apt-get install libffi-dev libssl-dev libreadline-dev make g++ build-essential zlib1g-dev libyaml-dev
-	wget http://cache.ruby-lang.org/pub/ruby/2.2/ruby-2.2.0.tar.gz
-	tar xpvf ruby-2.2.0.tar.gz
-	cd ruby-2.2.0 && ./configure && make && sudo make install
-	cd ..	#Exits ruby-2.2.0 directory
+	sudo apt-get install ruby
 else
 	echo -e "\033[31m [!]\033[00m ruby installed"
 fi
@@ -35,7 +30,7 @@ fi
 
 distro=`cat /etc/issue | grep -i "$Debian" | cut -d ' ' -f1`
 
-if [ "$distro" = "debian" ]
+if [ "$distro" = "Debian" ]
 then
 	echo -e "033[1m [!]\033[00m sudo apt-get install python libmysqlclient-dev bundler"
 	sudo apt-get install python libmysqlclient-dev bundler
