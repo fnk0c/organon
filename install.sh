@@ -17,27 +17,41 @@ fi
 
 #end check
 
-#Checking ruby version
+#Checking if ruby is installed
 ruby=`ruby --version`
 
 if [ ! -n "$ruby" ]
 then
+	echo -e "033[1m [!]\033[00m sudo apt-get install ruby"
 	sudo apt-get install ruby
 else
 	echo -e "\033[31m [!]\033[00m ruby installed"
 fi
 #End Ruby check
 
-distro=`cat /etc/issue | grep -i "$Debian" | cut -d ' ' -f1`
+#Check Distro
+distro=`cat /etc/issue | cut -d ' ' -f1`
 
 if [ "$distro" = "Debian" ]
 then
 	echo -e "033[1m [!]\033[00m sudo apt-get install python libmysqlclient-dev bundler"
 	sudo apt-get install python libmysqlclient-dev bundler
+
+elif [ "$distro" = "Ubuntu" ]
+then
+	#Check Ubuntu Version
+	version=`lsb_release -r | cut -d: -f2`
+	if [ "$version" = "14.10" ]
+	then
+		echo -e "033[1m [!]\033[00m sudo apt-get install python libmysqlclient-dev bundler"
+		sudo apt-get install python libmysqlclient-dev bundler
+	fi
+	#end Version check
 else
 	echo -e "033[31m [!]\033[00m sudo apt-get install python libmysqlclient-dev ruby-bundler"
 	sudo apt-get install python libmysqlclient-dev ruby-bundler
 fi
+#End Distro check
 
 echo -e "\033[32m [+]\033[00m Bundling ruby gems"
 bundle install
