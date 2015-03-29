@@ -11,7 +11,7 @@
 require 'mysql'
 require 'colorize'
 
-$server = "104.236.105.209"
+$server = "189.55.146.187"
 $user = "organonuser"
 $pass = "organon"
 $database = "organon"
@@ -47,7 +47,7 @@ class Resp
 				puts " [" + "!".red + "] Downloading source\n #{get}"
 				system get
 				
-				pkgconf = "wget http://104.236.105.209/organon/pkgconfig/#{row[2]}.conf"
+				pkgconf = "wget http://#{$server}/organon/pkgconfig/#{row[2]}.conf"
 				puts pkgconf
 				system pkgconf
 
