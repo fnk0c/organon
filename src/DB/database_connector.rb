@@ -47,7 +47,7 @@ class Resp
 				puts " [" + "!".red + "] Downloading source\n #{get}"
 				system get
 				
-				pkgconf = "wget http://#{$server}/organon/pkgconfig/#{row[2]}.conf"
+				pkgconf = "wget http://#{$server}:1000/organon/pkgconfig/#{row[2]}.conf"
 				puts pkgconf
 				system pkgconf
 
