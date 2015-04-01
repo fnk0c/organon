@@ -45,6 +45,9 @@ then
 	then
 		echo -e "033[1m [!]\033[00m sudo apt-get install python libmysqlclient-dev bundler"
 		sudo apt-get install python libmysqlclient-dev bundler
+	else
+		echo -e "033[31m [!]\033[00m sudo apt-get install python libmysqlclient-dev ruby-bundler"
+		sudo apt-get install python libmysqlclient-dev ruby-bundler
 	fi
 	#end Version check
 else
