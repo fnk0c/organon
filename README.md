@@ -34,6 +34,24 @@ Tested on:
 * Elementary OS Luna
 * Linux Mint 17.1
 
+Screenshot
+----------
+![Screenshot](https://i.imgur.com/C4BvEh3.png)
+
+Help
+----
+	* Listing available tools  
+	        organon -l  
+	* Searching for tools  
+	        organon -s <package>
+	* Installing tool  
+	        organon -i <package> <package>
+	* Update Organon  
+	        organon -u
+	* Remove tool [coming soon]
+		organon -r <package> <package>
+
+
 BUGS
 ----
 Since it's still on development phase bugs are expected. Please, **report to us!** or open an **Issue**
