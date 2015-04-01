@@ -3,7 +3,6 @@
 This program focuses on automating the download, installation and compilation of pentest tools from source
 
 # ATTENTION!
-###server is currently down thus is unavailable to connect to database
 
 This tool is in development phase and **may does not work properly**.
 Tool developed for Debian systems (apt)
