@@ -57,24 +57,34 @@ class Resp
 
 					dep = "sudo apt-get install #{row[1]} -y"
 					
-					inst_dep = -> do						 					 # Proc method
-						puts " [" + "!".red + "] Installing dependencies......." # to not mess
-						system dep						 						 # the case
+					def inst_dep
+						puts " [" + "!".red + "] Installing dependencies......."
+						system dep
 					end
 
-					puts "The following dependencies are necessary for this tool."
-					puts "(#{row[1].split.length}) #{row[1]}"
-					puts "Would you like to install them? (Y/n)"
-					print "=> "
-					opt = STDIN.gets.chomp
-						case opt
-							when /[Yy]/ then inst_dep.call
-							when /[Nn]/ then exit 1
-						end
+					display = -> do
+						puts "The following dependencies are necessary for this tool."
+						puts "(#{row[1].split.length}) #{row[1]}"
+						puts "Would you like to install them? (Y/n)"
+						print "=> "
+						opt = STDIN.gets.chomp
+							case opt
+								when /[Yy]/ 
+									inst_dep
+								when /[Nn]/
+									exit
+								else
+									puts "Thats not an option, buddy."
+									display.call
+							end
+					end
+					display.call
 				else
 					puts "[" + "~".blue + "] No necessary dependence"
 				end
 			end
+		rescue Exception
+			exit!
 		end
 		result.free
 			# Invoking .free to release the result set. 
@@ -93,7 +103,9 @@ class Resp
 
 TOOLS
 	  		end
-		
+		rescue Exception
+			exit!
+
 	   	result.free
 		end
 	end
