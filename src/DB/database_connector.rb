@@ -53,7 +53,7 @@ class Resp
 				puts pkgconf
 				system pkgconf
 
-				if row[1] != nil
+				if row[1] != nil # Checking if the row of the dependencies of the given tool is not empty
 
 					dep = "sudo apt-get install #{row[1]} -y"
 					
@@ -62,7 +62,7 @@ class Resp
 						system dep
 					end
 
-					display = -> do
+					display = -> do # Proc method to behave as a function and facilitate its recursive calling
 						puts "The following dependencies are necessary for this tool."
 						puts "(#{row[1].split.length}) #{row[1]}"
 						puts "Would you like to install them? (Y/n)"
@@ -84,7 +84,7 @@ class Resp
 				end
 			end
 		rescue Exception
-			exit!
+			exit!			# Exiting immediately
 		end
 		result.free
 			# Invoking .free to release the result set. 
@@ -104,7 +104,7 @@ class Resp
 TOOLS
 	  		end
 		rescue Exception
-			exit!
+			exit!			# Exiting immediately
 
 	   	result.free
 		end
