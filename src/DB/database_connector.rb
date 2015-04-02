@@ -1,12 +1,14 @@
 #!/usr/bin/ruby -W0
 
-###################################################################
-# This script is responsible for making the connection to the     #
-# MySQL database					          #
-#								  # #								  #
-# Maximoz Sec <maximozsec@outlook.com.br>	       		  #
-# 01/02/2015							  #
-###################################################################
+=begin
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ This script is responsible for making the connection to the
+ MySQL database
+
+ Maximoz Sec <maximozsec@outlook.com.br>
+ 01/02/2015
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=end
 
 require 'mysql'
 require 'colorize'
@@ -40,8 +42,8 @@ class Resp
 			result.each do |row|
 				
 				if row[0].include?("https://github.com/")   # Checking if the tool is 
-					get = "git clone #{row[0]}"         # located on github or belongs 
-				else				       	    # to another source
+					get = "git clone #{row[0]}"         	# located on github or belongs 
+				else				       	    			# to another source
 					get = "wget #{row[0]}"
 				end
 				puts " [" + "!".red + "] Downloading source\n #{get}"
@@ -51,14 +53,27 @@ class Resp
 				puts pkgconf
 				system pkgconf
 
-				if row[1].nil? == false	
+				if row[1] != nil
+
 					dep = "sudo apt-get install #{row[1]} -y"
-					puts " [" + "!".red + "] Installing dependencies\n #{dep}"
-					system dep
+					
+					inst_dep = -> do						 					 # Proc method
+						puts " [" + "!".red + "] Installing dependencies......." # to not mess
+						system dep						 						 # the case
+					end
+
+					puts "The following dependencies are necessary for this tool."
+					puts "(#{row[1].split.length}) #{row[1]}"
+					puts "Would you like to install them? (Y/n)"
+					print "=> "
+					opt = STDIN.gets.chomp
+						case opt
+							when /[Yy]/ then inst_dep.call
+							when /[Nn]/ then exit 1
+						end
 				else
 					puts "[" + "~".blue + "] No necessary dependence"
 				end
-				
 			end
 		end
 		result.free
