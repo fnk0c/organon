@@ -58,6 +58,9 @@ if install == True:
 	if "python" in a:
 		lang = "python"
 		exe = ".py"
+	elif "python3" in a:
+		lang = "python3"
+		exe = ".py"
 	elif "perl" in a:
 		lang = "perl"
 		exe = ".pl"
