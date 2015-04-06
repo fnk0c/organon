@@ -38,6 +38,8 @@ parser.add_argument("-s",
 	help = "Search for package")
 parser.add_argument("-l", action = "store_true",
 	help = "List all packages available")
+parser.add_argument("--clean", action = "store_true",
+	help = "Clean Organon\'s cache")
 
 args = parser.parse_args()
 
@@ -54,6 +56,8 @@ else:
 		for package in args.i:
 			os.system("ruby src/DB/database_connector.rb install \"SELECT url, dependencias, nome FROM programas WHERE nome LIKE '%s'\"" % package)
 			os.system("python src/installer.py %s" % package)
+			try: os.system("mv %s* cache/" % package)
+			except:	pass
 
 	elif args.r:
 		for package in args.r:
@@ -71,3 +75,6 @@ else:
 
 	elif args.about:
 		os.system("cat README.md | more")
+
+	elif args.clean:
+		os.system("rm -rf cache/*")
