@@ -54,26 +54,11 @@ class Resp
 				system pkgconf
 
 				if row[1] != 'NULL' # Checking if the row of the dependencies of the given tool is not empty
- 
-                	display = -> do # Proc method to behave as a function and facilitate its recursive calling
-                    	puts "The following dependencies are necessary for this tool."
-                        puts "(#{row[1].split.length}) #{row[1]}"
-                		puts "Would you like to install them? (Y/n)"
-                        print "=> "
-                        opt = STDIN.gets.chomp
-                      		case opt
-                            	when /[Yy]/
-                                	puts " [" + "!".red + "] Installing dependencies........"
-                                    system "sudo apt-get install #{row[1]} -y"
-                                when /[Nn]/
-                                    exit 1
-                                else
-                                    puts " [" + "!".red + "] Thats not an option, buddy.\n"
-                                    display.call
-                          	end
-                	end
-                	display.call
-               	else
+					puts "The following dependencies are necessary for this tool."
+					puts "(#{row[1].split.length}) #{row[1]}\n"
+					puts " [" + "!".red + "] Installing dependencies........"
+					system "sudo apt-get install #{row[1]} -y"      
+              	else
                 	puts "[" + "~".blue + "] No necessary dependence"
                 end
 			end
