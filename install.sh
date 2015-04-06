@@ -85,8 +85,8 @@ sudo chmod +x /usr/bin/organon
 sudo chmod 644 /usr/local/share/man/man8/organon.8
 
 #Delete ruby file
-echo -e "\033[32m [+]\033[00m Cleaning directory"
-sudo rm -rf /opt/organon/ruby-2.2.0*
+echo -e "\033[32m [+]\033[00m Creating .cache directory"
+mkdir /opt/organon/.cache
 
 echo -e '\033[32m [+]\033[00m Complete!'
 echo 'Type "organon" in order to use it'

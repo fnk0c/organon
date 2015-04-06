@@ -56,7 +56,7 @@ else:
 		for package in args.i:
 			os.system("ruby src/DB/database_connector.rb install \"SELECT url, dependencias, nome FROM programas WHERE nome LIKE '%s'\"" % package)
 			os.system("python src/installer.py %s" % package)
-			try: os.system("mv %s* cache/" % package)
+			try: os.system("mv %s* .cache/" % package)
 			except:	pass
 
 	elif args.r:
