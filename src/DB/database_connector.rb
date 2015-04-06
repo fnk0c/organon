@@ -58,9 +58,9 @@ class Resp
 					puts "(#{row[1].split.length}) #{row[1]}\n"
 					puts " [" + "!".red + "] Installing dependencies........"
 					system "sudo apt-get install #{row[1]} -y"      
-              	else
-                	puts "[" + "~".blue + "] No necessary dependence"
-                end
+				else
+					puts "[" + "~".blue + "] No necessary dependence"
+				end
 			end
 		rescue Exception
 			exit!			# Exiting immediately
