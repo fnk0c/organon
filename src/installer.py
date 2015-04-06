@@ -68,7 +68,7 @@ if install == True:
 		lang = "ruby"
 		exe = ".rb"
 	elif "exec" in a:
-		os.system("sudo ln -s /opt/%s/%s /usr/bin" % package_name)
+		os.system("sudo ln -s /opt/%s/%s /usr/bin" % (package_name package_name))
 		exit()
 	elif "php" in a:
 		lang = "php"

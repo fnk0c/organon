@@ -61,7 +61,7 @@ else:
 
 	elif args.r:
 		for package in args.r:
-			os.system("src/uninstall_%s.*" % package)
+			os.system("sudo rm -rf /opt/%s && sudo rm /usr/bin/%s" % (package, package))
 
 	elif args.s:
 		print(args.s)
