@@ -41,7 +41,7 @@ elif [ "$distro" = "Ubuntu" ]
 then
 	#Check Ubuntu Version
 	version=`lsb_release -r | cut -d: -f2`
-	if [ "$version" = "14.10" ]
+	if [ "$version" = "	14.10" ]
 	then
 		echo -e "033[1m [!]\033[00m sudo apt-get install python libmysqlclient-dev bundler"
 		sudo apt-get install python libmysqlclient-dev bundler
