@@ -48,8 +48,10 @@ Help
 	        organon -i <package> <package>
 	* Update Organon  
 	        organon -u
-	* Remove tool [coming soon]
-		organon -r <package> <package>
+	* Remove tool
+            organon -r <package> <package>
+	* Clean .cache directory
+            organon --clean 
 
 
 BUGS
