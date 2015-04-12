@@ -1,5 +1,10 @@
 #!/usr/bin/python
 
+#This script makes part of Organon Project
+#https://github.com/maximozsec/organon
+#LAST UPDATE = 12/04/15
+
+
 __AUTHOR__ 	= "Fnkoc"
 __DATE__	= "Mimi\'s day 2015"		#12/03/2015
 
@@ -7,12 +12,30 @@ import sys
 import os
 import re
 
+#Get argument
 package_name = sys.argv[1]
+
+def generator(lang, package_name, prog):
+	installer = open("src/installer.sh", "w")
+
+	with open("src/installer_base.txt", "r") as base:
+		base = base.readlines()
+		for l in base:
+			l = l.replace("organon.py", prog).replace("organon", package_name).replace("python", lang)
+			installer.write(l)
+
+	installer.close()
+	os.system("sudo sh src/installer.sh")
+	os.system("rm installer.sh")
+
+
+################################################################################
+#Generate Shell Script to compile
 
 pkg = open(package_name + ".conf", "r")				#Open config file
 
 for a in pkg:
-	if re.match("(.*)(T|t)ype(.*)", a):
+	if re.match("(.*)(T|t)ype(.*)", a):				#Searchs for "type"
 		a = a.replace("type =", "").lower()
 pkg.close()
 
@@ -42,7 +65,7 @@ else:
 pkg.close()
 #end
 
-#Generate shell script to install
+#Generate shell script to compile
 with open("pkgconfig.sh", "w") as l:	
 	l.write("#!/bin/bash\n\n")
 	l.write("#This file is generated automatically by installer.py\n\n")
@@ -75,5 +98,6 @@ if install == True:
 		lang = "php"
 		exe = ".php"
 
-	os.system("cd src/ && python generator.py %s %s %s" % (lang, package_name, package_name + exe))
-	os.system("rm pkgconfig.sh %s.conf" % package_name)
+	prog = package_name + exe
+	generator(lang, package_name, prog)
+os.system("rm pkgconfig.sh %s.conf" % package_name)

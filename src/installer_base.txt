@@ -14,7 +14,7 @@ fi
 #end check
 
 #Move organon to opt
-cd .. && mv organon /opt/
+mv organon /opt/
 
 echo \#\!/bin/bash >> /usr/bin/organon
 echo cd /opt/organon >> /usr/bin/organon
