@@ -54,10 +54,16 @@ else:
 
 	elif args.i:
 		for package in args.i:
-			os.system("ruby src/DB/database_connector.rb install \"SELECT url, dependencias, nome FROM programas WHERE nome LIKE '%s'\"" % package)
-			os.system("python src/installer.py %s" % package)
-			try: os.system("mv *%s* .cache/" % package)
-			except:	pass
+			db = os.system("ruby src/DB/database_connector.rb install \"SELECT \
+url, dependencias, nome FROM programas WHERE nome LIKE '%s'\"" % package)
+			install = os.system("python src/installer.py %s" % package)
+			cache = os.system("mkdir .cache/%s && mv *%s* .cache/%s" % (package,\
+ package, package))
+			
+			if cache == 0 and db == 0 and install == 0: print(" [+] Success!\n \
+Source files can be found at .cache")
+			elif cache != 0 and db == 0 and install == 0: print(" [+] Success!")
+			else: print(" [-] Something went wrong")
 
 	elif args.r:
 		for package in args.r:
@@ -65,10 +71,12 @@ else:
 
 	elif args.s:
 		print(args.s)
-		result = os.system("ruby src/DB/database_connector.rb list \"SELECT nome, versao, descricao FROM programas WHERE nome LIKE '%s'\"" % args.s)
+		result = os.system("ruby src/DB/database_connector.rb list \"SELECT nome,\
+ versao, descricao FROM programas WHERE nome LIKE '%s'\"" % args.s)
 
 	elif args.l:
-		os.system("ruby src/DB/database_connector.rb list \"SELECT nome, versao, descricao FROM programas\"")
+		os.system("ruby src/DB/database_connector.rb list \"SELECT nome, versao, \
+descricao FROM programas\" | more")
 
 	elif args.version:
 		print(__VERSION__)

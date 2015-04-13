@@ -26,7 +26,7 @@ def generator(lang, package_name, prog):
 
 	installer.close()
 	os.system("sudo sh src/installer.sh")
-	os.system("rm installer.sh")
+	os.system("rm src/installer.sh")
 
 
 ################################################################################
@@ -90,10 +90,6 @@ if install == True:
 	elif "ruby" in a:
 		lang = "ruby"
 		exe = ".rb"
-	elif "exec" in a:
-		os.system("sudo ln -s /opt/%s/%s /usr/bin" % (package_name, package_name))
-		os.system("rm pkgconfig.sh %s.conf" % package_name)
-		exit()
 	elif "php" in a:
 		lang = "php"
 		exe = ".php"
