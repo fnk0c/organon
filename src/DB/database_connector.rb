@@ -41,11 +41,6 @@ class Resp
 			result = $db.query(install_command)
 			result.each do |row|
 			
-				hsbc = -> do
-					puts " [" + "!".red + "] Downloading source\n #{get}"
-					system get
-				end
-				
 				# Checking if the tool is located on github or belongs to another source
 				if row[0].include?("https://github.com/")
 					if File.exists?('/opt/organon/.cache/#{row[2]}')
@@ -54,7 +49,8 @@ class Resp
 						system get
 					else
 						get = "git clone #{row[0]}"
-						hsbc.call
+						puts " [" + "!".red + "] Downloading source\n #{get}"
+						system get
 					end         	
 				else				       	    			
 					if File.exists?('/opt/organon/.cache/#{row[2]}')
@@ -62,7 +58,8 @@ class Resp
 						system get
 					else					
 						get = "wget #{row[0]}"
-						hsbc.call
+						puts " [" + "!".red + "] Downloading source\n #{get}"
+						system get
 					end
 				end
 				
