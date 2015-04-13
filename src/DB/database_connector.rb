@@ -40,14 +40,28 @@ class Resp
 			# Requesting information from database as of a SQL command
 			result = $db.query(install_command)
 			result.each do |row|
-				
-				if row[0].include?("https://github.com/")   # Checking if the tool is 
-					get = "git clone #{row[0]}"         	# located on github or belongs 
-				else				       	    			# to another source
-					get = "wget #{row[0]}"
+			
+				# Checking if the tool is located on github or belongs to another source
+				if row[0].include?("https://github.com/")
+					if File.exists?('/opt/organon/.cache/#{row[2]}')
+						get = "git pull"
+						system "cd /opt/#{row[2]}"
+						system get
+					else
+						get = "git clone #{row[0]}"
+						puts " [" + "!".red + "] Downloading source\n #{get}"
+						system get
+					end         	
+				else				       	    			
+					if File.exists?('/opt/organon/.cache/#{row[2]}')
+						get = "wget -c #{row[0]}"
+						system get
+					else					
+						get = "wget #{row[0]}"
+						puts " [" + "!".red + "] Downloading source\n #{get}"
+						system get
+					end
 				end
-				puts " [" + "!".red + "] Downloading source\n #{get}"
-				system get
 				
 				pkgconf = "wget http://#{$server}:1000/organon/pkgconfig/#{row[2]}.conf"
 				puts pkgconf
