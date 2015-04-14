@@ -12,8 +12,12 @@
 
 require 'mysql'
 require 'colorize'
+require 'nokogiri'
+require 'open-uri'
 
-$server = "189.55.146.187"
+doc = Nokogiri::HTML(open("http://organon.ddns.net"))
+
+$server = doc.css('link')[0]['href'].gsub!("http://", "").gsub!(":1000/favicon.ico", "")
 $user = "organonuser"
 $pass = "organon"
 $database = "organon"
