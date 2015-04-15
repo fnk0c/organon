@@ -54,7 +54,6 @@ class Resp
 						get = "cd .cache && wget -c #{row[0]}"
 						puts " [" + "!".red + "] Downloading source\n #{get}"
 						system get
-					end
 				end
 				
 				pkgconf = "wget http://#{$server}:1000/organon/pkgconfig/#{row[2]}.conf"
