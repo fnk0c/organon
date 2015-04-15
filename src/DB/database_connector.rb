@@ -47,21 +47,11 @@ class Resp
 			
 				# Checking if the tool is located on github or belongs to another source
 				if row[0].include?("https://github.com/")
-					if File.exists?('/opt/organon/.cache/#{row[2]}')
-						get = "git pull"
-						system "cd /opt/#{row[2]}"
-						system get
-					else
-						get = "git clone #{row[0]}"
+						get = "cd .cache && git clone #{row[0]}"
 						puts " [" + "!".red + "] Downloading source\n #{get}"
 						system get
-					end         	
 				else				       	    			
-					if File.exists?('/opt/organon/.cache/#{row[2]}')
-						get = "wget -c #{row[0]}"
-						system get
-					else					
-						get = "wget #{row[0]}"
+						get = "cd .cache && wget -c #{row[0]}"
 						puts " [" + "!".red + "] Downloading source\n #{get}"
 						system get
 					end
