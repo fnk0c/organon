@@ -23,7 +23,8 @@ banner = """%s
                       ▀                       
 %s""" % (white, default)
 
-parser = argparse.ArgumentParser(description = "Package manager that focus on Pentest tools")
+parser = argparse.ArgumentParser(description = "Package manager that focus on \
+Pentest tools")
 parser.add_argument("-a", "--about", action = "store_true",
 	help = "About this tool")
 parser.add_argument("-v", "--version", action = "store_true",
@@ -57,17 +58,16 @@ else:
 			db = os.system("ruby src/DB/database_connector.rb install \"SELECT \
 url, dependencias, nome FROM programas WHERE nome LIKE '%s'\"" % package)
 			install = os.system("python src/installer.py %s" % package)
-			cache = os.system("mkdir .cache/%s && mv *%s* .cache/%s" % (package,\
- package, package))
 			
-			if cache == 0 and db == 0 and install == 0: print(" [+] Success!\n \
+			if db == 0 and install == 0: print(" [+] Success!\n \
 Source files can be found at .cache")
-			elif cache != 0 and db == 0 and install == 0: print(" [+] Success!")
+			elif db != 0: print(" [-] Check you\'re internet connection!")
 			else: print(" [-] Something went wrong")
 
 	elif args.r:
 		for package in args.r:
-			os.system("sudo rm -rf /opt/%s && sudo rm /usr/bin/%s" % (package, package))
+			os.system("sudo rm -rf /opt/%s && sudo rm /usr/bin/%s" % (package, \
+			package))
 
 	elif args.s:
 		print(args.s)
