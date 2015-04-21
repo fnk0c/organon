@@ -10,10 +10,15 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 =end
 
-require 'mysql'
-require 'colorize'
-require 'nokogiri'
-require 'open-uri'
+begin
+	require 'mysql'
+	require 'colorize'
+	require 'nokogiri'
+	require 'open-uri'
+rescue Interrupt
+	warn "You have interrupted the application."
+	exit 1
+end
 
 doc = Nokogiri::HTML(open("http://organon.ddns.net"))
 
@@ -30,12 +35,14 @@ class Resp
 			# Connect to the MySQL server
 			$db = Mysql.real_connect($server, $user, $pass, $database)
 				
-			# If eventually occur some error
-			rescue Mysql::Error => e
-				puts "[" + "!".red + "]" + " Error code: " + "#{e.errno}".yellow
-				puts "[" + "!".red + "]" + " Error message: " + "#{e.error}".yellow
-				puts "[" + "!".red + "]" + " Error SQLSTATE: " + "#{e.sqlstate}".yellow if e.respond_to?("sqlstate")	
-				exit 1
+		# If eventually occur some error
+		rescue Mysql::Error => e
+			sgn = "[" + "!".red + "]"
+			puts sgn + " Error code: " + "#{e.errno}".yellow
+			puts sgn + " Error message: " + "#{e.error}".yellow
+			puts sgn + " Error SQLSTATE: " + "#{e.sqlstate}".yellow if e.respond_to?("sqlstate")	
+			puts sgn + " If you get this error, please let us an issue as soon! github.com/maximozsec/organon/issues"
+			exit 1
 		end
 	end		
 
@@ -47,15 +54,16 @@ class Resp
 			
 				# Checking if the tool is located on github or belongs to another source
 				if row[0].include?("https://github.com/")
-						get = "cd .cache && git clone #{row[0]}"
+						get = "cd .cache && git clone #{row[0]}" # Update the github tool
 						puts " [" + "!".red + "] Downloading source\n #{get}"
 						system get
 				else				       	    			
-						get = "cd .cache && wget -c #{row[0]}"
+						get = "cd .cache && wget -c #{row[0]}" # Continue the download from the last download stage
 						puts " [" + "!".red + "] Downloading source\n #{get}"
 						system get
 				end
 				
+				# Downloading the tool configuration file
 				pkgconf = "wget http://#{$server}:1000/organon/pkgconfig/#{row[2]}.conf"
 				puts pkgconf
 				system pkgconf
@@ -69,8 +77,9 @@ class Resp
 					puts "[" + "~".blue + "] No necessary dependence"
 				end
 			end
-		rescue Exception
-			exit!			# Exiting immediately
+		rescue Interrupt
+			warn "You have interrupted the labeling."
+			exit 1
 		end
 		result.free
 			# Invoking .free to release the result set. 
@@ -89,13 +98,13 @@ class Resp
 
 TOOLS
 	  		end
-		rescue Exception
-			exit!			# Exiting immediately
-
-	   	result.free
+		rescue Interrupt
+			warn "You have interrupted the instalation."
+			exit 1
 		end
+		result.free
 	end
-end # Ending class Resp
+end # Ending Resp class
 	
 action = Resp.new
 	
@@ -109,4 +118,6 @@ begin
 	else
 		exit 1
 	end
+rescue StandardError => e
+	warn "ERROR: #{e.message}"
 end
