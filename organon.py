@@ -3,15 +3,33 @@
 
 __AUTHOR__	= "Fnkoc"
 __VERSION__	= "0.1.8"
-__DATE__	= "12/03/2015"
+__DATE__	= "21/04/2015"
+"""
+	[UPDATES]
+	
+	Implemented install/remove confirmation
+	Update code to look better
+	Added comments
+	Update update function
+"""
 
 import sys
 import argparse
 import os
 
+# COLORS #######################################################################
+red = "\033[31m"
 white = "\33[1;37m"
+green = "\033[32m"
 default = "\33[1;00m"
 
+# PYTHON 2 E 3 SUPPORT #########################################################
+try:
+	raw_input
+except:
+	raw_input = input
+
+# BANNER #######################################################################
 banner = """%s
    
    ████▄ █▄▄▄▄   ▄▀  ██      ▄   ████▄    ▄   
@@ -22,6 +40,8 @@ banner = """%s
           ▀            █  █   ██       █   ██ 
                       ▀                       
 %s""" % (white, default)
+
+# ARGUMENTOS ###################################################################
 
 parser = argparse.ArgumentParser(description = "Package manager that focus on \
 Pentest tools")
@@ -44,45 +64,104 @@ parser.add_argument("--clean", action = "store_true",
 
 args = parser.parse_args()
 
+# UPDATE ORGANON FUNCTION ######################################################
+
+def update():
+	print(green + "[+] " + default + "Updating Organon")
+	up = os.system("git fetch && git pull")
+
+	if up != 0:
+		print(red + " [-] " +default + "Couldn\'t retrieve update. Please \
+download the latest version from https://github.com/maximozsec/organon")
+	else:
+		print(green + " [+] " + default + "Organon was successfully updated")
+
+# CHECK IF ARGS ARE NULL #######################################################
+
+#IF NULL
 if len(sys.argv) == 1:
 	os.system("clear")
 	print(banner)
 	parser.print_help()
 
+#IF NOT NULL
 else:
+	# UPDATE ORGANON ###########################################################
 	if args.u:
-		os.system("git fetch && git pull")
+		update()
+
+	# INSTALL PACKAGE ##########################################################
 
 	elif args.i:
-		for package in args.i:
-			db = os.system("ruby src/DB/database_connector.rb install \"SELECT \
-url, dependencias, nome FROM programas WHERE nome LIKE '%s'\"" % package)
-			install = os.system("python src/installer.py %s" % package)
-			
-			if db == 0 and install == 0: print(" [+] Success!\n \
+
+		# PRINT PACKAGES TO BE INSTALL #########################################
+		print("\n Packages (" + str(len(args.i)) + ") " + " ".join(args.i))
+		choice = raw_input(green + "\n [+] " + default +"Continue the \
+installation? [Y/n] ").lower()
+
+		# CHECK IF USER WANT TO CONTINUE #######################################
+		if choice != "y" and len(choice) != 0:
+			print(red + " [-] " + default + "Aborted")
+			sys.exit()
+
+		else:
+
+			# INSTALL PROCESS ##################################################
+			for package in args.i:
+				db = os.system("ruby src/DB/database_connector.rb install \"\
+SELECT url, dependencias, nome FROM programas WHERE nome LIKE '%s'\"" % package)
+				install = os.system("python src/installer.py %s" % package)
+
+				# CHECK IF SUCCESS #############################################
+				if db == 0 and install == 0: print(" [+] Success!\n \
 Source files can be found at .cache")
-			elif db != 0: print(" [-] Check you\'re internet connection!")
-			else: print(" [-] Something went wrong")
+				elif db != 0: print(" [-] Check you\'re internet connection!")
+
+	# REMOVE PACKAGE ###########################################################
 
 	elif args.r:
-		for package in args.r:
-			os.system("sudo rm -rf /opt/%s && sudo rm /usr/bin/%s" % (package, \
-			package))
+
+		# PRINT PACKAGES TO BE REMOVE ##########################################
+		print("\n Packages (" + str(len(args.r)) + ") " + " ".join(args.r))
+		choice = raw_input(green + "\n [+]" + default + " Remove these packages\
+? [Y/n] ").lower()
+
+		# CHECK IF USER WANT TO CONTINUE #######################################
+		if choice != "y" and len(choice) != 0:
+			print(red + " [-] " + default + "Aborted")
+			sys.exit()
+
+		else:
+
+			# REMOVE PROCESS ###################################################
+			for package in args.r:
+				os.system("sudo rm -rf /opt/%s && sudo rm /usr/bin/%s" % \
+(package, package))
+
+	# SEARCH FOR PACKAGE #######################################################
 
 	elif args.s:
 		print(args.s)
-		result = os.system("ruby src/DB/database_connector.rb list \"SELECT nome,\
- versao, descricao FROM programas WHERE nome LIKE '%s'\"" % args.s)
+		result = os.system("ruby src/DB/database_connector.rb list \"SELECT \
+nome, versao, descricao FROM programas WHERE nome LIKE '%s'\"" % args.s)
+
+	# LIST ALL PACKAGES ########################################################
 
 	elif args.l:
-		os.system("ruby src/DB/database_connector.rb list \"SELECT nome, versao, \
-descricao FROM programas\" | more")
+		os.system("ruby src/DB/database_connector.rb list \"SELECT nome, versao\
+, descricao FROM programas\" | more")
+
+	# PRINT VERSION ############################################################
 
 	elif args.version:
 		print(__VERSION__)
 
+	# OPEN README FILE #########################################################
+
 	elif args.about:
 		os.system("cat README.md | more")
+
+	# CLEAN ORGANON CACHE ######################################################
 
 	elif args.clean:
 		os.system("rm -rf .cache/*")
