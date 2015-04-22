@@ -17,7 +17,7 @@ Requirements
 1. Python >=2.7 or >=3.4    
 2. Ruby >=1.9
 3. [**bundler**](http://bundler.io/)
-4. **Gems**: [mysql](https://rubygems.org/gems/mysql), [colorize](https://rubygems.org/gems/colorize)
+4. **Gems**: [mysql](https://rubygems.org/gems/mysql), [colorize](https://rubygems.org/gems/colorize), [nokogiri](https://rubygems.org/gems/nokogiri)
 5. GNU/Linux system based on Debian
 
 Install
@@ -32,7 +32,7 @@ Tested on:
 * Ubuntu 14.10 x86_64
 * Debian 7.8 Wheezy
 * Elementary OS Luna
-* Linux Mint 17.1
+* Linux Mint 17
 
 Screenshot
 ----------
@@ -49,9 +49,9 @@ Help
 	* Update Organon  
 	        organon -u
 	* Remove tool
-            organon -r <package> <package>
+	        organon -r <package> <package>
 	* Clean .cache directory
-            organon --clean 
+	        organon --clean 
 
 
 BUGS

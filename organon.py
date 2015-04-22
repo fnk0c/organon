@@ -110,12 +110,14 @@ installation? [Y/n] ").lower()
 			for package in args.i:
 				db = os.system("ruby src/DB/database_connector.rb install \"\
 SELECT url, dependencias, nome FROM programas WHERE nome LIKE '%s'\"" % package)
-				install = os.system("python src/installer.py %s" % package)
+
+				if db == 0:
+					install = os.system("python src/installer.py %s" % package)
+				else: print(red + "[-]" + default + "Something went wrong")
 
 				# CHECK IF SUCCESS #############################################
 				if db == 0 and install == 0: print(" [+] Success!\n \
 Source files can be found at .cache")
-				elif db != 0: print(" [-] Check you\'re internet connection!")
 
 	# REMOVE PACKAGE ###########################################################
 
@@ -154,7 +156,8 @@ nome, versao, descricao FROM programas WHERE nome LIKE '%s'\"" % args.s)
 	# PRINT VERSION ############################################################
 
 	elif args.version:
-		print(__VERSION__)
+		print("\nVersion: ", __VERSION__)
+		print("Last update: ", __DATE__)
 
 	# OPEN README FILE #########################################################
 
