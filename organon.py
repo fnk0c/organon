@@ -2,8 +2,8 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.1.8"
-__DATE__	= "21/04/2015"
+__VERSION__	= "0.1.8-r11"
+__DATE__	= "07/05/2015"
 """
 	[UPDATES]
 	
@@ -11,6 +11,7 @@ __DATE__	= "21/04/2015"
 	Update code to look better
 	Added comments
 	Update update function
+	Check working path
 """
 
 import sys
@@ -80,6 +81,19 @@ download the latest version from https://github.com/maximozsec/organon")
 
 #IF NULL
 if len(sys.argv) == 1:
+	#CHECK IF PATH IS /OPT/ORGANON
+	#THIS CHECK HAPPENS BECAUSE WHEN YOU RUN ./INSTALL THE SCRIPT IS MOVED TO
+	#/OPT/. INSTALL.SH ALSO INSTALL ALL DEPENDENCIES NEEDED AND CREATE THE
+	#SYMBOLICS LINKS
+	if os.getcwd() != "/opt/organon":
+		from time import sleep
+		
+		os.system("clear")
+		print(red + "\n\n\t >> OPS! <<\n\n" + default)
+		print(red + " [!] " + default + "Did you run install.sh?\n Please run \
+\'./install.sh\' to install dependencies and configure Organon")
+		sleep(3)
+
 	os.system("clear")
 	print(banner)
 	parser.print_help()
@@ -156,7 +170,7 @@ nome, versao, descricao FROM programas WHERE nome LIKE '%s'\"" % args.s)
 	# PRINT VERSION ############################################################
 
 	elif args.version:
-		print("\nVersion: ", __VERSION__)
+		print("Version: ", __VERSION__)
 		print("Last update: ", __DATE__)
 
 	# OPEN README FILE #########################################################

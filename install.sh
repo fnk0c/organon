@@ -22,7 +22,7 @@ ruby=`ruby --version`
 
 if [ ! -n "$ruby" ]
 then
-	echo -e "033[1m [!]\033[00m sudo apt-get install ruby"
+	echo -e "\033[1m [!]\033[00m sudo apt-get install ruby"
 	sudo apt-get install ruby
 else
 	echo -e "\033[31m [!]\033[00m ruby installed"
@@ -51,7 +51,7 @@ then
 	fi
 	#end Version check
 else
-	echo -e "033[31m [!]\033[00m sudo apt-get install python libmysqlclient-dev ruby-bundler"
+	echo -e "\033[31m [!]\033[00m sudo apt-get install python libmysqlclient-dev ruby-bundler"
 	sudo apt-get install python libmysqlclient-dev ruby-bundler
 fi
 #End Distro check
@@ -63,6 +63,11 @@ cd .. 	#Exits organon directory
 
 #Move organon to opt
 echo -e "\033[32m [+]\033[00m Moving organon to /opt"
+if [ -e "organon-master" ]
+then
+	mv organon-master organon
+fi
+
 sudo mv organon /opt/
 
 #Create Symbolic Links
