@@ -104,17 +104,33 @@ TOOLS
 		end
 		result.free
 	end
+
+	def remove(remove_command)
+		begin
+			result = $db.query(remove_command)
+			result.each do |row|
+				system "sudo apt-get remove {row[0]}"
+			end
+		rescue Interrupt
+			warn "Interrupted."
+			exit 1
+		end
+	end
 end # Ending Resp class
 	
 action = Resp.new
-	
+
 begin
-	if 'install' == ARGV[0]
+	case ARGV[0]
+	when "install" 
 		action.connect
 		action.install(ARGV[1])
-	elsif 'list' == ARGV[0]
+	when "list" 
 		action.connect
 		action.list(ARGV[1])
+	when "remove"
+		action.connect
+		action.remove(ARGV[1])
 	else
 		exit 1
 	end
