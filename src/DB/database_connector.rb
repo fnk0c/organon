@@ -109,7 +109,7 @@ TOOLS
 		begin
 			result = $db.query(remove_command)
 			result.each do |row|
-				system "sudo apt-get remove {row[0]}"
+				system "sudo apt-get remove #{row[0]}"
 			end
 		rescue Interrupt
 			warn "Interrupted."
