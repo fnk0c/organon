@@ -2,16 +2,21 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.1.8-r11"
-__DATE__	= "07/05/2015"
+__VERSION__	= "0.1.8-r2"
+__DATE__	= "20/05/2015"
+
 """
+	THIS SCRIPT IS PART OF ORGANON
+	(https://github.com/maximozsec/organon)
+	
+	AUTHORS:	FNKOC
+				MAXIMOZ
+	LICENSE:	GPL v2
+
 	[UPDATES]
 	
-	Implemented install/remove confirmation
-	Update code to look better
-	Added comments
-	Update update function
-	Check working path
+	--dependencies argument. Use it to remove the required dependencies of
+	certain tool.
 """
 
 import sys
@@ -62,6 +67,8 @@ parser.add_argument("-l", action = "store_true",
 	help = "List all packages available")
 parser.add_argument("--clean", action = "store_true",
 	help = "Clean Organon\'s cache")
+parser.add_argument("--dependencies", action = "store_true",
+	help = "remove dependencies (use with -r)")
 
 args = parser.parse_args()
 
@@ -77,23 +84,23 @@ download the latest version from https://github.com/maximozsec/organon")
 	else:
 		print(green + " [+] " + default + "Organon was successfully updated")
 
+#CHECK IF PATH IS /OPT/ORGANON
+#THIS CHECK HAPPENS BECAUSE WHEN YOU RUN ./INSTALL.SH THE SCRIPT IS MOVED TO
+#/OPT/. INSTALL.SH ALSO INSTALL ALL DEPENDENCIES NEEDED AND CREATE THE
+#SYMBOLICS LINKS
+if os.getcwd() != "/opt/organon":
+	from time import sleep
+		
+	os.system("clear")
+	print(red + "\n\n\t >> OPS! <<\n\n" + default)
+	print(red + " [!] " + default + "Did you run install.sh?\n Please run \
+\'./install.sh\' to install dependencies and configure Organon")
+	sleep(3)
+
 # CHECK IF ARGS ARE NULL #######################################################
 
 #IF NULL
 if len(sys.argv) == 1:
-	#CHECK IF PATH IS /OPT/ORGANON
-	#THIS CHECK HAPPENS BECAUSE WHEN YOU RUN ./INSTALL THE SCRIPT IS MOVED TO
-	#/OPT/. INSTALL.SH ALSO INSTALL ALL DEPENDENCIES NEEDED AND CREATE THE
-	#SYMBOLICS LINKS
-	if os.getcwd() != "/opt/organon":
-		from time import sleep
-		
-		os.system("clear")
-		print(red + "\n\n\t >> OPS! <<\n\n" + default)
-		print(red + " [!] " + default + "Did you run install.sh?\n Please run \
-\'./install.sh\' to install dependencies and configure Organon")
-		sleep(3)
-
 	os.system("clear")
 	print(banner)
 	parser.print_help()
@@ -117,9 +124,7 @@ installation? [Y/n] ").lower()
 		if choice != "y" and len(choice) != 0:
 			print(red + " [-] " + default + "Aborted")
 			sys.exit()
-
 		else:
-
 			# INSTALL PROCESS ##################################################
 			for package in args.i:
 				db = os.system("ruby src/DB/database_connector.rb install \"\
@@ -153,6 +158,9 @@ Source files can be found at .cache")
 			for package in args.r:
 				os.system("sudo rm -rf /opt/%s && sudo rm /usr/bin/%s" % \
 (package, package))
+				if args.dependencies == True:
+					os.system("ruby src/DB/database_connector.rb remove \"\
+SELECT dependencias FROM programas WHERE nome LIKE '%s'\"" % package)
 
 	# SEARCH FOR PACKAGE #######################################################
 

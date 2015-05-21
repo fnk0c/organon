@@ -68,6 +68,8 @@ then
 	mv organon-master organon
 fi
 
+#Move organon to opt
+echo -e "\033[32m [+]\033[00m Moving organon to /opt"
 sudo mv organon /opt/
 
 #Create Symbolic Links
