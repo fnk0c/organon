@@ -84,7 +84,7 @@ if [ ! -e /usr/local/share/man/man8 ]
 then
 	sudo mkdir /usr/local/share/man/man8
 fi
-sudo mv /opt/organon/organon.8 /usr/local/share/man/man8/
+sudo mv /usr/share/organon/organon.8 /usr/local/share/man/man8/
 
 #Change permission
 echo -e "\033[32m [+]\033[00m Changing permissions"
@@ -93,7 +93,7 @@ sudo chmod 644 /usr/local/share/man/man8/organon.8
 
 #Delete ruby file
 echo -e "\033[32m [+]\033[00m Creating .cache directory"
-mkdir /opt/organon/.cache
+mkdir /usr/share/organon/.cache
 
 echo -e '\033[32m [+]\033[00m Complete!'
 echo 'Type "organon" in order to use it'
