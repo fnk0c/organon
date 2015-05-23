@@ -89,7 +89,7 @@ download the latest version from https://github.com/maximozsec/organon")
 #THIS CHECK HAPPENS BECAUSE WHEN YOU RUN ./INSTALL.SH THE SCRIPT IS MOVED TO
 #/OPT/. INSTALL.SH ALSO INSTALL ALL DEPENDENCIES NEEDED AND CREATE THE
 #SYMBOLICS LINKS
-if os.getcwd() != "/opt/organon":
+if os.getcwd() != "/usr/share/organon":
 	from time import sleep
 		
 	os.system("clear")
