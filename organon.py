@@ -2,8 +2,8 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.1.8-r2"
-__DATE__	= "20/05/2015"
+__VERSION__	= "0.1.8-r3"
+__DATE__	= "24/05/2015"
 
 """
 	THIS SCRIPT IS PART OF ORGANON
@@ -17,6 +17,7 @@ __DATE__	= "20/05/2015"
 	
 	--dependencies argument. Use it to remove the required dependencies of
 	certain tool.
+	Tools are now installed at /usr/share
 """
 
 import sys
@@ -156,7 +157,7 @@ Source files can be found at .cache")
 
 			# REMOVE PROCESS ###################################################
 			for package in args.r:
-				os.system("sudo rm -rf /opt/%s && sudo rm /usr/bin/%s" % \
+				os.system("sudo rm -rf /usr/share/%s && sudo rm /usr/bin/%s" % \
 (package, package))
 				if args.dependencies == True:
 					os.system("ruby src/DB/database_connector.rb remove \"\

@@ -1,9 +1,9 @@
 #!/bin/bash
 
 #Check if already installed
-if [ -e /opt/organon ]
+if [ -e /usr/share/organon ]
 then
-	rm -rf /opt/organon
+	rm -rf /usr/share/organon
 fi
 
 if [ -e /usr/bin/organon ]
@@ -14,13 +14,13 @@ fi
 #end check
 
 #Move organon to opt
-mv .cache/organon /opt/
+mv .cache/organon /usr/share/
 
 echo \#\!/bin/bash >> /usr/bin/organon
-echo cd /opt/organon >> /usr/bin/organon
+echo cd /usr/share/organon >> /usr/bin/organon
 echo exec python organon.py \"\$\@\" >> /usr/bin/organon
 
 chmod +x /usr/bin/organon
 
 echo '[+] Complete!'
-echo 'Type \"organon\" in order to use it'
+echo 'Type organon in order to use it'

@@ -5,9 +5,9 @@
 #Project = https://github.com/maximozsec/organon
 
 #Check if is already installed
-if [ -e /opt/organon ]
+if [ -e /usr/share/organon ]
 then
-	sudo rm -rf /opt/organon
+	sudo rm -rf /usr/share/organon
 fi
 
 if [ -e /usr/bin/organon ]
@@ -34,7 +34,7 @@ distro=`cat /etc/issue | cut -d ' ' -f1`
 
 if [ "$distro" = "Debian" ]
 then
-	echo -e "033[1m [!]\033[00m sudo apt-get install python libmysqlclient-dev bundler"
+	echo -e "\033[1m [!]\033[00m sudo apt-get install python libmysqlclient-dev bundler"
 	sudo apt-get install python libmysqlclient-dev bundler
 
 elif [ "$distro" = "Ubuntu" ]
@@ -43,10 +43,10 @@ then
 	version=`lsb_release -r | cut -d: -f2`
 	if [ "$version" = "	14.10" ]
 	then
-		echo -e "033[1m [!]\033[00m sudo apt-get install python libmysqlclient-dev bundler"
+		echo -e "\033[1m [!]\033[00m sudo apt-get install python libmysqlclient-dev bundler"
 		sudo apt-get install python libmysqlclient-dev bundler
 	else
-		echo -e "033[31m [!]\033[00m sudo apt-get install python libmysqlclient-dev ruby-bundler"
+		echo -e "\033[31m [!]\033[00m sudo apt-get install python libmysqlclient-dev ruby-bundler"
 		sudo apt-get install python libmysqlclient-dev ruby-bundler
 	fi
 	#end Version check
@@ -70,12 +70,12 @@ fi
 
 #Move organon to opt
 echo -e "\033[32m [+]\033[00m Moving organon to /opt"
-sudo mv organon /opt/
+sudo mv organon /usr/share/
 
 #Create Symbolic Links
 echo -e "\033[32m [+]\033[00m Creating symbolic link"
 sudo sh -c "echo \#\!/bin/bash >> /usr/bin/organon"
-sudo sh -c "echo cd /opt/organon >> /usr/bin/organon"
+sudo sh -c "echo cd /usr/share/organon >> /usr/bin/organon"
 sudo sh -c "echo exec python organon.py \$\@\ >> /usr/bin/organon"
 
 #Move Man Page
