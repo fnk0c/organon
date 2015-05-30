@@ -2,8 +2,8 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.1.8-r3"
-__DATE__	= "24/05/2015"
+__VERSION__	= "0.1.8-r4"
+__DATE__	= "30/05/2015"
 
 """
 	THIS SCRIPT IS PART OF ORGANON
@@ -18,6 +18,7 @@ __DATE__	= "24/05/2015"
 	--dependencies argument. Use it to remove the required dependencies of
 	certain tool.
 	Tools are now installed at /usr/share
+	Improve remove feature
 """
 
 import sys
@@ -60,6 +61,10 @@ parser.add_argument("-i", nargs = "+",
 	help = "Install packages")
 parser.add_argument("-r", nargs = "+",
 	help = "Remove packages")
+parser.add_argument("--dependencies", action = "store_true",
+	help = "Remove dependencies (use with -r)")
+parser.add_argument("--config", action = "store_true",
+	help = "Remove configuration files (use with -r)")
 parser.add_argument("-u", action = "store_true",
 	help = "Update Organon")
 parser.add_argument("-s",
@@ -68,8 +73,6 @@ parser.add_argument("-l", action = "store_true",
 	help = "List all packages available")
 parser.add_argument("--clean", action = "store_true",
 	help = "Clean Organon\'s cache")
-parser.add_argument("--dependencies", action = "store_true",
-	help = "remove dependencies (use with -r)")
 
 args = parser.parse_args()
 
@@ -85,10 +88,10 @@ download the latest version from https://github.com/maximozsec/organon")
 	else:
 		print(green + " [+] " + default + "Organon was successfully updated")
 
-#CHECK IF PATH IS /OPT/ORGANON
+#CHECK IF PATH IS /USR/SHARE/ORGANON
 #THIS CHECK HAPPENS BECAUSE WHEN YOU RUN ./INSTALL.SH THE SCRIPT IS MOVED TO
-#/OPT/. INSTALL.SH ALSO INSTALL ALL DEPENDENCIES NEEDED AND CREATE THE
-#SYMBOLICS LINKS
+#/USR/SHARE/. INSTALL.SH ALSO INSTALL ALL DEPENDENCIES NEEDED, CREATE THE
+#SYMBOLICS LINKS AND .cache DIRECTORY
 if os.getcwd() != "/usr/share/organon":
 	from time import sleep
 		
@@ -98,16 +101,7 @@ if os.getcwd() != "/usr/share/organon":
 \'./install.sh\' to install dependencies and configure Organon")
 	sleep(3)
 
-# CHECK IF ARGS ARE NULL #######################################################
-
-#IF NULL
-if len(sys.argv) == 1:
-	os.system("clear")
-	print(banner)
-	parser.print_help()
-
-#IF NOT NULL
-else:
+def main():
 	# UPDATE ORGANON ###########################################################
 	if args.u:
 		update()
@@ -142,7 +136,6 @@ Source files can be found at .cache")
 	# REMOVE PACKAGE ###########################################################
 
 	elif args.r:
-
 		# PRINT PACKAGES TO BE REMOVE ##########################################
 		print("\n Packages (" + str(len(args.r)) + ") " + " ".join(args.r))
 		choice = raw_input(green + "\n [+]" + default + " Remove these packages\
@@ -154,12 +147,35 @@ Source files can be found at .cache")
 			sys.exit()
 
 		else:
-
 			# REMOVE PROCESS ###################################################
 			for package in args.r:
-				os.system("sudo rm -rf /usr/share/%s && sudo rm /usr/bin/%s" % \
-(package, package))
+				print(green + " [+] " + default + "Deleting source files...")
+				try:
+					if package in os.listdir("/usr/share"):
+						os.removedirs("sudo rm -rf /usr/share/%s" % package)
+					elif package in os.listdir("/usr/local/share"):
+						os.removedirs("sudo rm -rf /usr/local/share/%s" % \
+						package)
+					elif package in os.listdir("/opt"):
+						os.removedirs("sudo rm -rf /opt/%s" % package)
+				except OSError as e:
+					print(e)
+
+				print(green + " [+] " + default + "Deleting symlink...")
+				try:
+					if package in os.listdir("/usr/bin"):
+						os.removedirs("sudo rm -rf /usr/bin/%s" % package)
+					elif package in os.listdir("/usr/local/bin"):
+						os.removedirs("sudo rm -rf /usr/local/bin/%s" % package)
+				except OSError as e:
+					print(e)
+
+				if args.config == True:
+					print(green + " [+] " + default + "Removing configuration \
+files...")
+
 				if args.dependencies == True:
+					print(green + " [+] " + default + "Removing dependencies...")
 					os.system("ruby src/DB/database_connector.rb remove \"\
 SELECT dependencias FROM programas WHERE nome LIKE '%s'\"" % package)
 
@@ -191,3 +207,14 @@ nome, versao, descricao FROM programas WHERE nome LIKE '%s'\"" % args.s)
 
 	elif args.clean:
 		os.system("rm -rf .cache/*")
+
+if __name__ == "__main__":
+	#IF NULL
+	if len(sys.argv) == 1:
+		os.system("clear")
+		print(banner)
+		parser.print_help()
+
+	#IF NOT NULL
+	else:
+		main()
