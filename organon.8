@@ -1,12 +1,12 @@
 .\" Manpage for organon.
 .\" Contact franco.c.colombino@gmail.com to correct errors or typos.
-.TH man 8 "06 April 2015" "0.1.8" "organon man page"
+.TH man 8 "30 may 2015" "0.1.8-r4" "organon man page"
 
 .SH NAME
 Organon \- Package manager that focus on pentest tools
 
 .SH SYNOPSIS
-usage: organon [-h] [-a] [-v] [-i I [I ...]] [-r R [R ...]] [-u] [-s S] [-l] [--clean]
+usage: organon [-h] [-a] [-v] [-i I [I ...]] [-r R [R ...]] [--dependencies] [--config] [-u] [-s S] [-l] [--clean]
 
 .SH DESCRIPTION
 Organon program focuses on automating the download, installation and compilation of pentest tools from source
@@ -43,6 +43,10 @@ Install an specific package
 
 organon -r [PACKAGE]
 Remove an specific package
+       --dependencies
+       Remove package dependencies
+       --config
+       Remove package configuration files
 
 organon -a
 Shows README file
@@ -64,6 +68,8 @@ organon -s hydra
 organon -l
 
 organon -r nmap
+
+organon -r nmap --dependencies --config
 
 .SH AUTHORS
   * Fnkoc
