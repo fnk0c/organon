@@ -15,17 +15,26 @@ then
 	sudo rm /usr/bin/organon
 fi
 
+if [ -e /usr/local/share/man/man8/organon.8 ]
+then
+	sudo rm /usr/local/share/man/man8/organon.8
+fi
 #end check
+
+red="\033[31m"
+green="\033[32m"
+default="\033[00m"
+white="\033[1m"
 
 #Checking if ruby is installed
 ruby=`ruby --version`
 
 if [ ! -n "$ruby" ]
 then
-	echo -e "\033[1m [!]\033[00m sudo apt-get install ruby"
+	echo -e "$white [!]$default sudo apt-get install ruby"
 	sudo apt-get install ruby
 else
-	echo -e "\033[31m [!]\033[00m ruby installed"
+	echo -e "$white [!]$default ruby installed"
 fi
 #End Ruby check
 
@@ -34,7 +43,7 @@ distro=`cat /etc/issue | cut -d ' ' -f1`
 
 if [ "$distro" = "Debian" ]
 then
-	echo -e "\033[1m [!]\033[00m sudo apt-get install python libmysqlclient-dev bundler"
+	echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev bundler"
 	sudo apt-get install python libmysqlclient-dev bundler
 
 elif [ "$distro" = "Ubuntu" ]
@@ -43,43 +52,41 @@ then
 	version=`lsb_release -r | cut -d: -f2`
 	if [ "$version" = "	14.10" ]
 	then
-		echo -e "\033[1m [!]\033[00m sudo apt-get install python libmysqlclient-dev bundler"
+		echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev bundler"
 		sudo apt-get install python libmysqlclient-dev bundler
 	else
-		echo -e "\033[31m [!]\033[00m sudo apt-get install python libmysqlclient-dev ruby-bundler"
+		echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev ruby-bundler"
 		sudo apt-get install python libmysqlclient-dev ruby-bundler
 	fi
 	#end Version check
 else
-	echo -e "\033[31m [!]\033[00m sudo apt-get install python libmysqlclient-dev ruby-bundler"
+	echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev ruby-bundler"
 	sudo apt-get install python libmysqlclient-dev ruby-bundler
 fi
 #End Distro check
 
-echo -e "\033[32m [+]\033[00m Bundling ruby gems"
+echo -e "$green [+]$default Bundling ruby gems"
 bundle install
 
 cd .. 	#Exits organon directory
 
-#Move organon to opt
-echo -e "\033[32m [+]\033[00m Moving organon to /opt"
 if [ -e "organon-master" ]
 then
 	mv organon-master organon
 fi
 
 #Move organon to opt
-echo -e "\033[32m [+]\033[00m Moving organon to /opt"
+echo -e "$green [+]$default Moving organon to /usr/share"
 sudo mv organon /usr/share/
 
 #Create Symbolic Links
-echo -e "\033[32m [+]\033[00m Creating symbolic link"
+echo -e "$green [+]$default Creating symbolic link"
 sudo sh -c "echo \#\!/bin/bash >> /usr/bin/organon"
 sudo sh -c "echo cd /usr/share/organon >> /usr/bin/organon"
 sudo sh -c "echo exec python organon.py \$\@\ >> /usr/bin/organon"
 
 #Move Man Page
-echo -e "\033[32m [+]\033[00m Creating MAN page"
+echo -e "$green [+]$default Creating MAN page"
 if [ ! -e /usr/local/share/man/man8 ]
 then
 	sudo mkdir /usr/local/share/man/man8
@@ -87,13 +94,13 @@ fi
 sudo mv /usr/share/organon/organon.8 /usr/local/share/man/man8/
 
 #Change permission
-echo -e "\033[32m [+]\033[00m Changing permissions"
+echo -e "$green [+]$default Changing permissions"
 sudo chmod +x /usr/bin/organon
 sudo chmod 644 /usr/local/share/man/man8/organon.8
 
 #Delete ruby file
-echo -e "\033[32m [+]\033[00m Creating .cache directory"
+echo -e "$green [+]$default Creating .cache directory"
 mkdir /usr/share/organon/.cache
 
-echo -e '\033[32m [+]\033[00m Complete!'
-echo 'Type "organon" in order to use it'
+echo -e "$green [+]$white Complete!"
+echo "Type "organon" in order to use it $default"
