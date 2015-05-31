@@ -152,27 +152,28 @@ Source files can be found at .cache")
 				print(green + " [+] " + default + "Deleting source files...")
 				try:
 					if package in os.listdir("/usr/share"):
-						os.removedirs("sudo rm -rf /usr/share/%s" % package)
+						os.system("sudo rm -rf /usr/share/%s" % package)
 					elif package in os.listdir("/usr/local/share"):
-						os.removedirs("sudo rm -rf /usr/local/share/%s" % \
+						os.system("sudo rm -rf /usr/local/share/%s" % \
 						package)
 					elif package in os.listdir("/opt"):
-						os.removedirs("sudo rm -rf /opt/%s" % package)
-				except OSError as e:
+						os.system("sudo rm -rf /opt/%s" % package)
+				except Exception as e:
 					print(e)
 
 				print(green + " [+] " + default + "Deleting symlink...")
 				try:
 					if package in os.listdir("/usr/bin"):
-						os.removedirs("sudo rm -rf /usr/bin/%s" % package)
+						os.system("sudo rm -rf /usr/bin/%s" % package)
 					elif package in os.listdir("/usr/local/bin"):
-						os.removedirs("sudo rm -rf /usr/local/bin/%s" % package)
-				except OSError as e:
+						os.system("sudo rm -rf /usr/local/bin/%s" % package)
+				except Exception as e:
 					print(e)
 
 				if args.config == True:
 					print(green + " [+] " + default + "Removing configuration \
 files...")
+					os.system("rm -rf /etc/%s" % package)
 
 				if args.dependencies == True:
 					print(green + " [+] " + default + "Removing dependencies...")
