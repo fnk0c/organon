@@ -9,8 +9,8 @@ Tool developed for Debian systems (apt)
 
 Authors:
 --------
-* Fnkoc
-* Maximoz
+* [Fnkoc](https://github.com/fnk0c)
+* [Maximoz](https://github.com/maximozsec)
 
 Requirements
 -------------
@@ -31,8 +31,9 @@ Tested on:
 * Ubuntu 14.04 x86_64
 * Ubuntu 14.10 x86_64
 * Debian 7.8 Wheezy
+* Debian 8 Squeezy
 * Elementary OS Luna
-* Linux Mint 17
+* Linux Mint 17.1
 
 Screenshot
 ----------
@@ -49,10 +50,13 @@ Help
 	* Update Organon  
 	        organon -u
 	* Remove tool
-	        organon -r <package> <package>
+	        organon -r <package> <package>  
+	* Remove tool and its dependencies and configuration files
+	        organon -r <package> <package> --dependencies --config  
 	* Clean .cache directory
 	        organon --clean 
-
+	* Current Version
+	        organon -v
 
 BUGS
 ----
@@ -60,6 +64,10 @@ Since it's still on development phase bugs are expected. Please, **report to us!
 * fb.com/fnkoc.a
 * fb.com/maxsecur1ty
 * fb.com/cienciahacker
+
+Be Part of development
+----------------------
+Send us a message on facebook
 
 About current version
 ---------------------

@@ -103,4 +103,4 @@ echo -e "$green [+]$default Creating .cache directory"
 mkdir /usr/share/organon/.cache
 
 echo -e "$green [+]$white Complete!"
-echo "Type "organon" in order to use it $default"
+echo -e "Type "organon" in order to use it $default"

@@ -97,8 +97,8 @@ if os.getcwd() != "/usr/share/organon":
 		
 	os.system("clear")
 	print(red + "\n\n\t >> OPS! <<\n\n" + default)
-	print(red + " [!] " + default + "Did you run install.sh?\n Please run \
-\'./install.sh\' to install dependencies and configure Organon")
+	print(red + " [!] " + white + "Did you run install.sh?\n Please run \
+\'./install.sh\' to install dependencies and configure Organon" + default)
 	sleep(3)
 
 def main():
@@ -171,9 +171,13 @@ Source files can be found at .cache")
 					print(e)
 
 				if args.config == True:
-					print(green + " [+] " + default + "Removing configuration \
-files...")
-					os.system("rm -rf /etc/%s" % package)
+					if package in os.listdir("/etc/"):
+						print(green + " [+] " + default + "Removing \
+configuration files...")
+						os.system("rm -rf /etc/%s" % package)
+					else:
+						print(red + " [!] " + default + "No configuration file \
+found")
 
 				if args.dependencies == True:
 					print(green + " [+] " + default + "Removing dependencies...")
