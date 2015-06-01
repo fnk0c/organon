@@ -31,7 +31,7 @@ Tested on:
 * Ubuntu 14.04 x86_64
 * Ubuntu 14.10 x86_64
 * Debian 7.8 Wheezy
-* Debian 8 Squeezy
+* Debian 8 Jessie
 * Elementary OS Luna
 * Linux Mint 17.1
 

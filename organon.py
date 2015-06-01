@@ -2,8 +2,8 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.1.8-r4"
-__DATE__	= "30/05/2015"
+__VERSION__	= "0.1.8-r5"
+__DATE__	= "31/05/2015"
 
 """
 	THIS SCRIPT IS PART OF ORGANON
@@ -19,6 +19,7 @@ __DATE__	= "30/05/2015"
 	certain tool.
 	Tools are now installed at /usr/share
 	Improve remove feature
+	Check if tool already installed
 """
 
 import sys
@@ -121,16 +122,25 @@ installation? [Y/n] ").lower()
 			sys.exit()
 		else:
 			# INSTALL PROCESS ##################################################
+			
 			for package in args.i:
-				db = os.system("ruby src/DB/database_connector.rb install \"\
-SELECT url, dependencias, nome FROM programas WHERE nome LIKE '%s'\"" % package)
+				# CHECK IF ALREADY INSTALLED ###################################
+				if package in (os.listdir("/usr/share") or os.listdir("/usr/\
+local/share") or os.listdir("/opt")):
+					print(red + " [!] " + default + "%s already installed" % \
+package)
 
-				if db == 0:
-					install = os.system("python src/installer.py %s" % package)
-				else: print(red + "[-]" + default + "Something went wrong")
+				else:
+					db = os.system("ruby src/DB/database_connector.rb install \
+\"SELECT url, dependencias, nome FROM debian WHERE nome LIKE '%s'\"" % \
+package)
+					if db == 0:
+						install = os.system("python src/installer.py %s" % \
+package)
+					else: print(red + "[-]" + default + "Something went wrong")
 
-				# CHECK IF SUCCESS #############################################
-				if db == 0 and install == 0: print(" [+] Success!\n \
+					# CHECK IF SUCCESS #########################################
+					if db == 0 and install == 0: print(" [+] Success!\n \
 Source files can be found at .cache")
 
 	# REMOVE PACKAGE ###########################################################
@@ -158,6 +168,10 @@ Source files can be found at .cache")
 						package)
 					elif package in os.listdir("/opt"):
 						os.system("sudo rm -rf /opt/%s" % package)
+					else:
+						print(red + " [-] " + default + "%s doesn\'t seem to be\
+ installed" % package)
+						break
 				except Exception as e:
 					print(e)
 
@@ -174,7 +188,7 @@ Source files can be found at .cache")
 					if package in os.listdir("/etc/"):
 						print(green + " [+] " + default + "Removing \
 configuration files...")
-						os.system("rm -rf /etc/%s" % package)
+						os.system("sudo rm -rf /etc/%s" % package)
 					else:
 						print(red + " [!] " + default + "No configuration file \
 found")
@@ -182,20 +196,20 @@ found")
 				if args.dependencies == True:
 					print(green + " [+] " + default + "Removing dependencies...")
 					os.system("ruby src/DB/database_connector.rb remove \"\
-SELECT dependencias FROM programas WHERE nome LIKE '%s'\"" % package)
+SELECT dependencias FROM debian WHERE nome LIKE '%s'\"" % package)
 
 	# SEARCH FOR PACKAGE #######################################################
 
 	elif args.s:
 		print(args.s)
 		result = os.system("ruby src/DB/database_connector.rb list \"SELECT \
-nome, versao, descricao FROM programas WHERE nome LIKE '%s'\"" % args.s)
+nome, versao, descricao FROM debian WHERE nome LIKE '%s'\"" % args.s)
 
 	# LIST ALL PACKAGES ########################################################
 
 	elif args.l:
 		os.system("ruby src/DB/database_connector.rb list \"SELECT nome, versao\
-, descricao FROM programas\" | more")
+, descricao FROM debian\" | more")
 
 	# PRINT VERSION ############################################################
 
