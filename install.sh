@@ -39,30 +39,37 @@ fi
 #End Ruby check
 
 #Check Distro
-distro=`cat /etc/issue | cut -d ' ' -f1`
-
-if [ "$distro" = "Debian" ]
+if [ -e /etc/apt ]
 then
-	echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev bundler"
-	sudo apt-get install python libmysqlclient-dev bundler
+	distro=`cat /etc/issue | cut -d ' ' -f1`
 
-elif [ "$distro" = "Ubuntu" ]
-then
-	#Check Ubuntu Version
-	version=`lsb_release -r | cut -d: -f2`
-	if [ "$version" = "	14.10" ]
+	if [ "$distro" = "Debian" ]
 	then
 		echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev bundler"
 		sudo apt-get install python libmysqlclient-dev bundler
+
+	elif [ "$distro" = "Ubuntu" ]
+	then
+		#Check Ubuntu Version
+		version=`lsb_release -r | cut -d: -f2`
+		if [ "$version" = "	14.10" ]
+		then
+			echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev bundler"
+			sudo apt-get install python libmysqlclient-dev bundler
+		else
+			echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev ruby-bundler"
+			sudo apt-get install python libmysqlclient-dev ruby-bundler
+		fi
+		#end Version check
 	else
 		echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev ruby-bundler"
 		sudo apt-get install python libmysqlclient-dev ruby-bundler
 	fi
-	#end Version check
-else
-	echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev ruby-bundler"
-	sudo apt-get install python libmysqlclient-dev ruby-bundler
+elif [ -e /etc/pacman.d ]
+then
+	sudo pacman -S python ruby 
 fi
+
 #End Distro check
 
 echo -e "$green [+]$default Bundling ruby gems"
@@ -108,10 +115,11 @@ if [ -e /etc/apt ]
 then
 	echo -e "$white[+] Debian based system$default"
 elif
-	[ -e /etc/arch ]
+	[ -e /etc/pacman.d ]
 	echo -e "$white[+] Arch based system$default"
 	sed -i "s/debian/arch/g" /usr/share/organon/organon.py
 	sed -i "s/debian/arch/g" /usr/share/organon/src/DB/database_connector.rb
+	sed -i "s/apt-get install/pacman -S/g" /usr/share/organon/src/DB/database_connector.rb
 fi
 
 echo -e "$green [+]$white Complete!"
