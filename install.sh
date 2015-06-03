@@ -67,13 +67,18 @@ then
 	fi
 elif [ -e /etc/pacman.d ]
 then
-	sudo pacman -S python ruby 
+	sudo pacman -S python ruby libmariadbclient
 fi
 
 #End Distro check
 
 echo -e "$green [+]$default Bundling ruby gems"
-bundle install
+if [ -e /etc/apt ]
+then
+	bundle install
+elif [ -e /etc/pacman.d ]
+then
+	gem install mysql nokogiri colorize
 
 cd .. 	#Exits organon directory
 
@@ -114,12 +119,13 @@ echo -e "$green [+]$default Configuring organon to your system"
 if [ -e /etc/apt ]
 then
 	echo -e "$white[+] Debian based system$default"
-elif
-	[ -e /etc/pacman.d ]
+elif [ -e /etc/pacman.d ]
+then
 	echo -e "$white[+] Arch based system$default"
 	sed -i "s/debian/arch/g" /usr/share/organon/organon.py
 	sed -i "s/debian/arch/g" /usr/share/organon/src/DB/database_connector.rb
 	sed -i "s/apt-get install/pacman -S/g" /usr/share/organon/src/DB/database_connector.rb
+	sed -i "s/apt-get remove/pacman -R/g" /usr/share/organon/src/DB/database_connector.rb
 fi
 
 echo -e "$green [+]$white Complete!"
