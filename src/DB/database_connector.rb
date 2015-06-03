@@ -64,7 +64,7 @@ class Resp
 				end
 				
 				# Downloading the tool configuration file
-				pkgconf = "wget http://#{$server}:1000/organon/pkgconfig/#{row[2]}.conf"
+				pkgconf = "wget http://#{$server}:1000/organon/pkgconfig/debian/#{row[2]}.conf"
 				puts pkgconf
 				system pkgconf
 

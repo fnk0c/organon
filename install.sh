@@ -98,9 +98,21 @@ echo -e "$green [+]$default Changing permissions"
 sudo chmod +x /usr/bin/organon
 sudo chmod 644 /usr/local/share/man/man8/organon.8
 
-#Delete ruby file
+#Create .cache
 echo -e "$green [+]$default Creating .cache directory"
 mkdir /usr/share/organon/.cache
+
+#Configuring organon based on your distro
+echo -e "$green [+]$default Configuring organon to your system"
+if [ -e /etc/apt ]
+then
+	echo -e "$white[+] Debian based system$default"
+elif
+	[ -e /etc/arch ]
+	echo -e "$white[+] Arch based system$default"
+	sed -i "s/debian/arch/g" /usr/share/organon/organon.py
+	sed -i "s/debian/arch/g" /usr/share/organon/src/DB/database_connector.rb
+fi
 
 echo -e "$green [+]$white Complete!"
 echo -e "Type "organon" in order to use it $default"
