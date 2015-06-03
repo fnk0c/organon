@@ -79,6 +79,7 @@ then
 elif [ -e /etc/pacman.d ]
 then
 	gem install mysql nokogiri colorize
+fi
 
 cd .. 	#Exits organon directory
 
