@@ -2,7 +2,7 @@
 
 #This script makes part of Organon Project
 #https://github.com/maximozsec/organon
-#LAST UPDATE = 31/05/15
+#LAST UPDATE = 03/06/15
 
 
 __AUTHOR__ 	= "Fnkoc"
@@ -89,7 +89,7 @@ if install == True:
 		lang = "python3"
 		exe = ".py"
 	elif "python" in a:
-		lang = "python"
+		lang = "python2"
 		exe = ".py"
 	elif "perl" in a:
 		lang = "perl"

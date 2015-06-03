@@ -18,7 +18,7 @@ Requirements
 2. Ruby >=1.9
 3. [**bundler**](http://bundler.io/)
 4. **Gems**: [mysql](https://rubygems.org/gems/mysql), [colorize](https://rubygems.org/gems/colorize), [nokogiri](https://rubygems.org/gems/nokogiri)
-5. GNU/Linux system based on Debian
+5. GNU/Linux system based on Debian and Arch
 
 Install
 -------
@@ -34,6 +34,7 @@ Tested on:
 * Debian 8 Jessie
 * Elementary OS Luna
 * Linux Mint 17.1
+* Manjaro (Unstable)
 
 Screenshot
 ----------
