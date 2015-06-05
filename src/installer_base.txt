@@ -1,19 +1,6 @@
 #!/bin/bash
 
-#Check if already installed
-if [ -e /usr/share/organon ]
-then
-	rm -rf /usr/share/organon
-fi
-
-if [ -e /usr/bin/organon ]
-then
-	rm /usr/bin/organon
-fi
-
-#end check
-
-#Move organon to opt
+#Move organon to /usr/share
 mv .cache/organon /usr/share/
 
 echo \#\!/bin/bash >> /usr/bin/organon

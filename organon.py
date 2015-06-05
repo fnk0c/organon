@@ -89,18 +89,28 @@ download the latest version from https://github.com/maximozsec/organon")
 	else:
 		print(green + " [+] " + default + "Organon was successfully updated")
 
-#CHECK IF PATH IS /USR/SHARE/ORGANON
-#THIS CHECK HAPPENS BECAUSE WHEN YOU RUN ./INSTALL.SH THE SCRIPT IS MOVED TO
-#/USR/SHARE/. INSTALL.SH ALSO INSTALL ALL DEPENDENCIES NEEDED, CREATE THE
-#SYMBOLICS LINKS AND .cache DIRECTORY
-if os.getcwd() != "/usr/share/organon":
-	from time import sleep
+def check():
+	#CHECK IF PATH IS /USR/SHARE/ORGANON
+	#THIS CHECK HAPPENS BECAUSE WHEN YOU RUN ./INSTALL.SH THE SCRIPT IS MOVED TO
+	#/USR/SHARE/. INSTALL.SH ALSO INSTALL ALL DEPENDENCIES NEEDED, CREATE THE
+	#SYMBOLICS LINKS AND .cache DIRECTORY
+	if os.getcwd() != "/usr/share/organon":
+		from time import sleep
 		
-	os.system("clear")
-	print(red + "\n\n\t >> OPS! <<\n\n" + default)
-	print(red + " [!] " + white + "Did you run install.sh?\n Please run \
+		os.system("clear")
+		print(red + "\n\n\t >> OPS! <<\n\n" + default)
+		print(red + " [!] " + white + "Did you run install.sh?\n Please run \
 \'./install.sh\' to install dependencies and configure Organon" + default)
-	sleep(3)
+		sleep(3)
+
+	if os.getuid() == 0:
+		print(red + "\n [WARNING] " + default + "You're not supposed to run \
+Organon as root")
+		choice = raw_input(" %s[!]%s Processed? [y/N] " %(red, default)).lower()
+		if choice == "y":
+			pass
+		else:
+			sys.exit()
 
 def main():
 	# UPDATE ORGANON ###########################################################
@@ -236,4 +246,5 @@ if __name__ == "__main__":
 
 	#IF NOT NULL
 	else:
+		check()
 		main()

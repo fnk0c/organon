@@ -3,6 +3,28 @@
 #This script belongs to organons project
 #Author = Fnkoc
 #Project = https://github.com/maximozsec/organon
+#last update 04/06/2015
+
+#Colors
+red="\033[31m"
+green="\033[32m"
+default="\033[00m"
+white="\033[1m"
+
+#Check user id
+id=`id -u`
+
+if [ $id == 0 ]
+then
+	echo -e "$red[!]$default$white You're not supposed to run this script as root$default"
+	read -p "[!] Continue? [y/N] " choice
+	
+	if [ $choice != "y" ]
+	then
+		exit
+	fi
+fi
+#end check user id
 
 #Check if is already installed
 if [ -e /usr/share/organon ]
@@ -20,11 +42,6 @@ then
 	sudo rm /usr/local/share/man/man8/organon.8
 fi
 #end check
-
-red="\033[31m"
-green="\033[32m"
-default="\033[00m"
-white="\033[1m"
 
 #Checking if ruby is installed
 ruby=`ruby --version`
