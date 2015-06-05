@@ -77,7 +77,7 @@ then
 
 elif [ -e /etc/pacman.d ]
 then
-	sudo pacman -S python ruby libmariadbclient
+	sudo pacman -S python ruby libmariadbclient --needed
 fi
 
 #End Distro check
@@ -87,6 +87,8 @@ if [ -e /etc/pacman.d ]
 then
 	wget https://aur.archlinux.org/packages/ru/ruby-bundler/PKGBUILD
 	makepkg PKGBUILD
+	sudo pacman -U ruby-bundler-*.pkg.tar.xg
+	rm -rf pkg PKGBUILD ruby-bundler-*.pkg.tar.xg bundler-*.gem
 fi
 
 bundle install
