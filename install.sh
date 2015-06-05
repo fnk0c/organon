@@ -85,7 +85,8 @@ fi
 echo -e "$green [+]$default Bundling ruby gems"
 if [ -e /etc/pacman.d ]
 then
-	gem install bundle
+	wget https://aur.archlinux.org/packages/ru/ruby-bundler/PKGBUILD
+	makepkg PKGBUILD
 fi
 
 bundle install
