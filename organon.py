@@ -2,8 +2,8 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.1.8-r5"
-__DATE__	= "31/05/2015"
+__VERSION__	= "0.1.8-r6"
+__DATE__	= "04/06/2015"
 
 """
 	THIS SCRIPT IS PART OF ORGANON
@@ -15,11 +15,7 @@ __DATE__	= "31/05/2015"
 
 	[UPDATES]
 	
-	--dependencies argument. Use it to remove the required dependencies of
-	certain tool.
-	Tools are now installed at /usr/share
-	Improve remove feature
-	Check if tool already installed
+	Check user permission
 """
 
 import sys

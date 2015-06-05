@@ -21,6 +21,7 @@ then
 	
 	if [ $choice != "y" ]
 	then
+		echo -e "$green [-] User aborted$default"
 		exit
 	fi
 fi
@@ -46,15 +47,6 @@ fi
 #Checking if ruby is installed
 ruby=`ruby --version`
 
-if [ ! -n "$ruby" ]
-then
-	echo -e "$white [!]$default sudo apt-get install ruby"
-	sudo apt-get install ruby
-else
-	echo -e "$white [!]$default ruby installed"
-fi
-#End Ruby check
-
 #Check Distro
 if [ -e /etc/apt ]
 then
@@ -63,7 +55,7 @@ then
 	if [ "$distro" = "Debian" ]
 	then
 		echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev bundler"
-		sudo apt-get install python libmysqlclient-dev bundler
+		sudo apt-get install python ruby libmysqlclient-dev bundler
 
 	elif [ "$distro" = "Ubuntu" ]
 	then
@@ -72,16 +64,17 @@ then
 		if [ "$version" = "	14.10" ]
 		then
 			echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev bundler"
-			sudo apt-get install python libmysqlclient-dev bundler
+			sudo apt-get install python ruby libmysqlclient-dev bundler
 		else
 			echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev ruby-bundler"
-			sudo apt-get install python libmysqlclient-dev ruby-bundler
+			sudo apt-get install python ruby libmysqlclient-dev ruby-bundler
 		fi
 		#end Version check
 	else
 		echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev ruby-bundler"
-		sudo apt-get install python libmysqlclient-dev ruby-bundler
+		sudo apt-get install python ruby libmysqlclient-dev ruby-bundler
 	fi
+
 elif [ -e /etc/pacman.d ]
 then
 	sudo pacman -S python ruby libmariadbclient
@@ -90,13 +83,12 @@ fi
 #End Distro check
 
 echo -e "$green [+]$default Bundling ruby gems"
-if [ -e /etc/apt ]
+if [ -e /etc/pacman.d ]
 then
-	bundle install
-elif [ -e /etc/pacman.d ]
-then
-	gem install mysql nokogiri colorize
+	gem install bundle
 fi
+
+bundle install
 
 cd .. 	#Exits organon directory
 
@@ -136,10 +128,10 @@ mkdir /usr/share/organon/.cache
 echo -e "$green [+]$default Configuring organon to your system"
 if [ -e /etc/apt ]
 then
-	echo -e "$white[+] Debian based system$default"
+	echo -e "$white [+] Debian based system$default"
 elif [ -e /etc/pacman.d ]
 then
-	echo -e "$white[+] Arch based system$default"
+	echo -e "$white [+] Arch based system$default"
 	sed -i "s/debian/arch/g" /usr/share/organon/organon.py
 	sed -i "s/debian/arch/g" /usr/share/organon/src/DB/database_connector.rb
 	sed -i "s/apt-get install/pacman -S/g" /usr/share/organon/src/DB/database_connector.rb
