@@ -87,8 +87,8 @@ if [ -e /etc/pacman.d ]
 then
 	wget https://aur.archlinux.org/packages/ru/ruby-bundler/PKGBUILD
 	makepkg PKGBUILD
-	sudo pacman -U ruby-bundler-*.pkg.tar.xg
-	rm -rf pkg PKGBUILD ruby-bundler-*.pkg.tar.xg bundler-*.gem
+	sudo pacman -U ruby-bundler-*.pkg.tar.xz
+	rm -rf pkg PKGBUILD ruby-bundler-*.pkg.tar.xz bundler-*.gem
 fi
 
 bundle install
