@@ -132,11 +132,12 @@ installation? [Y/n] ").lower()
 			
 			for package in args.i:
 				# CHECK IF ALREADY INSTALLED ###################################
-				if package in os.listdir("/usr/share") or os.listdir("/usr/\
-local/share") or os.listdir("/opt"):
+				if package in os.listdir("/usr/bin"):
 					print(red + " [!] " + default + "%s already installed" % \
 package)
-
+				elif package in os.listdir("/usr/local/bin"):
+					print(red + " [!] " + default + "%s already installed" % \
+package)
 				else:
 					db = os.system("ruby src/DB/database_connector.rb install \
 \"SELECT url, dependencias, nome FROM debian WHERE nome LIKE '%s'\"" % \
