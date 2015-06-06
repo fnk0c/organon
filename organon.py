@@ -3,7 +3,7 @@
 
 __AUTHOR__	= "Fnkoc"
 __VERSION__	= "0.1.8-r6"
-__DATE__	= "04/06/2015"
+__DATE__	= "06/06/2015"
 
 """
 	THIS SCRIPT IS PART OF ORGANON
@@ -16,6 +16,7 @@ __DATE__	= "04/06/2015"
 	[UPDATES]
 	
 	Check user permission
+	database_connector.rb > Improve git clone for faster clone
 """
 
 import sys
@@ -81,7 +82,7 @@ def update():
 
 	if up != 0:
 		print(red + " [-] " +default + "Couldn\'t retrieve update. Please \
-download the latest version from https://github.com/maximozsec/organon")
+download the latest version from https://github.com/fnk0c/organon")
 	else:
 		print(green + " [+] " + default + "Organon was successfully updated")
 
@@ -131,8 +132,8 @@ installation? [Y/n] ").lower()
 			
 			for package in args.i:
 				# CHECK IF ALREADY INSTALLED ###################################
-				if package in (os.listdir("/usr/share") or os.listdir("/usr/\
-local/share") or os.listdir("/opt")):
+				if package in os.listdir("/usr/share") or os.listdir("/usr/\
+local/share") or os.listdir("/opt"):
 					print(red + " [!] " + default + "%s already installed" % \
 package)
 

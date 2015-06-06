@@ -54,7 +54,7 @@ class Resp
 			
 				# Checking if the tool is located on github or belongs to another source
 				if row[0].include?("https://github.com/")
-						get = "cd .cache && git clone #{row[0]}" # Update the github tool
+						get = "cd .cache && git clone --depth 1 #{row[0]}" # Update the github tool
 						puts " [" + "!".red + "] Downloading source\n #{get}"
 						system get
 				else				       	    			
