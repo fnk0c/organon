@@ -5,12 +5,12 @@ This program focuses on automating the download, installation and compilation of
 # ATTENTION!
 
 This tool is in development phase and **may does not work properly**.
-Tool developed for Debian systems (apt)
+Tool developed for Linux systems (APT and Pacman)
 
 Authors:
 --------
-* [Fnkoc](https://github.com/fnk0c)
-* [Maximoz](https://github.com/maximozsec)
+* [Franco Colombino (Fnkoc)](https://github.com/fnk0c)
+* [Ygor Máximo (Maximoz)](https://github.com/maximozsec)
 
 Requirements
 -------------
@@ -26,6 +26,8 @@ Install
 	cd organon
 	./install.sh
 
+[With screenshot](http://organon.ddns.net/install)
+
 Tested on:
 ----------
 * Ubuntu 14.04 x86_64
@@ -38,7 +40,7 @@ Tested on:
 
 Screenshot
 ----------
-![Screenshot](https://i.imgur.com/C4BvEh3.png)
+![Screenshot](https://i.imgur.com/mAKhkRC.png)
 
 Help
 ----
@@ -72,6 +74,27 @@ Send us a message on facebook
 
 About current version
 ---------------------
+
+#### `v0.1.8-r6`
+- **Goal**
+ - Install tools and its dependences from a MySQL database
+
+- **MySQL**
+ - Server version: 5.5.41-0+wheezy1 (Debian)
+
+ - Ruby code to connect to the database
+
+ - Python script to execute the SQL commands and run the program
+
+- **PKGCONFIG**
+ - The installation scripts were replaced by pkgconfig files, similar to pacman pkgbuild. These files are hosted on the organon server.
+
+- **Arch Linux support**
+ - Organon now supports Arch and Debian linux  
+
+- **Improvements on Install and Remove functions**
+ - * Check if already installed
+ - * When uninstalling, Organon check for the tool and diferent directorys (/usr/share || /usr/local/share || /opt)
 
 #### `v0.1.8-beta`
 
