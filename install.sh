@@ -44,32 +44,30 @@ then
 fi
 #end check
 
-#Checking if ruby is installed
-ruby=`ruby --version`
-
 #Check Distro
 if [ -e /etc/apt ]
 then
 	distro=`cat /etc/issue | cut -d ' ' -f1`
 
-	if [ "$distro" = "Debian" ]
+	if [ "$distro" = "Ubuntu" ]
+	then
+		#Check Ubuntu Version
+		version=`cat /etc/*release | grep -i version_id | cut -d '"' -f 2`
+		if [ "$version" = "	12.04" ] || [ "$version" = " 14.04" ]
+		then
+			echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev ruby-bundler"
+			sudo apt-get install python ruby libmysqlclient-dev ruby-bundler
+		else
+			echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev bundler"
+			sudo apt-get install python ruby libmysqlclient-dev bundler
+		fi
+		#end Ubuntu check
+	
+	elif [ "$distro" = "Debian" ]
 	then
 		echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev bundler"
 		sudo apt-get install python ruby libmysqlclient-dev bundler
 
-	elif [ "$distro" = "Ubuntu" ]
-	then
-		#Check Ubuntu Version
-		version=`lsb_release -r | cut -d: -f2`
-		if [ "$version" = "	14.10" ]
-		then
-			echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev bundler"
-			sudo apt-get install python ruby libmysqlclient-dev bundler
-		else
-			echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev ruby-bundler"
-			sudo apt-get install python ruby libmysqlclient-dev ruby-bundler
-		fi
-		#end Version check
 	else
 		echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev ruby-bundler"
 		sudo apt-get install python ruby libmysqlclient-dev ruby-bundler
@@ -85,10 +83,16 @@ fi
 echo -e "$green [+]$default Bundling ruby gems"
 if [ -e /etc/pacman.d ]
 then
-	wget https://aur.archlinux.org/packages/ru/ruby-bundler/PKGBUILD
-	makepkg PKGBUILD
-	sudo pacman -U ruby-bundler-*.pkg.tar.xz
-	rm -rf pkg PKGBUILD ruby-bundler-*.pkg.tar.xz bundler-*.gem
+	if [ 'pacman -Q | grep ruby-bundler' = 1 ]
+	then
+		wget https://aur.archlinux.org/packages/ru/ruby-bundler/PKGBUILD
+		makepkg PKGBUILD
+		sudo pacman -U ruby-bundler-*.pkg.tar.xz
+		rm -rf pkg PKGBUILD ruby-bundler-*.pkg.tar.xz bundler-*.gem
+		echo -e "$green [+]$default Bundler installed"
+	else
+		echo -e "$green [+]$default Bundler installed"
+	fi
 fi
 
 bundle install
@@ -97,6 +101,10 @@ cd .. 	#Exits organon directory
 
 if [ -e "organon-master" ]
 then
+	echo -e "$red [!]$default Aparently you haven't clone the repository."
+	echo "This way you will not be able to retrive updates to Organon"
+	echo "use $green git clone https://github.com/fnk0c/organon$default to clone"
+	sleep 5
 	mv organon-master organon
 fi
 
