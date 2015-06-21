@@ -1,5 +1,5 @@
-#Arquivo para conexão com banco de dados
+#Arquivo para conexão com banco de dados  
 
-**linguagem**: Ruby
-**Módulos**: Mysql
-**Autor**: Maximoz
+**linguagem**: Ruby  
+**Módulos**: Mysql  
+**Autor**: Maximoz  

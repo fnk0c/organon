@@ -3,15 +3,22 @@
 
 __AUTHOR__	= "Fnkoc"
 __VERSION__	= "0.1.8-r6"
-__DATE__	= "06/06/2015"
+__DATE__	= "21/06/2015"
 
 """
-	THIS SCRIPT IS PART OF ORGANON
-	(https://github.com/maximozsec/organon)
-	
-	AUTHORS:	FNKOC
-				MAXIMOZ
-	LICENSE:	GPL v2
+	Copyright (C) 2015  Franco Colombino & Ygor Máximo
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+	(https://github.com/fnk0c/organon)
 
 	[UPDATES]
 	

@@ -5,6 +5,18 @@
 #Project = https://github.com/maximozsec/organon
 #last update 04/06/2015
 
+#	 Copyright (C) 2015  Franco Colombino & Ygor Máximo
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation; either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+
 #Colors
 red="\033[31m"
 green="\033[32m"
@@ -102,13 +114,13 @@ cd .. 	#Exits organon directory
 if [ -e "organon-master" ]
 then
 	echo -e "$red [!]$default Aparently you haven't clone the repository."
-	echo "This way you will not be able to retrive updates to Organon"
-	echo "use $green git clone https://github.com/fnk0c/organon$default to clone"
+	echo -e "This way you will not be able to retrive updates to Organon"
+	echo -e "use$green git clone https://github.com/fnk0c/organon$default to clone"
 	sleep 5
 	mv organon-master organon
 fi
 
-#Move organon to opt
+#Move organon to /usr/share
 echo -e "$green [+]$default Moving organon to /usr/share"
 sudo mv organon /usr/share/
 

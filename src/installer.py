@@ -1,9 +1,22 @@
 #!/usr/bin/python
 
 #This script makes part of Organon Project
-#https://github.com/maximozsec/organon
+#https://github.com/fnk0c/organon
 #LAST UPDATE = 03/06/15
 
+"""
+	Copyright (C) 2015  Franco Colombino & Ygor Máximo
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+"""
 
 __AUTHOR__ 	= "Fnkoc"
 __DATE__	= "Mimi\'s day 2015"		#12/03/2015

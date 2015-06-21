@@ -22,7 +22,7 @@ Requirements
 
 Install
 -------
-	git clone https://github.com/maximozsec/organon.git
+	git clone https://github.com/fnk0c/organon.git
 	cd organon
 	./install.sh
 
@@ -30,8 +30,9 @@ Install
 
 Tested on:
 ----------
-* Ubuntu 14.04 x86_64
-* Ubuntu 14.10 x86_64
+* Ubuntu 14.04  
+* Ubuntu 14.10  
+* Ubuntu 15.04  
 * Debian 7.8 Wheezy
 * Debian 8 Jessie
 * Elementary OS Luna
@@ -44,6 +45,24 @@ Screenshot
 
 Help
 ----
+	usage: organon.py [-h] [-a] [-v] [-i I [I ...]] [-r R [R ...]]
+                  [--dependencies] [--config] [-u] [-s S] [-l] [--clean]
+
+	Package manager that focus on Pentest tools
+
+	optional arguments:
+	  -h, --help      show this help message and exit
+	  -a, --about     About this tool
+	  -v, --version   Show version and exit
+	  -i I [I ...]    Install packages
+	  -r R [R ...]    Remove packages
+	  --dependencies  Remove dependencies (use with -r)
+	  --config        Remove configuration files (use with -r)
+	  -u              Update Organon
+	  -s S            Search for package
+	  -l              List all packages available
+	  --clean         Clean Organon's cache
+
 	* Listing available tools  
 	        organon -l  
 	* Searching for tools  
