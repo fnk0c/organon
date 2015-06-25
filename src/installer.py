@@ -1,4 +1,5 @@
 #!/usr/bin/python
+#coding=utf-8
 
 #This script makes part of Organon Project
 #https://github.com/fnk0c/organon
