@@ -82,7 +82,7 @@ then
 
 	else
 		echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev ruby-bundler libmysql-ruby"
-		sudo apt-get install python ruby libmysqlclient-dev ruby-bundle libmysql-rubyr
+		sudo apt-get install python ruby libmysqlclient-dev ruby-bundler libmysql-ruby
 	fi
 
 elif [ -e /etc/pacman.d ]
