@@ -76,9 +76,11 @@ class Resp
 				end
 				
 				# Downloading the tool configuration file
-				pkgconf = "wget http://#{$server}:1000/organon/pkgconfig/debian/#{row[2]}.conf"
-				puts pkgconf
-				system pkgconf
+				pkgconf = Net::HTTP.get(URI "http://#{$server}:1000/organon/pkgconfig/arch/#{row[2]}.conf")
+
+				File.open("#{row[2]}.conf", "w+") do |file|
+					file.write(pkgconf)
+				end
 
 				if row[1] != 'NULL' # Checking if the row of the dependencies of the given tool is not empty
 					puts "The following dependencies are necessary for this tool."
