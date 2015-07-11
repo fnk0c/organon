@@ -27,6 +27,7 @@ begin
 	require 'colorize'
 	require 'nokogiri'
 	require 'open-uri'
+	require 'net/http'
 rescue Interrupt
 	warn "You have interrupted the application."
 	exit 1
