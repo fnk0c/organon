@@ -81,13 +81,27 @@ then
 		sudo apt-get install python ruby libmysqlclient-dev bundler
 
 	else
-		echo -e "$white [!]$default sudo apt-get install python libmysqlclient-dev ruby-bundler libmysql-ruby"
-		sudo apt-get install python ruby libmysqlclient-dev ruby-bundler libmysql-ruby
+		echo -e "$white [!]$default Try to install manually:"
+		echo " [+] Packages:"
+		echo "	python"
+		echo "	libmysqlclient-dev"
+		echo "	ruby-bundler"
+		echo " [+] gems:"
+		echo "	colorize"
+		echo " 	nokogiri"
+		echo " 	mysql"
+		exit
 	fi
 
 elif [ -e /etc/pacman.d ]
 then
 	sudo pacman -S python ruby libmariadbclient --needed
+
+
+else
+	echo -e "$red [-]$default Your system doesn't seem to be supported"
+	echo " Please, read the documentation"
+	exit
 fi
 
 #End Distro check
