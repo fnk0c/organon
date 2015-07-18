@@ -8,6 +8,7 @@ echo cd /usr/share/organon >> /usr/bin/organon
 echo exec python organon.py \"\$\@\" >> /usr/bin/organon
 
 chmod +x /usr/bin/organon
+chmod 777 /usr/share/organon
 
 echo '[+] Complete!'
 echo 'Type organon in order to use it'
