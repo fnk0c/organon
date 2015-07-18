@@ -77,7 +77,7 @@ class Resp
 				end
 				
 				# Downloading the tool configuration file
-				pkgconf = Net::HTTP.get(URI "http://#{$server}:1000/organon/pkgconfig/arch/#{row[2]}.conf")
+				pkgconf = Net::HTTP.get(URI "http://#{$server}:1000/organon/pkgconfig/debian/#{row[2]}.conf")
 
 				File.open("#{row[2]}.conf", "w+") do |file|
 					file.write(pkgconf)
