@@ -40,6 +40,14 @@ chmod +x /usr/bin/organon
 chmod 777 /usr/share/organon
 """
 
+EXT = {
+"python":"py",
+"ruby":"rb",
+"shell":"sh",
+"php":"php",
+"perl":"pl"
+}
+
 #Package to be install
 pkg_name = argv[1]
 
@@ -59,8 +67,8 @@ def data():
 
 	#colect data for program compilation and install
 	for variables in pkgconfig:
-		TYPE = findall("type = (.*)", variables)
-		INSTALLER = findall("installer = (.*)", variables)
+		TYPE = findall("type = (.*)", variables)[0]
+		INSTALLER = findall("installer = (.*)", variables)[0]
 		INSTRUCTIONS = variables[variables.find("{") + 1:variables.find("}")]
 
 def script_creator():
@@ -77,16 +85,13 @@ def script_creator():
 " + INSTRUCTIONS.replace("\"", "").replace(",", "").replace("\t", "") +
 "#end")
 
-
 	system("sh process.sh")
 
 	#Check if program need to be installed manually
 	if "True" in INSTALLER:
 		with open("install.sh", "w") as script:
-			for n in template.replace("organon", pkg_name):
+			for n in template.replace("organon", pkg_name).replace("python", TYPE).replace("py", EXT[TYPE]):
 				script.write(n)
-			for t in template.replace("python", str(TYPE)):
-				script.write(str(t))
 		system("sudo sh install.sh")
 
 if __name__ == "__main__":
