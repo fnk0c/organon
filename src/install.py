@@ -87,7 +87,7 @@ def script_creator():
 				script.write(n)
 			for t in template.replace("python", str(TYPE)):
 				script.write(str(t))
-		system("sh install.sh")
+		system("sudo sh install.sh")
 
 if __name__ == "__main__":
 	try:
