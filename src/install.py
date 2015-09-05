@@ -51,6 +51,7 @@ def data():
 
 	global INSTRUCTIONS
 	global INSTALLER
+	global TYPE
 
 	with open(pkg_name + ".conf", "r") as f:
 		pkgconfig_file = f.read()
@@ -67,6 +68,7 @@ def script_creator():
 
 	global INSTRUCTIONS
 	global INSTALLER
+	global TYPE
 
 	with open("process.sh", "w") as process:
 		process.write("\
@@ -91,7 +93,7 @@ if __name__ == "__main__":
 	try:
 		data()
 		script_creator()
-		system("rf install.sh process.sh")
+		system("rm install.sh process.sh")
 	except Exception as e:
 		print(e)
 		exit()
