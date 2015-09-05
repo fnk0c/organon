@@ -90,7 +90,8 @@ def script_creator():
 	#Check if program need to be installed manually
 	if "True" in INSTALLER:
 		with open("install.sh", "w") as script:
-			for n in template.replace("organon", pkg_name).replace("python", TYPE).replace("py", EXT[TYPE]):
+			for n in template.replace("organon", pkg_name).replace("python", \
+			TYPE).replace("py", EXT[TYPE]):
 				script.write(n)
 		system("sudo sh install.sh")
 
@@ -98,7 +99,7 @@ if __name__ == "__main__":
 	try:
 		data()
 		script_creator()
-		system("rm install.sh process.sh")
+		system("rm install.sh process.sh %s" % pkg_name)
 	except Exception as e:
 		print(e)
 		exit()
