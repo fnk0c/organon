@@ -58,7 +58,7 @@ def data():
 		INSTALLER = findall("installer = (.*)", variables)
 		INSTRUCTIONS = variables[variables.find("{") + 1:variables.find("}")]
 
-def script_creator():
+def script_creator(INSTRUCTIONS):
 	#generates shell script to compile program
 	with open("process.sh", "w") as process:
 		process.write("\
@@ -80,7 +80,7 @@ def script_creator():
 if __name__ == "__main__":
 	try:
 		data()
-		script_creator()
+		script_creator(INSTRUCTIONS)
 	except Exception as e:
 		print(e)
 		exit()

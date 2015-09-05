@@ -150,7 +150,7 @@ package)
 \"SELECT url, dependencias, nome FROM debian WHERE nome LIKE '%s'\"" % \
 package)
 					if db == 0:
-						install = os.system("python src/installer.py %s" % \
+						install = os.system("python src/install.py %s" % \
 package)
 					else: print(red + "[-]" + default + "Something went wrong")
 
