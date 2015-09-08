@@ -26,6 +26,7 @@ from sys import argv
 from re import findall
 from os import system
 
+#Template used to do the install
 template = \
 """#!/bin/bash
 
@@ -39,7 +40,7 @@ echo exec python organon.py \"\$\@\" >> /usr/bin/organon
 chmod +x /usr/bin/organon
 chmod 777 /usr/share/organon
 """
-
+#Store extension
 EXT = {
 "python":"py",
 "ruby":"rb",
@@ -99,7 +100,7 @@ if __name__ == "__main__":
 	try:
 		data()
 		script_creator()
-		system("rm install.sh process.sh %s" % pkg_name)
+		system("rm install.sh process.sh %s.conf" % pkg_name)
 	except Exception as e:
 		print(e)
 		exit()

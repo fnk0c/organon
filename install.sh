@@ -150,7 +150,7 @@ if [ ! -e /usr/local/share/man/man8 ]
 then
 	sudo mkdir /usr/local/share/man/man8
 fi
-sudo mv /usr/share/organon/organon.8 /usr/local/share/man/man8/
+sudo mv /usr/share/organon/doc/organon.8 /usr/local/share/man/man8/
 
 #Change permission
 echo -e "$green [+]$default Changing permissions"

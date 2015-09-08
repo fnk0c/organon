@@ -83,7 +83,7 @@ Help
 BUGS
 ----
 Since it's still on development phase bugs are expected. Please, **report to us!** or open an **Issue**
-* fb.com/fnkoc.a
+* fb.com/franco.colombino
 * fb.com/maxsecur1ty
 * fb.com/cienciahacker
 
@@ -93,7 +93,12 @@ Send us a message on facebook
 
 About current version
 ---------------------
+#### `v0.1.9`
+- All features from previous versions + review of the code  
+ - Installation script re-wrote and optimized  
 
+About previous version
+---------------------
 #### `v0.1.8-r6`
 - **Goal**
  - Install tools and its dependences from a MySQL database
@@ -114,33 +119,3 @@ About current version
 - **Improvements on Install and Remove functions**
  - * Check if already installed
  - * When uninstalling, Organon check for the tool and diferent directorys (/usr/share || /usr/local/share || /opt)
-
-#### `v0.1.8-beta`
-
-- **Goal**
- - Install tools and its dependences from a MySQL database
-
-- **MySQL**
- - Server version: 5.5.41-0+wheezy1 (Debian)
-
- - Ruby code to connect to the database
-
- - Python script to execute the SQL commands and run the program
-
-- **PKGBUILD**
- - The installation scripts were replaced by pkgconfig files, similar to pacman pkgbuild. These files are hosted on the organon server.
-
-
-About previous version
----------------------
-##### `v0.1.7-beta`
-
-- **Goal**
- - Install tools and its dependences from a MySQL database
-
-- **MySQL**
- - Server version: 5.5.41-0+wheezy1 (Debian)
-
-- Ruby code to connect to the database
-
-- Python script to execute the SQL commands and run the program
