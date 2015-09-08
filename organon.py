@@ -2,8 +2,8 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.1.8-r6"
-__DATE__	= "21/06/2015"
+__VERSION__	= "0.1.9"
+__DATE__	= "08/09/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino & Ygor Máximo
@@ -150,7 +150,7 @@ package)
 \"SELECT url, dependencias, nome FROM debian WHERE nome LIKE '%s'\"" % \
 package)
 					if db == 0:
-						install = os.system("python src/installer.py %s" % \
+						install = os.system("python src/install.py %s" % \
 package)
 					else: print(red + "[-]" + default + "Something went wrong")
 
