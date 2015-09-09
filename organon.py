@@ -174,7 +174,8 @@ Source files can be found at .cache")
 		else:
 			# REMOVE PROCESS ###################################################
 			for package in args.r:
-				print(green + " [+] " + default + "Deleting source files...")
+				print(green + " [+] " + default + "Deleting %s source files..." \
+% package)
 				try:
 					if package in os.listdir("/usr/share"):
 						os.system("sudo rm -rf /usr/share/%s" % package)
@@ -183,6 +184,8 @@ Source files can be found at .cache")
 						package)
 					elif package in os.listdir("/opt"):
 						os.system("sudo rm -rf /opt/%s" % package)
+					elif package in os.listdir("/usr/bin"):
+						os.system("sudo rm -rf /usr/bin/%s" % package)
 					else:
 						print(red + " [-] " + default + "%s doesn\'t seem to be\
  installed" % package)

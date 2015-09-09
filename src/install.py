@@ -26,6 +26,10 @@ from sys import argv
 from re import findall
 from os import system
 
+#Define color schema
+red = "\033[31m"
+default = "\33[1;00m"
+
 #Template used to do the install
 template = \
 """#!/bin/bash
@@ -62,9 +66,15 @@ def data():
 	global INSTALLER
 	global TYPE
 
-	with open(pkg_name + ".conf", "r") as f:
-		pkgconfig_file = f.read()
-		pkgconfig.append(pkgconfig_file)
+	try:
+		with open(pkg_name + ".conf", "r") as f:
+			pkgconfig_file = f.read()
+			pkgconfig.append(pkgconfig_file)
+
+	except (FileNotFoundError, IOError, OSError):
+		print(red + " [!] " + default + "No tool found on database named \
+[%s]" % pkg_name)
+		exit()
 
 	#colect data for program compilation and install
 	for variables in pkgconfig:
