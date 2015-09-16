@@ -3,7 +3,7 @@
 
 __AUTHOR__	= "Fnkoc"
 __VERSION__	= "0.1.9"
-__DATE__	= "08/09/2015"
+__DATE__	= "16/09/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino & Ygor Máximo
@@ -22,8 +22,7 @@ __DATE__	= "08/09/2015"
 
 	[UPDATES]
 	
-	Check user permission
-	database_connector.rb > Improve git clone for faster clone
+	Improve search mechanism
 """
 
 import sys
@@ -219,9 +218,15 @@ SELECT dependencias FROM debian WHERE nome LIKE '%s'\"" % package)
 	# SEARCH FOR PACKAGE #######################################################
 
 	elif args.s:
-		print(args.s)
-		result = os.system("ruby src/DB/database_connector.rb list \"SELECT \
-nome, versao, descricao FROM debian WHERE nome LIKE '%s'\"" % args.s)
+		query = "SELECT * FROM debian WHERE (CONVERT( nome USING utf8 ) LIKE \
+'%create%' OR CONVERT( versao USING utf8 ) LIKE '%create%' OR CONVERT( url \
+USING utf8 ) LIKE '%create%' OR CONVERT( descricao USING utf8) LIKE '%create%' \
+OR CONVERT( dependencias  USING utf8 ) LIKE '%create%') LIMIT 0, 30".replace(\
+"create", str(args.s))
+		command = (("ruby src/DB/database_connector.rb search \"%s\"") % query)
+	
+		print("Searching for: " + args.s)
+		result = os.system(command)
 
 	# LIST ALL PACKAGES ########################################################
 
