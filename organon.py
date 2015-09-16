@@ -2,7 +2,7 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.1.9"
+__VERSION__	= "0.2.0"
 __DATE__	= "16/09/2015"
 
 """
@@ -218,14 +218,22 @@ SELECT dependencias FROM debian WHERE nome LIKE '%s'\"" % package)
 	# SEARCH FOR PACKAGE #######################################################
 
 	elif args.s:
-		query = "SELECT * FROM debian WHERE (CONVERT( nome USING utf8 ) LIKE \
-'%create%' OR CONVERT( versao USING utf8 ) LIKE '%create%' OR CONVERT( url \
-USING utf8 ) LIKE '%create%' OR CONVERT( descricao USING utf8) LIKE '%create%' \
-OR CONVERT( dependencias  USING utf8 ) LIKE '%create%') LIMIT 0, 30".replace(\
-"create", str(args.s))
+		query = "\
+SELECT * FROM debian WHERE \
+(CONVERT( nome USING utf8 ) \
+LIKE '%create%' OR \
+CONVERT( versao USING utf8 ) \
+LIKE '%create%' OR \
+CONVERT( url USING utf8 ) \
+LIKE '%create%' OR \
+CONVERT( descricao USING utf8) \
+LIKE '%create%' OR \
+CONVERT( dependencias  USING utf8 ) \
+LIKE '%create%') LIMIT 0, 30".replace("create", str(args.s))
+		
 		command = (("ruby src/DB/database_connector.rb search \"%s\"") % query)
 	
-		print("Searching for: " + args.s)
+		print(green + " [+] " + default + "Searching for: " + args.s)
 		result = os.system(command)
 
 	# LIST ALL PACKAGES ########################################################
@@ -243,7 +251,7 @@ OR CONVERT( dependencias  USING utf8 ) LIKE '%create%') LIMIT 0, 30".replace(\
 	# OPEN README FILE #########################################################
 
 	elif args.about:
-		os.system("cat README.md | more")
+		os.system("man organon")
 
 	# CLEAN ORGANON CACHE ######################################################
 
