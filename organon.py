@@ -55,8 +55,8 @@ banner = """%s
 
 # ARGUMENTOS ###################################################################
 
-parser = argparse.ArgumentParser(description = "Package manager that focus on \
-Pentest tools")
+parser = argparse.ArgumentParser(prog = "organon", description = "Package \
+manager that focus on Pentest tools")
 parser.add_argument("-a", "--about", action = "store_true",
 	help = "About this tool")
 parser.add_argument("-v", "--version", action = "store_true",
@@ -245,8 +245,8 @@ LIKE '%create%') LIMIT 0, 30".replace("create", str(args.s))
 	# PRINT VERSION ############################################################
 
 	elif args.version:
-		print("Version: ", __VERSION__)
-		print("Last update: ", __DATE__)
+		print("Version: %s" % __VERSION__)
+		print("Last update: %s" % __DATE__)
 
 	# OPEN README FILE #########################################################
 

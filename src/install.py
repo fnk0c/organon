@@ -48,9 +48,9 @@ chmod 777 /usr/share/organon
 EXT = {
 "python":"py",
 "ruby":"rb",
-"shell":"sh",
+"sh":"sh",
 "php":"php",
-"perl":"pl"
+"perl":"pl",
 }
 
 #Package to be install
