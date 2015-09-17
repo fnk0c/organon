@@ -26,11 +26,15 @@ from sys import argv
 from re import findall
 from os import system
 
+#Define color schema
+red = "\033[31m"
+default = "\33[1;00m"
+
 #Template used to do the install
-template = \
+script_template = \
 """#!/bin/bash
 
-#Move organon to /usr/share
+#Copy organon to /usr/share
 cp -R .cache/organon /usr/share/
 
 echo \#\!/bin/bash >> /usr/bin/organon
@@ -40,13 +44,21 @@ echo exec python organon.py \"\$\@\" >> /usr/bin/organon
 chmod +x /usr/bin/organon
 chmod 777 /usr/share/organon
 """
+link_template = \
+"""#!/bin/bash
+
+#Copy organon to /usr/share
+cp -R .cache/organon /usr/share
+
+ln -s /usr/share/organon/organon /usr/bin/organon
+"""
 #Store extension
 EXT = {
 "python":"py",
 "ruby":"rb",
-"shell":"sh",
+"sh":"sh",
 "php":"php",
-"perl":"pl"
+"perl":"pl",
 }
 
 #Package to be install
@@ -60,16 +72,24 @@ def data():
 
 	global INSTRUCTIONS
 	global INSTALLER
+	global INSTALLER_TYPE	
 	global TYPE
 
-	with open(pkg_name + ".conf", "r") as f:
-		pkgconfig_file = f.read()
-		pkgconfig.append(pkgconfig_file)
+	try:
+		with open(pkg_name + ".conf", "r") as f:
+			pkgconfig_file = f.read()
+			pkgconfig.append(pkgconfig_file)
+
+	except (FileNotFoundError, IOError, OSError):
+		print(red + " [!] " + default + "No tool found on database named \
+[%s]" % pkg_name)
+		exit()
 
 	#colect data for program compilation and install
 	for variables in pkgconfig:
 		TYPE = findall("type = (.*)", variables)[0]
 		INSTALLER = findall("installer = (.*)", variables)[0]
+		INSTALLER_TYPE = findall("installer_type = (.*)", variables)[0]
 		INSTRUCTIONS = variables[variables.find("{") + 1:variables.find("}")]
 
 def script_creator():
@@ -77,6 +97,7 @@ def script_creator():
 
 	global INSTRUCTIONS
 	global INSTALLER
+	global INSTALLER_TYPE
 	global TYPE
 
 	with open("process.sh", "w") as process:
@@ -90,10 +111,17 @@ def script_creator():
 
 	#Check if program need to be installed manually
 	if "True" in INSTALLER:
+		#Check if its gonna be created a script or a symlink
+		print(INSTALLER_TYPE)
 		with open("install.sh", "w") as script:
-			for n in template.replace("organon", pkg_name).replace("python", \
-			TYPE).replace("py", EXT[TYPE]):
-				script.write(n)
+			if "script" in INSTALLER_TYPE:
+				for n in script_template.replace("organon", pkg_name).replace("python", \
+				TYPE).replace("py", EXT[TYPE]):
+					script.write(n)
+
+			elif "link" in INSTALLER_TYPE:
+				for n in link_template.replace("organon", pkg_name):
+					script.write(n)
 		system("sudo sh install.sh")
 
 if __name__ == "__main__":

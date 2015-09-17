@@ -2,8 +2,8 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.1.9"
-__DATE__	= "08/09/2015"
+__VERSION__	= "0.2.0"
+__DATE__	= "16/09/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino & Ygor Máximo
@@ -22,8 +22,7 @@ __DATE__	= "08/09/2015"
 
 	[UPDATES]
 	
-	Check user permission
-	database_connector.rb > Improve git clone for faster clone
+	Improve search mechanism
 """
 
 import sys
@@ -56,8 +55,8 @@ banner = """%s
 
 # ARGUMENTOS ###################################################################
 
-parser = argparse.ArgumentParser(description = "Package manager that focus on \
-Pentest tools")
+parser = argparse.ArgumentParser(prog = "organon", description = "Package \
+manager that focus on Pentest tools")
 parser.add_argument("-a", "--about", action = "store_true",
 	help = "About this tool")
 parser.add_argument("-v", "--version", action = "store_true",
@@ -174,7 +173,8 @@ Source files can be found at .cache")
 		else:
 			# REMOVE PROCESS ###################################################
 			for package in args.r:
-				print(green + " [+] " + default + "Deleting source files...")
+				print(green + " [+] " + default + "Deleting %s source files..." \
+% package)
 				try:
 					if package in os.listdir("/usr/share"):
 						os.system("sudo rm -rf /usr/share/%s" % package)
@@ -183,6 +183,8 @@ Source files can be found at .cache")
 						package)
 					elif package in os.listdir("/opt"):
 						os.system("sudo rm -rf /opt/%s" % package)
+					elif package in os.listdir("/usr/bin"):
+						os.system("sudo rm -rf /usr/bin/%s" % package)
 					else:
 						print(red + " [-] " + default + "%s doesn\'t seem to be\
  installed" % package)
@@ -216,9 +218,23 @@ SELECT dependencias FROM debian WHERE nome LIKE '%s'\"" % package)
 	# SEARCH FOR PACKAGE #######################################################
 
 	elif args.s:
-		print(args.s)
-		result = os.system("ruby src/DB/database_connector.rb list \"SELECT \
-nome, versao, descricao FROM debian WHERE nome LIKE '%s'\"" % args.s)
+		query = "\
+SELECT * FROM debian WHERE \
+(CONVERT( nome USING utf8 ) \
+LIKE '%create%' OR \
+CONVERT( versao USING utf8 ) \
+LIKE '%create%' OR \
+CONVERT( url USING utf8 ) \
+LIKE '%create%' OR \
+CONVERT( descricao USING utf8) \
+LIKE '%create%' OR \
+CONVERT( dependencias  USING utf8 ) \
+LIKE '%create%') LIMIT 0, 30".replace("create", str(args.s))
+		
+		command = (("ruby src/DB/database_connector.rb search \"%s\"") % query)
+	
+		print(green + " [+] " + default + "Searching for: " + args.s)
+		result = os.system(command)
 
 	# LIST ALL PACKAGES ########################################################
 
@@ -229,13 +245,13 @@ nome, versao, descricao FROM debian WHERE nome LIKE '%s'\"" % args.s)
 	# PRINT VERSION ############################################################
 
 	elif args.version:
-		print("Version: ", __VERSION__)
-		print("Last update: ", __DATE__)
+		print("Version: %s" % __VERSION__)
+		print("Last update: %s" % __DATE__)
 
 	# OPEN README FILE #########################################################
 
 	elif args.about:
-		os.system("cat README.md | more")
+		os.system("man organon")
 
 	# CLEAN ORGANON CACHE ######################################################
 

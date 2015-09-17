@@ -120,6 +120,24 @@ TOOLS
 		result.free
 	end
 
+	def search(list_command) # Method to list tools
+		begin
+			result = $db.query(list_command)
+	   		result.each do |row| # Listing each row
+	     		puts <<TOOLS
+
+ #{"[" + " + ".green + "]"} #{row[0]} #{"v#{row[1]}".yellow}
+ #{row[3]}
+
+TOOLS
+	  		end
+		rescue Interrupt
+			warn "You have interrupted the instalation."
+			exit 1
+		end
+		result.free
+	end
+
 	def remove(remove_command)
 		begin
 			result = $db.query(remove_command)
@@ -143,6 +161,9 @@ begin
 	when "list" 
 		action.connect
 		action.list(ARGV[1])
+	when "search" 
+		action.connect
+		action.search(ARGV[1])
 	when "remove"
 		action.connect
 		action.remove(ARGV[1])
