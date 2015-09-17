@@ -89,7 +89,7 @@ def data():
 	for variables in pkgconfig:
 		TYPE = findall("type = (.*)", variables)[0]
 		INSTALLER = findall("installer = (.*)", variables)[0]
-		INSTALLER_TYPE = findall("installer type = (.*)", variables[0])
+		INSTALLER_TYPE = findall("installer_type = (.*)", variables[0])
 		INSTRUCTIONS = variables[variables.find("{") + 1:variables.find("}")]
 
 def script_creator():
