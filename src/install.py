@@ -112,12 +112,13 @@ def script_creator():
 	#Check if program need to be installed manually
 	if "True" in INSTALLER:
 		#Check if its gonna be created a script or a symlink
-		if INSTALLER_TYPE == "script":
+		if "script" in INSTALLER_TYPE:
 			with open("install.sh", "w") as script:
 				for n in script_template.replace("organon", pkg_name).replace("python", \
 				TYPE).replace("py", EXT[TYPE]):
 					script.write(n)
-		elif INSTALLER_TYPE == "link":
+
+		elif "link" in INSTALLER_TYPE:
 			for n in link_template.replace("organon", pkg_name):
 					script.write(n)
 		system("sudo sh install.sh")
