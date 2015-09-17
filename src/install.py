@@ -50,7 +50,7 @@ link_template = \
 #Copy organon to /usr/share
 cp -R .cache/organon /usr/share
 
-ln -s /usr/share/organon /usr/bin/organon
+ln -s /usr/share/organon/organon /usr/bin/organon
 """
 #Store extension
 EXT = {
@@ -89,7 +89,7 @@ def data():
 	for variables in pkgconfig:
 		TYPE = findall("type = (.*)", variables)[0]
 		INSTALLER = findall("installer = (.*)", variables)[0]
-		INSTALLER_TYPE = findall("installer_type = (.*)", variables[0])
+		INSTALLER_TYPE = findall("installer_type = (.*)", variables)[0]
 		INSTRUCTIONS = variables[variables.find("{") + 1:variables.find("}")]
 
 def script_creator():
@@ -112,14 +112,15 @@ def script_creator():
 	#Check if program need to be installed manually
 	if "True" in INSTALLER:
 		#Check if its gonna be created a script or a symlink
-		if "script" in INSTALLER_TYPE:
-			with open("install.sh", "w") as script:
+		print(INSTALLER_TYPE)
+		with open("install.sh", "w") as script:
+			if "script" in INSTALLER_TYPE:
 				for n in script_template.replace("organon", pkg_name).replace("python", \
 				TYPE).replace("py", EXT[TYPE]):
 					script.write(n)
 
-		elif "link" in INSTALLER_TYPE:
-			for n in link_template.replace("organon", pkg_name):
+			elif "link" in INSTALLER_TYPE:
+				for n in link_template.replace("organon", pkg_name):
 					script.write(n)
 		system("sudo sh install.sh")
 
