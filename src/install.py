@@ -72,6 +72,7 @@ def data():
 
 	global INSTRUCTIONS
 	global INSTALLER
+	global INSTALLER_TYPE	
 	global TYPE
 
 	try:
@@ -96,6 +97,7 @@ def script_creator():
 
 	global INSTRUCTIONS
 	global INSTALLER
+	global INSTALLER_TYPE
 	global TYPE
 
 	with open("process.sh", "w") as process:
