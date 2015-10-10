@@ -4,7 +4,8 @@ This program focuses on automating the download, installation and compilation of
 
 # ATTENTION!
 
-This tool is in development phase and **may does not work properly**.
+## ** This tool is no longer in development! ** .
+
 Tool developed for Linux systems (APT and Pacman)
 
 Authors:
