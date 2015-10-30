@@ -1,0 +1,114 @@
+#!/usr/bin/python
+#coding=utf-8
+
+__AUTHOR__	= "Fnkoc"
+__VERSION__	= "0.2.1"
+__DATE__	= "30/10/2015"
+
+"""
+	Copyright (C) 2015  Franco Colombino
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+	(https://github.com/fnk0c/organon)
+"""
+
+from sys import version, argv
+from os import path, getuid
+from subprocess import check_call, CalledProcessError
+
+dependencies = {
+"arch2":["python2-lxml", "python2-beautifulsoup4"], #python2-pymysql is available on AUR
+"debian2":["python-lxml", "python-bs4", "python-pymysql"],
+"arch3":["python-lxml", "python-beautifulsoup4"], ##python-pymysql is available on AUR
+"debian3":["python3-lxml", "python3-bs4", "python3-pymysql"]
+}
+
+py_version = {
+3:[dependencies["arch3"], dependencies["debian3"]],
+2:[dependencies["arch2"], dependencies["debian2"]],
+}
+
+arch = 0
+debian = 1
+ver2 = 2
+ver3 = 3
+
+def main():
+	if path.isfile("/etc/apt/sources.list"):
+		manager = "sudo apt-get install "
+
+		if "2" in version[0]:
+			dep = str(py_version[ver2][debian]).replace("[", "")\
+			.replace("]", "").replace(",", "")
+		elif "3" in version[0]:
+			dep = str(py_version[ver3][debian]).replace("[", "")\
+			.replace("]", "").replace(",", "")
+
+	elif path.isfile("/etc/pacman.conf"):
+		manager = "sudo pacman -S "
+
+		# using wget cause urllib.request was not working 
+		if "2" in version[0]:
+			dep = str(py_version[ver2][arch]).replace("[", "").replace("]", "")\
+			.replace(",", "")
+			check_call("wget https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=python2-pymysql -O PKGBUILD", shell = True)
+		elif "3" in version[0]:
+			dep = str(py_version[ver3][arch]).replace("[", "").replace("]", "")\
+			.replace(",", "")
+			check_call("wget https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=python-pymysql -O PKGBUILD", shell = True)
+
+	#I could have used re.sub to replace the chars, but it doesn't seems to be a
+	#great improve. Neither on layout nor in efficiency
+	else:
+		print("Installer not finished for this type os Linux.")
+		print("Please, install the following dependencies:")
+		for i in py_version[ver2][debian]: print("\t%s" % i)
+		exit()
+		
+	try:
+		command = manager + dep
+		print(" [+] Installing dependencies")
+		check_call(command, shell = True)
+		check_call("makepkg PKGBUILD", shell = True)
+		check_call("sudo pacman -U python-pymysql*", shell = True)
+		print(" [+] Creating .cache")
+		check_call("mkdir .cache", shell = True)
+		print(" [+] Moving organon to /usr/share")
+		check_call("sudo mv ../organon /usr/share", shell = True)
+		print(" [+] Creating symlink")
+		check_call("sudo ln -s /usr/share/organon /usr/bin", shell = True)
+		print(" [+] Installing MAN page")
+		check_call("sudo install -Dm644 doc/organon.8 /usr/share/man/man8/", \
+		shell = True)
+		print(" [+] Installing LICENSE")
+		check_call("sudo install -Dm644 doc/LICENSE /usr/share/licenses/organon/", \
+		shell = True)
+		print(" [+] Cleaning files")
+		check_call("rm -rf python-pymysql* PKGBUILD PyMySQL* pkg src", \
+		shell = True)
+	
+	except (CalledProcessError, KeyboardInterrupt) as e:
+		print(" [!] ainn. Something went wrong")
+		print(e)
+		exit()
+
+if __name__ == "__main__":
+	if len(argv) == 1 or argv[1] == "help":
+		print("Usage: python setup.py install")
+		exit()
+	else:
+		if getuid() == 0:
+			print(getuid)
+			print(" [!] Are you root? Please do NOT run this script as root")
+			exit()
+		else:
+			main()

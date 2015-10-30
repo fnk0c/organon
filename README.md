@@ -4,7 +4,7 @@ This program focuses on automating the download, installation and compilation of
 
 # ATTENTION!
 
-## ** This tool is no longer in development! ** .
+## ** This tool is no longer working! Server is down ** .
 
 Tool developed for Linux systems (APT and Pacman)
 
@@ -16,9 +16,8 @@ Authors:
 Requirements
 -------------
 1. Python >=2.7 or >=3.4    
-2. Ruby >=1.9
-3. [**bundler**](http://bundler.io/)
-4. **Gems**: [mysql](https://rubygems.org/gems/mysql), [colorize](https://rubygems.org/gems/colorize), [nokogiri](https://rubygems.org/gems/nokogiri)
+2. python-pymysql
+3. BeautifulSoup
 5. GNU/Linux system based on Debian and Arch
 
 Install
@@ -85,7 +84,6 @@ BUGS
 ----
 Since it's still on development phase bugs are expected. Please, **report to us!** or open an **Issue**
 * fb.com/franco.colombino
-* fb.com/maxsecur1ty
 * fb.com/cienciahacker
 
 Be Part of development
@@ -94,20 +92,22 @@ Send us a message on facebook
 
 About current version
 ---------------------
-#### `v0.1.9`
+#### `v0.2.1`
 - All features from previous versions + review of the code  
  - Installation script re-wrote and optimized  
+ - Remove ruby  
+ - All scripts are made in python  
 
 About previous version
 ---------------------
-#### `v0.1.8-r6`
+#### `v0.2.0`
 - **Goal**
  - Install tools and its dependences from a MySQL database
 
 - **MySQL**
  - Server version: 5.5.41-0+wheezy1 (Debian)
 
- - Ruby code to connect to the database
+ - Ruby code to connect to the database (depreciated)
 
  - Python script to execute the SQL commands and run the program
 

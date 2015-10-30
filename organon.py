@@ -2,11 +2,11 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.2.0"
-__DATE__	= "16/09/2015"
+__VERSION__	= "0.2.1"
+__DATE__	= "30/10/2015"
 
 """
-	Copyright (C) 2015  Franco Colombino & Ygor Máximo
+	Copyright (C) 2015  Franco Colombino
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,27 +19,19 @@ __DATE__	= "16/09/2015"
     GNU General Public License for more details.
 
 	(https://github.com/fnk0c/organon)
-
-	[UPDATES]
-	
-	Improve search mechanism
 """
 
-import sys
+from sys import path, argv, version
+from os import system
 import argparse
-import os
+path.append("src/")
+import atom
 
 # COLORS #######################################################################
 red = "\033[31m"
 white = "\33[1;37m"
 green = "\033[32m"
 default = "\33[1;00m"
-
-# PYTHON 2 E 3 SUPPORT #########################################################
-try:
-	raw_input
-except:
-	raw_input = input
 
 # BANNER #######################################################################
 banner = """%s
@@ -80,192 +72,74 @@ parser.add_argument("--clean", action = "store_true",
 
 args = parser.parse_args()
 
-# UPDATE ORGANON FUNCTION ######################################################
+# DETECTS PYTHON VERSION #######################################################
 
-def update():
-	print(green + "[+] " + default + "Updating Organon")
-	up = os.system("git fetch && git pull")
+def py_version():
+	global ver3
 
-	if up != 0:
-		print(red + " [-] " +default + "Couldn\'t retrieve update. Please \
-download the latest version from https://github.com/fnk0c/organon")
+	if "2" in version[0]:
+		ver3 = False
+	elif "3" in version[0]:
+		ver3 = True
 	else:
-		print(green + " [+] " + default + "Organon was successfully updated")
-
-def check():
-	#CHECK IF PATH IS /USR/SHARE/ORGANON
-	#THIS CHECK HAPPENS BECAUSE WHEN YOU RUN ./INSTALL.SH THE SCRIPT IS MOVED TO
-	#/USR/SHARE/. INSTALL.SH ALSO INSTALL ALL DEPENDENCIES NEEDED, CREATE THE
-	#SYMBOLICS LINKS AND .cache DIRECTORY
-	if os.getcwd() != "/usr/share/organon":
-		from time import sleep
-		
-		os.system("clear")
-		print(red + "\n\n\t >> OPS! <<\n\n" + default)
-		print(red + " [!] " + white + "Did you run install.sh?\n Please run \
-\'./install.sh\' to install dependencies and configure Organon" + default)
-		sleep(3)
-
-	if os.getuid() == 0:
-		print(red + "\n [WARNING] " + default + "You're not supposed to run \
-Organon as root")
-		choice = raw_input(" %s[!]%s Processed? [y/N] " %(red, default)).lower()
-		if choice == "y":
-			pass
-		else:
-			sys.exit()
+		print("WTF Dude! Are you using Python?")
+		exit()
 
 def main():
-	# UPDATE ORGANON ###########################################################
-	if args.u:
-		update()
+	core = atom.actions(ver3, distro)
 
-	# INSTALL PACKAGE ##########################################################
-
-	elif args.i:
-
-		# PRINT PACKAGES TO BE INSTALL #########################################
-		print("\n Packages (" + str(len(args.i)) + ") " + " ".join(args.i))
-		choice = raw_input(green + "\n [+] " + default +"Continue the \
-installation? [Y/n] ").lower()
-
-		# CHECK IF USER WANT TO CONTINUE #######################################
-		if choice != "y" and len(choice) != 0:
-			print(red + " [-] " + default + "Aborted")
-			sys.exit()
-		else:
-			# INSTALL PROCESS ##################################################
-			
-			for package in args.i:
-				# CHECK IF ALREADY INSTALLED ###################################
-				if package in os.listdir("/usr/bin"):
-					print(red + " [!] " + default + "%s already installed" % \
-package)
-				elif package in os.listdir("/usr/local/bin"):
-					print(red + " [!] " + default + "%s already installed" % \
-package)
-				else:
-					db = os.system("ruby src/DB/database_connector.rb install \
-\"SELECT url, dependencias, nome FROM debian WHERE nome LIKE '%s'\"" % \
-package)
-					if db == 0:
-						install = os.system("python src/install.py %s" % \
-package)
-					else: print(red + "[-]" + default + "Something went wrong")
-
-					# CHECK IF SUCCESS #########################################
-					if db == 0 and install == 0: print(" [+] Success!\n \
-Source files can be found at .cache")
-
-	# REMOVE PACKAGE ###########################################################
-
-	elif args.r:
-		# PRINT PACKAGES TO BE REMOVE ##########################################
-		print("\n Packages (" + str(len(args.r)) + ") " + " ".join(args.r))
-		choice = raw_input(green + "\n [+]" + default + " Remove these packages\
-? [Y/n] ").lower()
-
-		# CHECK IF USER WANT TO CONTINUE #######################################
-		if choice != "y" and len(choice) != 0:
-			print(red + " [-] " + default + "Aborted")
-			sys.exit()
-
-		else:
-			# REMOVE PROCESS ###################################################
-			for package in args.r:
-				print(green + " [+] " + default + "Deleting %s source files..." \
-% package)
-				try:
-					if package in os.listdir("/usr/share"):
-						os.system("sudo rm -rf /usr/share/%s" % package)
-					elif package in os.listdir("/usr/local/share"):
-						os.system("sudo rm -rf /usr/local/share/%s" % \
-						package)
-					elif package in os.listdir("/opt"):
-						os.system("sudo rm -rf /opt/%s" % package)
-					elif package in os.listdir("/usr/bin"):
-						os.system("sudo rm -rf /usr/bin/%s" % package)
-					else:
-						print(red + " [-] " + default + "%s doesn\'t seem to be\
- installed" % package)
-						break
-				except Exception as e:
-					print(e)
-
-				print(green + " [+] " + default + "Deleting symlink...")
-				try:
-					if package in os.listdir("/usr/bin"):
-						os.system("sudo rm -rf /usr/bin/%s" % package)
-					elif package in os.listdir("/usr/local/bin"):
-						os.system("sudo rm -rf /usr/local/bin/%s" % package)
-				except Exception as e:
-					print(e)
-
-				if args.config == True:
-					if package in os.listdir("/etc/"):
-						print(green + " [+] " + default + "Removing \
-configuration files...")
-						os.system("sudo rm -rf /etc/%s" % package)
-					else:
-						print(red + " [!] " + default + "No configuration file \
-found")
-
-				if args.dependencies == True:
-					print(green + " [+] " + default + "Removing dependencies...")
-					os.system("ruby src/DB/database_connector.rb remove \"\
-SELECT dependencias FROM debian WHERE nome LIKE '%s'\"" % package)
-
-	# SEARCH FOR PACKAGE #######################################################
-
-	elif args.s:
-		query = "\
-SELECT * FROM debian WHERE \
-(CONVERT( nome USING utf8 ) \
-LIKE '%create%' OR \
-CONVERT( versao USING utf8 ) \
-LIKE '%create%' OR \
-CONVERT( url USING utf8 ) \
-LIKE '%create%' OR \
-CONVERT( descricao USING utf8) \
-LIKE '%create%' OR \
-CONVERT( dependencias  USING utf8 ) \
-LIKE '%create%') LIMIT 0, 30".replace("create", str(args.s))
-		
-		command = (("ruby src/DB/database_connector.rb search \"%s\"") % query)
+	#Check if organon is correctly installed
+	core.check_install()
 	
-		print(green + " [+] " + default + "Searching for: " + args.s)
-		result = os.system(command)
+	### - OPEN MAN PAGE - ###
+	if args.about:
+		system("man organon")
+	
+	### - RETURN VERSION - ###
+	if args.version:
+		print("Version: ", __VERSION__)
+		print("Last revision", __DATE__)
 
-	# LIST ALL PACKAGES ########################################################
+	### - UPDATE ORGANON - ###
+	if args.u:
+		core.update()
 
+	### - INSTALL PROGRAM - ###
+	elif args.i:
+		core.install(args.i)
+
+	### - REMOVE PROGRAM - ###
+	elif args.r:
+		config = False
+		deps = False
+		if args.config == True and args.dependencies == True:
+			config = True
+			deps = True
+
+		elif args.config == True and args.dependencies == False:
+			config = True
+			deps = False
+
+		elif args.config == False and args.dependencies == True:
+			config = False
+			deps = True
+
+		core.uninstall(args.r, config, deps)
+
+	### - LISTA DATABASE - ###
 	elif args.l:
-		os.system("ruby src/DB/database_connector.rb list \"SELECT nome, versao\
-, descricao FROM debian\" | more")
+		core.enum_db()
 
-	# PRINT VERSION ############################################################
-
-	elif args.version:
-		print("Version: %s" % __VERSION__)
-		print("Last update: %s" % __DATE__)
-
-	# OPEN README FILE #########################################################
-
-	elif args.about:
-		os.system("man organon")
-
-	# CLEAN ORGANON CACHE ######################################################
-
-	elif args.clean:
-		os.system("rm -rf .cache/*")
+	### - SEARCH IN DATABASE - ###
+	elif args.s:
+		core.search_db(args.s)
 
 if __name__ == "__main__":
-	#IF NULL
-	if len(sys.argv) == 1:
-		os.system("clear")
+	if len(argv) == 1:
+		system("clear")
 		print(banner)
 		parser.print_help()
-
-	#IF NOT NULL
 	else:
-		check()
+		distro = "debian"
+		py_version()
 		main()
