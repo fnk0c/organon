@@ -44,7 +44,7 @@ debian = 1
 ver2 = 2
 ver3 = 3
 
-def main():
+def install():
 	if path.isfile("/etc/apt/sources.list"):
 		distro = "debian"
 		manager = "sudo apt-get install "
@@ -97,14 +97,14 @@ def main():
 		check_call("sudo mv ../organon /usr/share", shell = True)
 		print(" [+] Creating symlink")
 		check_call("sudo ln -s /usr/share/organon /usr/bin", shell = True)
-		print(" [+] Installing MAN page")
-		check_call("sudo install -Dm644 doc/organon.8 /usr/share/man/man8/", \
-		shell = True)
-		print(" [+] Installing LICENSE")
-		check_call("sudo install -Dm644 doc/LICENSE /usr/share/licenses/organon/", \
-		shell = True)
+#		print(" [+] Installing MAN page")
+#		check_call("sudo install -Dm644 doc/organon.8 /usr/share/man/man8/", \
+#		shell = True)
+#		print(" [+] Installing LICENSE")
+#		check_call("sudo install -Dm644 doc/LICENSE /usr/share/licenses/organon/", \
+#		shell = True)
 		print(" [+] Cleaning files")
-		check_call("rm -rf python-pymysql* PKGBUILD PyMySQL* pkg wget*", \
+		check_call("sudo rm -rf python-pymysql* PKGBUILD PyMySQL* pkg wget*", \
 		shell = True)
 	
 	except (CalledProcessError, KeyboardInterrupt) as e:
@@ -114,15 +114,19 @@ def main():
 
 	with open("organon.conf", "w") as conf:
 		conf.write("arch = %s" % machine())
-		conf.write("distro = %s" % distro)
+		conf.write("\ndistro = %s" % distro)
 	
 	check_call("sudo mkdir /etc/organon && sudo mv organon.conf /etc/organon", \
 	shell = True)
 	check_call("sudo cp etc/mirrors /etc/organon", shell = True)
 
+def uninstall():
+	check_call("sudo rm -rf /usr/share/organon /var/cache/organon /etc/organon\
+	/usr/bin/organon", shell = True)
+
 if __name__ == "__main__":
 	if len(argv) == 1 or argv[1] == "help":
-		print("Usage: python setup.py install")
+		print("Usage: python setup.py {install || uninstall}")
 		exit()
 	else:
 		if getuid() == 0:
@@ -130,4 +134,11 @@ if __name__ == "__main__":
 			print(" [!] Are you root? Please do NOT run this script as root")
 			exit()
 		else:
-			main()
+			if argv[1] == "install":
+				if path.isfile("/usr/share/organon/organon.py"):
+					print("Remove organon before continue")
+					print("python setup.py uninstall")
+				else:
+					install()
+			elif argv[1] == "uninstall":
+				uninstall()
