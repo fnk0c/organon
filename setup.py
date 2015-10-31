@@ -83,10 +83,16 @@ def main():
 		command = manager + dep
 		print(" [+] Installing dependencies")
 		check_call(command, shell = True)
-		check_call("makepkg PKGBUILD", shell = True)
-		check_call("sudo pacman -U python-pymysql*", shell = True)
-		print(" [+] Creating .cache")
-		check_call("mkdir /var/cache/organon", shell = True)
+		if distro == "arch":
+			check_call("makepkg PKGBUILD", shell = True)
+			check_call("sudo pacman -U python-pymysql*", shell = True)
+		else:
+			pass
+		check_call("wget https://pypi.python.org/packages/source/w/wget/wget-3.2.zip", shell = True)
+		check_call("unzip wget-*", shell = True)
+		check_call("cd wget-* && sudo python setup.py install", shell = True)
+		print(" [+] Creating organon\'s cache")
+		check_call("sudo mkdir /var/cache/organon", shell = True)
 		print(" [+] Moving organon to /usr/share")
 		check_call("sudo mv ../organon /usr/share", shell = True)
 		print(" [+] Creating symlink")
@@ -98,7 +104,7 @@ def main():
 		check_call("sudo install -Dm644 doc/LICENSE /usr/share/licenses/organon/", \
 		shell = True)
 		print(" [+] Cleaning files")
-		check_call("rm -rf python-pymysql* PKGBUILD PyMySQL* pkg src", \
+		check_call("rm -rf python-pymysql* PKGBUILD PyMySQL* pkg wget*", \
 		shell = True)
 	
 	except (CalledProcessError, KeyboardInterrupt) as e:

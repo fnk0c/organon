@@ -33,7 +33,7 @@ class actions(object):
 
 	# UPDATE ORGANON ###########################################################
 	def update(self):
-		print(green + "[+] " + default + "Updating Organon")
+		print("[+] Updating Organon")
 		up = os.system("git fetch && git pull")
 
 		if up != 0:
@@ -70,10 +70,10 @@ to install dependencies and configure Organon")
 
 	def install(self, pkgs):
 		#PYTHON 2 AND 3 SUPPORT
-		try:
-			raw_input
-		except: 
-			raw_input = input		
+		if self.ver3 == True:
+			raw_input = input
+		else:
+			pass		
 
 		#RESUME ACTIONS TO BE DONE
 		print("\n Packages (" + str(len(pkgs)) + ") " + " ".join(pkgs))

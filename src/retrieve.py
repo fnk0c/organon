@@ -24,6 +24,7 @@ __DATE__ = "04/09/2015"
 
 from re import findall
 from subprocess import check_call
+import wget
 
 #Define color schema
 red = "\033[31m"
@@ -40,10 +41,12 @@ class download(object):
 			mirror = mirror.readline()
 			mirror = mirror.replace("\n", "")
 	
-		self.src_mirror = mirror + "mirror/" + self.distro + "/" + self.arch + "/"
-		self.pkg_mirror = mirror + "pkgconfig/" + self.distro + "/" + self.arch + "/"
+		self.src_mirror = mirror + "mirror/" + self.arch + "/"
+		self.pkg_mirror = mirror + "pkgconfig/" + self.distro + "/"
 
 	def get_files(self):
+#		wget.download(self.src_mirror + self.pkg_name)
+#		wget.download(self.pkg_mirror + self.pkg_name)
 		print(self.src_mirror + self.pkg_name)
 		print(self.pkg_mirror + self.pkg_name)
 
