@@ -4,6 +4,8 @@
 #This script makes part of Organon Project
 #https://github.com/fnk0c/organon
 
+__AUTHOR__ 	= "Fnkoc"
+__DATE__ = "31/10/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino & Ygor Máximo
@@ -18,9 +20,6 @@
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 """
-
-__AUTHOR__ 	= "Fnkoc"
-__DATE__ = "04/09/2015"
 
 from re import findall
 from subprocess import check_call

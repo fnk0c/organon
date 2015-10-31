@@ -91,18 +91,18 @@ def install():
 		check_call("wget https://pypi.python.org/packages/source/w/wget/wget-3.2.zip", shell = True)
 		check_call("unzip wget-*", shell = True)
 		check_call("cd wget-* && sudo python setup.py install", shell = True)
+		print(" [+] Installing MAN page")
+		check_call("sudo install -Dm644 doc/organon.8 /usr/share/man/man8/", \
+		shell = True)
+		print(" [+] Installing LICENSE")
+		check_call("sudo install -Dm644 doc/LICENSE /usr/share/licenses/organon/", \
+		shell = True)
 		print(" [+] Creating organon\'s cache")
 		check_call("sudo mkdir /var/cache/organon", shell = True)
 		print(" [+] Moving organon to /usr/share")
 		check_call("sudo mv ../organon /usr/share", shell = True)
 		print(" [+] Creating symlink")
-		check_call("sudo ln -s /usr/share/organon /usr/bin", shell = True)
-#		print(" [+] Installing MAN page")
-#		check_call("sudo install -Dm644 doc/organon.8 /usr/share/man/man8/", \
-#		shell = True)
-#		print(" [+] Installing LICENSE")
-#		check_call("sudo install -Dm644 doc/LICENSE /usr/share/licenses/organon/", \
-#		shell = True)
+		check_call("sudo ln -s /usr/share/organon/organon /usr/bin/", shell = True)
 		print(" [+] Cleaning files")
 		check_call("sudo rm -rf python-pymysql* PKGBUILD PyMySQL* pkg wget*", \
 		shell = True)
