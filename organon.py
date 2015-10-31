@@ -86,10 +86,10 @@ def py_version():
 		exit()
 
 def main():
-	core = atom.actions(ver3, distro)
+	core = atom.actions(ver3, distro, arch)
 
 	#Check if organon is correctly installed
-	core.check_install()
+#	core.check_install()
 	
 	### - OPEN MAN PAGE - ###
 	if args.about:
@@ -140,6 +140,9 @@ if __name__ == "__main__":
 		print(banner)
 		parser.print_help()
 	else:
-		distro = "debian"
+		with open("/etc/organon/organon.conf", "r") as conf:
+			conf = conf.readlines()
+			distro = conf[0].split("=")[1].replace("\n", "").replace(" ", "")
+			arch = conf[1].split("=")[1].replace("\n", "").replace(" ", "")
 		py_version()
 		main()

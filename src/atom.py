@@ -22,12 +22,14 @@ __DATE__	= "13/10/2015"
 """
 
 import os
-import database
+import database		#Retrieve database data
+import retrieve		#Retrieve source files and pkgconfig
 
 class actions(object):
-	def __init__(self, ver3, distro):
+	def __init__(self, ver3, distro, arch):
 		self.ver3 = ver3
 		self.distro = distro
+		self.arch = arch
 
 	# UPDATE ORGANON ###########################################################
 	def update(self):
@@ -68,12 +70,10 @@ to install dependencies and configure Organon")
 
 	def install(self, pkgs):
 		#PYTHON 2 AND 3 SUPPORT
-		try: raw_input
-		except: raw_input = input		
-		if self.ver3 == True:
-			import urllib.request as u
-		elif self.ver3 == False:
-			import urllib as u
+		try:
+			raw_input
+		except: 
+			raw_input = input		
 
 		#RESUME ACTIONS TO BE DONE
 		print("\n Packages (" + str(len(pkgs)) + ") " + " ".join(pkgs))
@@ -83,7 +83,7 @@ to install dependencies and configure Organon")
 		if choice != "y" and len(choice) != 0:
 			print(" [-] Aborted")
 			exit()
-		else:
+		elif choice == "y" or len(choice) == 0:
 			for package in pkgs:
 				# CHECK IF ALREADY INSTALLED
 				if package in os.listdir("/usr/bin"):
@@ -91,13 +91,12 @@ to install dependencies and configure Organon")
 				elif package in os.listdir("/usr/local/bin"):
 					print(" [!] %s already installed" % package)
 				else:
-					#IF NOT INSTALLED
-					pkgconfig_source = ("http://organon.ddns.net/pkgconfig/%s/%s.conf" % (self.distro, package))
-					con = u.urlopen(pkgconfig_source)
-
-					with open((package + ".conf"), "w") as pkgconfig:
-						source = con.read()
-						pkgconfig.write(str(source) + "\n")
+					#call module responsable to download package
+					down = retrieve.download(package, self.distro, self.arch)
+					#define server to be used
+					down.get_mirror()
+					#download source em pkgconfig
+					down.get_files()
 						
 
 	def uninstall(self, pkgs, config, dep):

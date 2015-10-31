@@ -24,11 +24,12 @@ __DATE__	= "30/10/2015"
 from sys import version, argv
 from os import path, getuid
 from subprocess import check_call, CalledProcessError
+from platform import machine
 
 dependencies = {
 "arch2":["python2-lxml", "python2-beautifulsoup4"], #python2-pymysql is available on AUR
 "debian2":["python-lxml", "python-bs4", "python-pymysql"],
-"arch3":["python-lxml", "python-beautifulsoup4"], ##python-pymysql is available on AUR
+"arch3":["python-lxml", "python-beautifulsoup4"], #python-pymysql is available on AUR
 "debian3":["python3-lxml", "python3-bs4", "python3-pymysql"]
 }
 
@@ -37,6 +38,7 @@ py_version = {
 2:[dependencies["arch2"], dependencies["debian2"]],
 }
 
+distro = 0
 arch = 0
 debian = 1
 ver2 = 2
@@ -44,6 +46,7 @@ ver3 = 3
 
 def main():
 	if path.isfile("/etc/apt/sources.list"):
+		distro = "debian"
 		manager = "sudo apt-get install "
 
 		if "2" in version[0]:
@@ -54,6 +57,7 @@ def main():
 			.replace("]", "").replace(",", "")
 
 	elif path.isfile("/etc/pacman.conf"):
+		distro = "arch"
 		manager = "sudo pacman -S "
 
 		# using wget cause urllib.request was not working 
@@ -71,7 +75,8 @@ def main():
 	else:
 		print("Installer not finished for this type os Linux.")
 		print("Please, install the following dependencies:")
-		for i in py_version[ver2][debian]: print("\t%s" % i)
+		for i in py_version[ver2][debian]:
+			print("\t%s" % i)
 		exit()
 		
 	try:
@@ -81,7 +86,7 @@ def main():
 		check_call("makepkg PKGBUILD", shell = True)
 		check_call("sudo pacman -U python-pymysql*", shell = True)
 		print(" [+] Creating .cache")
-		check_call("mkdir .cache", shell = True)
+		check_call("mkdir /var/cache/organon", shell = True)
 		print(" [+] Moving organon to /usr/share")
 		check_call("sudo mv ../organon /usr/share", shell = True)
 		print(" [+] Creating symlink")
@@ -100,6 +105,14 @@ def main():
 		print(" [!] ainn. Something went wrong")
 		print(e)
 		exit()
+
+	with open("organon.conf", "w") as conf:
+		conf.write("arch = %s" % machine())
+		conf.write("distro = %s" % distro)
+	
+	check_call("sudo mkdir /etc/organon && sudo mv organon.conf /etc/organon", \
+	shell = True)
+	check_call("sudo cp etc/mirrors /etc/organon", shell = True)
 
 if __name__ == "__main__":
 	if len(argv) == 1 or argv[1] == "help":
