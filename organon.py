@@ -26,12 +26,7 @@ from os import system
 import argparse
 path.append("src/")
 import atom
-
-# COLORS #######################################################################
-red = "\033[31m"
-white = "\33[1;37m"
-green = "\033[32m"
-default = "\33[1;00m"
+from colors import *
 
 # BANNER #######################################################################
 banner = """%s

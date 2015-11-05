@@ -26,12 +26,16 @@ This script is responsible to connect with the database and retrieve all the
 needed informations
 """
 
+from colors import *
+
 class connect(object):
 	def __init__(self, host, ver3):
 		self.host = host
 		self.ver3 = ver3
 
 	def ip_retriever(self):
+		def __init__(self):
+			self.ip = ip
 		#lib to parse html
 		from bs4 import BeautifulSoup
 		
@@ -68,8 +72,15 @@ class connect(object):
 			cur.execute(query)
 
 			for row in cur:
-				for i in row:
-					print(str(i) + "\n")
+				for i in row[::3]:
+					package = str(i)
+				for i in row[1::3]:
+					version = str(i)
+				for i in row[2::3]:
+					description = str(i)
+			
+				print("%s%s%s | v%s%s%s\n\n  %s\n" % (green, package, default, \
+				yellow, version, default,description))
 		except sql.Error as e:
 			print(e)
 			exit()

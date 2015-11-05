@@ -24,6 +24,7 @@ __DATE__	= "13/10/2015"
 import os
 import database		#Retrieve database data
 import retrieve		#Retrieve source files and pkgconfig
+from colors import *
 
 class actions(object):
 	def __init__(self, ver3, distro, arch):
@@ -33,7 +34,7 @@ class actions(object):
 
 	# UPDATE ORGANON ###########################################################
 	def update(self):
-		print("[+] Updating Organon")
+		print(colors.green + "[+] Updating Organon" + colors.default)
 		up = os.system("git fetch && git pull")
 
 		if up != 0:
@@ -55,9 +56,9 @@ version from https://github.com/fnk0c/organon")
 			from time import sleep
 		
 			os.system("clear")
-			print("\n\n\t >> OPS! <<\n\n")
+			print(red + "\n\n\t >> OPS! <<\n\n")
 			print(" [!] Did you run install.sh?\n Please run \'./install.sh\' \
-to install dependencies and configure Organon")
+to install dependencies and configure Organon" + default)
 			sleep(3)
 
 		if os.getuid() == 0:
@@ -70,14 +71,15 @@ to install dependencies and configure Organon")
 
 	def install(self, pkgs):
 		#PYTHON 2 AND 3 SUPPORT
-		if self.ver3 == True:
+		if self.ver3 == False:
+			pass
+		elif self.ver3 == True:
 			raw_input = input
-		else:
-			pass		
 
 		#RESUME ACTIONS TO BE DONE
 		print("\n Packages (" + str(len(pkgs)) + ") " + " ".join(pkgs))
-		choice = raw_input("\n [+] Continue the installation? [Y/n] ").lower()
+		choice = raw_input("\n %s[+]%s Continue the installation? [Y/n] " % \
+		(green, default)).lower()
 
 		# CHECK IF USER WANT TO CONTINUE
 		if choice != "y" and len(choice) != 0:
@@ -163,14 +165,14 @@ SELECT * FROM table WHERE \
 LIKE '%create%' OR \
 CONVERT( versao USING utf8 ) \
 LIKE '%create%' OR \
-CONVERT( url USING utf8 ) \
-LIKE '%create%' OR \
 CONVERT( descricao USING utf8) \
+LIKE '%create%' OR \
+CONVERT( url USING utf8 ) \
 LIKE '%create%' OR \
 CONVERT( dependencias  USING utf8 ) \
 LIKE '%create%') LIMIT 0, 30").replace("create", keyword).replace("table", self.distro)
 
-		print(" [+] Searching for: ", keyword)
+		print(" [+] Searching for: " + keyword)
 		db = database.connect("http://organon.ddns.net", self.ver3)
 		db.ip_retriever()
 		db.MySQL(query)

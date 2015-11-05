@@ -113,8 +113,8 @@ def install():
 		exit()
 
 	with open("organon.conf", "w") as conf:
-		conf.write("arch = %s" % machine())
-		conf.write("\ndistro = %s" % distro)
+		conf.write("distro = %s" % distro)
+		conf.write("\narch = %s" % machine())
 	
 	check_call("sudo mkdir /etc/organon && sudo mv organon.conf /etc/organon", \
 	shell = True)
