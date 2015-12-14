@@ -90,10 +90,19 @@ def install():
 		print(" [+] Moving organon to /usr/share")
 		check_call("sudo mv ../organon /usr/share", shell = True)
 		print(" [+] Creating symlink")
-		check_call("sudo ln -s /usr/share/organon/organon /usr/bin/", shell = True)
+
+		with open("organon", "w") as symlink:
+			symlink.write(\
+"""
+#!/bin/bash
+			
+cd /usr/share/organon
+python organon.py $@""")
+
+		check_call("sudo mv organon /usr/bin", shell = True)
+		print(" [+] Changing permission")
+		check_call("sudo chmod +x /usr/bin/organon", shell = True)
 		print(" [+] Cleaning files")
-		check_call("sudo rm -rf python-pymysql* PKGBUILD PyMySQL* pkg wget*", \
-		shell = True)
 	
 	except (CalledProcessError, KeyboardInterrupt) as e:
 		print(" [!] ainn. Something went wrong")
