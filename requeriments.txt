@@ -1,4 +1,4 @@
 html5lib
 pymysql
-beautifulsoup
+beautifulsoup4
 wget
