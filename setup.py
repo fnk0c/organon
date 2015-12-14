@@ -85,9 +85,6 @@ def install():
 		print(" [+] Installing MAN page")
 		check_call("sudo install -Dm644 doc/organon.8 /usr/share/man/man8/", \
 		shell = True)
-		print(" [+] Installing LICENSE")
-		check_call("sudo install -Dm644 doc/LICENSE /usr/share/licenses/organon/", \
-		shell = True)
 		print(" [+] Creating organon\'s cache")
 		check_call("sudo mkdir /var/cache/organon", shell = True)
 		print(" [+] Moving organon to /usr/share")
