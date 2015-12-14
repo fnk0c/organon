@@ -76,11 +76,11 @@ class connect(object):
 					package = str(i)
 				for i in row[1::5]:
 					version = str(i)
-				for i in row[2::5]:
+				for i in row[3::5]:
 					description = str(i)
 			
 				print("%s%s%s | v%s%s%s\n\n  %s\n" % (green, package, default, \
-				yellow, version, default,description))
+				yellow, version, default, description))
 		except sql.Error as e:
 			print(e)
 			exit()
