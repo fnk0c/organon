@@ -27,10 +27,10 @@ from subprocess import check_call, CalledProcessError
 from platform import machine
 
 dependencies = {
-"arch2":["python2-lxml", "python2-beautifulsoup4"], #python2-pymysql is available on AUR
-"debian2":["python-lxml", "python-bs4", "python-pymysql"],
-"arch3":["python-lxml", "python-beautifulsoup4"], #python-pymysql is available on AUR
-"debian3":["python3-lxml", "python3-bs4", "python3-pymysql"]
+"arch2":["python2", "python2-pip"],
+"debian2":["python", "python-pip"],
+"arch3":["python", "python-pip"],
+"debian3":["python3", "python3-pip"]
 }
 
 py_version = {
@@ -64,11 +64,9 @@ def install():
 		if "2" in version[0]:
 			dep = str(py_version[ver2][arch]).replace("[", "").replace("]", "")\
 			.replace(",", "")
-			check_call("wget https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=python2-pymysql -O PKGBUILD", shell = True)
 		elif "3" in version[0]:
 			dep = str(py_version[ver3][arch]).replace("[", "").replace("]", "")\
 			.replace(",", "")
-			check_call("wget https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=python-pymysql -O PKGBUILD", shell = True)
 
 	#I could have used re.sub to replace the chars, but it doesn't seems to be a
 	#great improve. Neither on layout nor in efficiency
@@ -83,14 +81,7 @@ def install():
 		command = manager + dep
 		print(" [+] Installing dependencies")
 		check_call(command, shell = True)
-		if distro == "arch":
-			check_call("makepkg PKGBUILD", shell = True)
-			check_call("sudo pacman -U python-pymysql*", shell = True)
-		else:
-			pass
-		check_call("wget https://pypi.python.org/packages/source/w/wget/wget-3.2.zip", shell = True)
-		check_call("unzip wget-*", shell = True)
-		check_call("cd wget-* && sudo python setup.py install", shell = True)
+		check_call("sudo pip install -r requeriments.txt", shell = True)
 		print(" [+] Installing MAN page")
 		check_call("sudo install -Dm644 doc/organon.8 /usr/share/man/man8/", \
 		shell = True)

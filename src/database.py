@@ -51,7 +51,7 @@ class connect(object):
 		html = con.read()
 
 		### - Parse HTML - ###
-		soup = BeautifulSoup(html, "lxml")
+		soup = BeautifulSoup(html, "html5lib")
 		for l in soup.findAll("link"):
 			ip = l.get("href")
 

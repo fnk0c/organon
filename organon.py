@@ -95,6 +95,11 @@ def main():
 		print("Version: ", __VERSION__)
 		print("Last revision", __DATE__)
 
+	### - CLEAN ORGANON CACHE - ###
+	if args.clean:
+		print(" [!] Cleaning cache")
+		system("sudo rm -rf /var/cache/organon/*")
+
 	### - UPDATE ORGANON - ###
 	if args.u:
 		core.update()

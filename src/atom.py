@@ -34,7 +34,7 @@ class actions(object):
 
 	# UPDATE ORGANON ###########################################################
 	def update(self):
-		print(colors.green + "[+] Updating Organon" + colors.default)
+		print(green + "[+] Updating Organon" + default)
 		up = os.system("git fetch && git pull")
 
 		if up != 0:
@@ -99,7 +99,10 @@ to install dependencies and configure Organon" + default)
 					down.get_mirror()
 					#download source em pkgconfig
 					down.get_files()
-						
+
+					install = retrieve.install()
+					install.data()
+					install.script_creator()
 
 	def uninstall(self, pkgs, config, dep):
 		if self.ver3 == True:

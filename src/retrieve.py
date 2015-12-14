@@ -42,14 +42,15 @@ class download(object):
 	def get_files(self):
 		src = self.src_mirror + self.pkg_name + ".tar.gz"
 		pkg = self.pkg_mirror + self.pkg_name + ".conf"
-		print(src)
 		print(pkg)
 
 		try:
-			check_call("wget %s" % src, shell = True)
+			check_call("sudo wget -c -P /var/cache/organon %s" % src, shell = True)
 		except (CalledProcessError, FileNotFoundError):
 			src = src.replace("x86_64", "any").replace("x86", "any")
-			check_call("wget %s" % src, shell = True)
+			check_call("sudo wget -c -P /var/cache/organon %s" % src, shell = True)
+
+		check_call("sudo wget -c -P /var/cache/organon %s" % pkg, shell = True)
 
 class install(object):
 	#Template used to do the install
@@ -85,22 +86,23 @@ ln -s /usr/share/organon/organon /usr/bin/organon
 
 	#Store config file
 	pkgconfig = []
-	def __init__(self, INSTRUCTIONS, INSTALLER, INSTALLER_TYPE, TYPE):
-		self.instructions = INSTRUCTIONS
-		self.installer = INSTALLER
-		self.installer_type = INSTALLER_TYPE
-		self.type = TYPE
+#	def __init__(self, INSTRUCTIONS, INSTALLER, INSTALLER_TYPE, TYPE):
+#		self.instructions = INSTRUCTIONS
+#		self.installer = INSTALLER
+#		self.installer_type = INSTALLER_TYPE
+#		self.type = TYPE
 
 	def data(self):
 		#open, reads and append config file to list
 		try:
-			with open(pkg_name + ".conf", "r") as f:
+			f = "/var/cache/organon/" + download.pkg_name + ".conf"
+			with open(f + ".conf", "r") as f:
 				pkgconfig_file = f.read()
 				pkgconfig.append(pkgconfig_file)
 
 		except (FileNotFoundError, IOError, OSError):
 			print(red + " [!] " + default + "No tool found on \
-database named [%s]" % pkg_name)
+database named [%s]" % self.pkg_name)
 			exit()
 
 		#colect data for program compilation and install
