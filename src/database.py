@@ -72,11 +72,11 @@ class connect(object):
 			cur.execute(query)
 
 			for row in cur:
-				for i in row[::3]:
+				for i in row[::5]:
 					package = str(i)
-				for i in row[1::3]:
+				for i in row[1::5]:
 					version = str(i)
-				for i in row[2::3]:
+				for i in row[2::5]:
 					description = str(i)
 			
 				print("%s%s%s | v%s%s%s\n\n  %s\n" % (green, package, default, \

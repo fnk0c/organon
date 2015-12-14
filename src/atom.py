@@ -159,7 +159,8 @@ to install dependencies and configure Organon" + default)
 		#IP address everytime we run it
 		db = database.connect("http://organon.ddns.net", self.ver3)
 		db.ip_retriever()
-		db.MySQL("SELECT nome, versao, descricao FROM %s" % self.distro)
+		db.MySQL("SELECT nome, versao, descricao, url, dependencias FROM %s"\
+		% self.distro)
 
 	def search_db(self, keyword):
 		query = ("\
