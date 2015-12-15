@@ -3,7 +3,7 @@
 
 __AUTHOR__	= "Fnkoc"
 __VERSION__	= "0.2.1"
-__DATE__	= "13/10/2015"
+__DATE__	= "14/12/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino
@@ -35,7 +35,7 @@ class actions(object):
 	# UPDATE ORGANON ###########################################################
 	def update(self):
 		print(green + "[+] Updating Organon" + default)
-		up = os.system("git fetch && git pull")
+		up = os.system("git reset --hard && git fetch && git pull")
 
 		if up != 0:
 			print(" [-] Couldn\'t retrieve update. Please download the latest \
@@ -159,7 +159,7 @@ to install dependencies and configure Organon" + default)
 		#IP address everytime we run it
 		db = database.connect("http://organon.ddns.net", self.ver3)
 		db.ip_retriever()
-		db.MySQL("SELECT nome, versao, descricao, url, dependencias FROM %s"\
+		db.MySQL("SELECT nome, versao, dependencias, descricao FROM %s"\
 		% self.distro)
 
 	def search_db(self, keyword):
@@ -167,11 +167,9 @@ to install dependencies and configure Organon" + default)
 SELECT * FROM table WHERE \
 (CONVERT( nome USING utf8 ) \
 LIKE '%create%' OR \
-CONVERT( versao USING utf8 ) \
+CONVERT( url USING utf8 ) \
 LIKE '%create%' OR \
 CONVERT( descricao USING utf8) \
-LIKE '%create%' OR \
-CONVERT( url USING utf8 ) \
 LIKE '%create%' OR \
 CONVERT( dependencias  USING utf8 ) \
 LIKE '%create%') LIMIT 0, 30").replace("create", keyword).replace("table", self.distro)
