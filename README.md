@@ -18,7 +18,7 @@ Requirements
 1. Python >=2.7 or >=3.4    
 2. python-pymysql
 3. python-BeautifulSoup
-4. python-lxml
+4. python-html5lib
 5. python-wget
 6. GNU/Linux system based on Debian and Arch
 
@@ -26,7 +26,7 @@ Install
 -------
 	git clone https://github.com/fnk0c/organon.git
 	cd organon
-	./install.sh
+	python setup.py install
 
 [With screenshot](http://organon.ddns.net/install)
 
