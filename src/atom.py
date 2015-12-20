@@ -48,9 +48,9 @@ version from https://github.com/fnk0c/organon")
 	#TO /USR/SHARE/. INSTALL.SH ALSO INSTALL ALL DEPENDENCIES NEEDED, CREATE 
 	#THE SYMBOLICS LINKS AND .cache DIRECTORY
 	def check_install(self):
-#		if self.ver3 == True:
-		try: raw_input
-		except: raw_input = input
+		if self.ver3 == True:
+			try: raw_input
+			except: raw_input = input
 
 		if os.getcwd() != "/usr/share/organon":
 			from time import sleep
@@ -71,9 +71,7 @@ to install dependencies and configure Organon" + default)
 
 	def install(self, pkgs):
 		#PYTHON 2 AND 3 SUPPORT
-		if self.ver3 == False:
-			pass
-		elif self.ver3 == True:
+		if self.ver3 == True:
 			raw_input = input
 
 		#RESUME ACTIONS TO BE DONE

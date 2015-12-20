@@ -79,7 +79,7 @@ class connect(object):
 				for i in row[3::5]:
 					description = str(i)
 			
-				print("%s%s%s | v%s%s%s\n\n  %s\n" % (green, package, default, \
+				print(" %s%s%s | v%s%s%s\n\n    %s\n" % (green, package, default, \
 				yellow, version, default, description))
 		except sql.Error as e:
 			print(e)
