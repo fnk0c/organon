@@ -16,10 +16,7 @@ Authors:
 Requirements
 -------------
 1. Python >=2.7 or >=3.4    
-2. python-pymysql
-3. python-BeautifulSoup
-4. python-html5lib
-5. GNU/Linux system based on Debian and Arch
+2. GNU/Linux system based on Debian and Arch
 
 Install
 -------
