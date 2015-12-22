@@ -19,8 +19,7 @@ Requirements
 2. python-pymysql
 3. python-BeautifulSoup
 4. python-html5lib
-5. python-wget
-6. GNU/Linux system based on Debian and Arch
+5. GNU/Linux system based on Debian and Arch
 
 Install
 -------
@@ -32,14 +31,9 @@ Install
 
 Tested on:
 ----------
-* Ubuntu 14.04  
-* Ubuntu 14.10  
-* Ubuntu 15.04  
-* Debian 7.8 Wheezy
-* Debian 8 Jessie
-* Elementary OS Luna
-* Linux Mint 17.1
-* Manjaro (Unstable)
+* Arch Linux
+* Manjaro
+* Debian 8
 
 Screenshot
 ----------
@@ -94,31 +88,17 @@ Send us a message on facebook
 
 About current version
 ---------------------
+#### `v0.2.2`
+- All features from previous versions + review of the code  
+ - Using rsync to do package tracking
+ - Download application according to platform (x86 ou x86_64)
+ - MySQL database replaced by CSV file
+
+About previous version
+---------------------
 #### `v0.2.1`
 - All features from previous versions + review of the code  
  - Installation script re-wrote and optimized  
  - Remove ruby  
  - All scripts are made in python  
 
-About previous version
----------------------
-#### `v0.2.0`
-- **Goal**
- - Install tools and its dependences from a MySQL database
-
-- **MySQL**
- - Server version: 5.5.41-0+wheezy1 (Debian)
-
- - Ruby code to connect to the database (depreciated)
-
- - Python script to execute the SQL commands and run the program
-
-- **PKGCONFIG**
- - The installation scripts were replaced by pkgconfig files, similar to pacman pkgbuild. These files are hosted on the organon server.
-
-- **Arch Linux support**
- - Organon now supports Arch and Debian linux  
-
-- **Improvements on Install and Remove functions**
- - * Check if already installed
- - * When uninstalling, Organon check for the tool and diferent directorys (/usr/share || /usr/local/share || /opt)

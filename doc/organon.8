@@ -6,61 +6,87 @@
 Organon \- Package manager that focus on pentest tools
 
 .SH SYNOPSIS
-usage: organon [-h] [-a] [-v] [-i I [I ...]] [-r R [R ...]] [--dependencies] [--config] [-u] [-s S] [-l] [--clean]
+usage: organon [-h] [-a] [-v] [-i I [I ...]] [-r R [R ...]]
+       [--dependencies] [--config] [-U] [-u] [-S S] [-s S]
+       [-L] [--clean]
 
 .SH DESCRIPTION
-Organon program focuses on automating the download, installation and compilation of pentest tools from source
+Organon is a program that focuses on automating the download, installation and compilation of pentest tools from source
 
 .SH REQUIREMENTS
   
   1. Python >=2.7 or >=3.4
-  2. Ruby >=1.9
-  3. bundler
-  4. Gems: mysql, colorize, nokogiri
-  5. GNU/Linux system based on Debian and Arch
+  2. GNU/Linux system based on Debian and Arch
 
 
 .SH TESTED ON
 
-  * Ubuntu 14.04 x86_64
-  * Ubuntu 14.10 x86_64
-  * Debian 7.8 Wheezy
-  * Debian 8 Squeezy
-  * Elementary OS Luna
-  * Linux Mint 17.1
-  * Manjaro (unstable)
+  * Debian 8 Wheezy
+  * Manjaro
+  * Arch Linux
 
 .SH OPTIONS
-organon -h 
+
+  -h, --help      show this help message and exit
+  -a, --about     About this tool
+  -v, --version   Show version and exit
+  -i I [I ...]    Install packages
+  -r R [R ...]    Remove packages
+  --dependencies  Remove dependencies (use with -r)
+  --config        Remove configuration files (use with -r)
+  -U              Update Organon
+  -u              Update packages
+  -S S            Synchronize database
+  -s S            Search for packages
+  -L              List all packages available
+  --clean         Clean Organon's cache
+
+organon -h
+
 Shows help
 
-organon -l 
-Lists all the availables tools to install
+organon -a
 
-organon -s [PACKAGE]
-Search for an specific package
+Shows MAN file
+
+organon -v
+Shows version
 
 organon -i [PACKAGE]
+
 Install an specific package
 
 organon -r [PACKAGE]
+
 Remove an specific package
        --dependencies
        Remove package dependencies
        --config
        Remove package configuration files
 
-organon -a
-Shows README file
+organon -U
 
-organon -v
-Shows tool version
-
-organon -u
 Search and download updates for Organon
 
+organon -u
+
+Search and download updates for installed packages
+
+organon -S [PACKAGE]
+
+Synchronizes database between server and client
+
+organon -s [PACKAGE]
+
+Search for an specific package
+
+organon -L
+
+Lists all the availables tools to install
+
 organon --clean
-Clean .cache directory
+
+Clean /var/cache/organon directory
 
 .SH EXAMPLES
 organon -i aircrack-ng reaver cangibrina
@@ -75,11 +101,11 @@ organon -r nmap --dependencies --config
 
 .SH AUTHORS
   * Fnkoc
-  * Maximoz
 
-.SH VISIT THE DEVELOPMENT PAGE
+.SH DEVELOPMENT PAGE
 https://fnk0c.github.io/organon
-http://organon.ddns.net
+
+https://github.com/fnk0c/organon
 
 .SH BUGS
 Please, open an Issue at github if find one
