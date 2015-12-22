@@ -10,8 +10,8 @@ Tool developed for Linux systems (APT and Pacman)
 
 Authors:
 --------
-* [Franco Colombino (Fnkoc)](https://github.com/fnk0c)
-* [Ygor Máximo (Maximoz)](https://github.com/maximozsec)
+* [Franco Colombino (Fnkoc)](https://github.com/fnk0c)  
+***Special thanks to [Ygor Máximo (Maximoz)](https://github.com/maximozsec) for support on the beginning***
 
 Requirements
 -------------
@@ -38,40 +38,64 @@ Screenshot
 
 Help
 ----
-	usage: organon.py [-h] [-a] [-v] [-i I [I ...]] [-r R [R ...]]
-                  [--dependencies] [--config] [-u] [-s S] [-l] [--clean]
+```
+usage: organon [-h] [-a] [-v] [-i I [I ...]] [-r R [R ...]] [--dependencies]
+               [--config] [-U] [-u] [-S] [-s S] [-L] [--clean]
 
-	Package manager that focus on Pentest tools
+Package manager that focus on Pentest tools
 
-	optional arguments:
-	  -h, --help      show this help message and exit
-	  -a, --about     About this tool
-	  -v, --version   Show version and exit
-	  -i I [I ...]    Install packages
-	  -r R [R ...]    Remove packages
-	  --dependencies  Remove dependencies (use with -r)
-	  --config        Remove configuration files (use with -r)
-	  -u              Update Organon
-	  -s S            Search for package
-	  -l              List all packages available
-	  --clean         Clean Organon's cache
+optional arguments:
+  -h, --help      show this help message and exit
+  -a, --about     About this tool
+  -v, --version   Show version and exit
+  -i I [I ...]    Install packages
+  -r R [R ...]    Remove packages
+  --dependencies  Remove dependencies (use with -r)
+  --config        Remove configuration files (use with -r)
+  -U              Update Organon
+  -u              Update packages
+  -S              Synchronize database
+  -s S            Search for packages
+  -L              List all packages available
+  --clean         Clean Organon's cache
 
-	* Listing available tools  
-	        organon -l  
-	* Searching for tools  
-	        organon -s <package>
-	* Installing tool  
-	        organon -i <package> <package>
-	* Update Organon  
-	        organon -u
-	* Remove tool
-	        organon -r <package> <package>  
-	* Remove tool and its dependencies and configuration files
-	        organon -r <package> <package> --dependencies --config  
-	* Clean .cache directory
-	        organon --clean 
-	* Current Version
-	        organon -v
+organon -h
+	Shows help
+
+organon -a
+	Shows MAN file
+
+organon -v 
+	Shows version
+
+organon -i [PACKAGE]
+	Install an specific package
+
+organon -r [PACKAGE]
+  Remove an specific package
+  --dependencies
+  	Remove package dependencies
+	--config
+		Remove package configuration files
+
+organon -U
+	Search and download updates for Organon
+
+organon -u
+	Search and download updates for installed packages
+
+organon -S [PACKAGE]
+	Synchronizes database between server and client
+
+organon -s [PACKAGE]
+	Search for an specific package
+
+organon -L
+	Lists all the availables tools to install
+
+organon --clean
+	Clean /var/cache/organon directory
+```
 
 BUGS
 ----
