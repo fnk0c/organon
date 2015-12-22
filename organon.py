@@ -2,8 +2,8 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.2.1"
-__DATE__	= "30/10/2015"
+__VERSION__	= "0.2.2"
+__DATE__	= "22/12/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino
@@ -56,11 +56,15 @@ parser.add_argument("--dependencies", action = "store_true",
 	help = "Remove dependencies (use with -r)")
 parser.add_argument("--config", action = "store_true",
 	help = "Remove configuration files (use with -r)")
-parser.add_argument("-u", action = "store_true",
+parser.add_argument("-U", action = "store_true",
 	help = "Update Organon")
+parser.add_argument("-u", action = "store_true",
+	help = "Update packages")
+parser.add_argument("-S", action = "store_true",
+	help = "Synchronize database")
 parser.add_argument("-s",
-	help = "Search for package")
-parser.add_argument("-l", action = "store_true",
+	help = "Search for packages")
+parser.add_argument("-L", action = "store_true",
 	help = "List all packages available")
 parser.add_argument("--clean", action = "store_true",
 	help = "Clean Organon\'s cache")
@@ -101,8 +105,12 @@ def main():
 		system("sudo rm -rf /var/cache/organon/*")
 
 	### - UPDATE ORGANON - ###
+	if args.U:
+		core.update_organon()
+
+	### - UPDATE PACKAGES - ###
 	if args.u:
-		core.update()
+		core.update_packages()
 
 	### - INSTALL PROGRAM - ###
 	elif args.i:
@@ -126,13 +134,17 @@ def main():
 
 		core.uninstall(args.r, config, deps)
 
-	### - LISTA DATABASE - ###
-	elif args.l:
-		core.enum_db()
+	### - SYNCHRONIZE DATABASE - ###
+	elif args.S:
+		core.sync_db()
 
 	### - SEARCH IN DATABASE - ###
 	elif args.s:
 		core.search_db(args.s)
+
+	### - LIST DATABASE - ###
+	elif args.L:
+		core.enum_db()
 
 if __name__ == "__main__":
 	if len(argv) == 1:

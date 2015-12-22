@@ -5,7 +5,7 @@
 #https://github.com/fnk0c/organon
 
 __AUTHOR__ 	= "Fnkoc"
-__DATE__ = "05/11/2015"
+__DATE__ = "22/12/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino & Ygor Máximo
@@ -42,15 +42,21 @@ class download(object):
 	def get_files(self):
 		src = self.src_mirror + self.pkg_name + ".tar.gz"
 		pkg = self.pkg_mirror + self.pkg_name + ".conf"
-		print(pkg)
+		print(src)
 
 		try:
-			check_call("sudo wget -c -P /var/cache/organon %s" % src, shell = True)
-		except (CalledProcessError, FileNotFoundError):
-			src = src.replace("x86_64", "any").replace("x86", "any")
-			check_call("sudo wget -c -P /var/cache/organon %s" % src, shell = True)
+			command = "sudo rsync -Cravzp %s /var/cache/organon" % src
+			check_call(command, shell = True)
+		except (Exception, CalledProcessError, FileNotFoundError):
+			command = command.replace("x86_64", "any").replace("x86", "any")
+			print(command)
+			check_call(command, shell = True)
 
 		check_call("sudo wget -c -P /var/cache/organon %s" % pkg, shell = True)
+
+	def sync(self):
+		command = "sudo rsync -Cravzp %sdb/tools.db /etc/organon/" % self.src_mirror
+		check_call(command, shell = True)
 
 class install(object):
 	#Template used to do the install

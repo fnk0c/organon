@@ -3,7 +3,7 @@
 
 __AUTHOR__	= "Fnkoc"
 __VERSION__	= "0.2.1"
-__DATE__	= "14/12/2015"
+__DATE__	= "22/12/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino
@@ -33,7 +33,7 @@ class actions(object):
 		self.arch = arch
 
 	# UPDATE ORGANON ###########################################################
-	def update(self):
+	def update_organon(self):
 		print(green + "[+] Updating Organon" + default)
 		up = os.system("git reset --hard && git fetch && git pull")
 
@@ -42,6 +42,9 @@ class actions(object):
 version from https://github.com/fnk0c/organon")
 		else:
 			print(" [+] Organon was successfully updated")
+
+	def update_packages(self):
+		print("coming soon")
 
 	#CHECK IF PATH IS /USR/SHARE/ORGANON
 	#THIS CHECK HAPPENS BECAUSE WHEN YOU RUN ./INSTALL.SH THE SCRIPT IS MOVED 
@@ -99,8 +102,8 @@ to install dependencies and configure Organon" + default)
 					down.get_files()
 
 					install = retrieve.install()
-					install.data()
-					install.script_creator()
+#					install.data()
+#					install.script_creator()
 
 	def uninstall(self, pkgs, config, dep):
 		if self.ver3 == True:
@@ -152,27 +155,14 @@ to install dependencies and configure Organon" + default)
 				if dep == True:
 					print(" [+] Removing dependencies...")
 
+	def sync_db(self):
+		sync = retrieve.download(None, self.distro, self.arch)
+		sync.get_mirror()
+		sync.sync()
+
 	def enum_db(self):
-		#Since organon is hosted on a Dynamic IP server. We need to get its
-		#IP address everytime we run it
-		db = database.connect("http://organon.ddns.net", self.ver3)
-		db.ip_retriever()
-		db.MySQL("SELECT nome, versao, dependencias, descricao FROM %s"\
-		% self.distro)
+		database.connect().listing()
 
 	def search_db(self, keyword):
-		query = ("\
-SELECT * FROM table WHERE \
-(CONVERT( nome USING utf8 ) \
-LIKE '%create%' OR \
-CONVERT( url USING utf8 ) \
-LIKE '%create%' OR \
-CONVERT( descricao USING utf8) \
-LIKE '%create%' OR \
-CONVERT( dependencias  USING utf8 ) \
-LIKE '%create%') LIMIT 0, 30").replace("create", keyword).replace("table", self.distro)
-
-		print(" [+] Searching for: " + keyword)
-		db = database.connect("http://organon.ddns.net", self.ver3)
-		db.ip_retriever()
-		db.MySQL(query)
+		print(green + " [+] " + default + "Searching for: " + keyword)
+		database.connect().search(keyword)
