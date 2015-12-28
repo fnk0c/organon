@@ -101,7 +101,7 @@ to install dependencies and configure Organon" + default)
 					#download source em pkgconfig
 					down.get_files()
 
-					install = retrieve.install()
+#					install = retrieve.install()
 #					install.data()
 #					install.script_creator()
 

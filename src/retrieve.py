@@ -5,7 +5,7 @@
 #https://github.com/fnk0c/organon
 
 __AUTHOR__ 	= "Fnkoc"
-__DATE__ = "22/12/2015"
+__DATE__ = "28/12/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino & Ygor Máximo
@@ -35,9 +35,10 @@ class download(object):
 		with open("/etc/organon/mirrors", "r") as mirror:
 			mirror = mirror.readline()
 			mirror = mirror.replace("\n", "")
-	
-		self.src_mirror = mirror + "mirror/" + self.arch + "/"
-		self.pkg_mirror = mirror + "pkgconfig/" + self.distro + "/"
+
+		self.mirror = mirror
+		self.src_mirror = mirror + "mirror/source/" + self.arch + "/"
+		self.pkg_mirror = mirror + "mirror/" + self.distro + "/pkgconfig/"
 
 	def get_files(self):
 		src = self.src_mirror + self.pkg_name + ".tar.gz"
@@ -45,7 +46,7 @@ class download(object):
 		print(src)
 
 		try:
-			command = "sudo rsync -Cravzp %s /var/cache/organon" % src
+			command = "sudo wget -c -P /var/cache/organon %s" % src
 			check_call(command, shell = True)
 		except (Exception, CalledProcessError, FileNotFoundError):
 			command = command.replace("x86_64", "any").replace("x86", "any")
@@ -55,7 +56,8 @@ class download(object):
 		check_call("sudo wget -c -P /var/cache/organon %s" % pkg, shell = True)
 
 	def sync(self):
-		command = "sudo rsync -Cravzp %sdb/tools.db /etc/organon/" % self.src_mirror
+#		command = "sudo rsync -Cravzp %sdb/tools.db /etc/organon/" % self.src_mirror
+		command = "sudo wget -N -P /etc/organon/ %smirror/%s/tools.db" % (self.mirror, self.distro)
 		check_call(command, shell = True)
 
 class install(object):
