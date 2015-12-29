@@ -2,8 +2,8 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.2.1"
-__DATE__	= "22/12/2015"
+__VERSION__	= "0.2.2"
+__DATE__	= "28/12/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino
@@ -101,7 +101,7 @@ to install dependencies and configure Organon" + default)
 					#download source em pkgconfig
 					down.get_files()
 
-#					install = retrieve.install()
+					install = retrieve.install()
 #					install.data()
 #					install.script_creator()
 
@@ -161,8 +161,8 @@ to install dependencies and configure Organon" + default)
 		sync.sync()
 
 	def enum_db(self):
-		database.connect().listing()
+		database.connect(self.ver3).listing()
 
 	def search_db(self, keyword):
 		print(green + " [+] " + default + "Searching for: " + keyword)
-		database.connect().search(keyword)
+		database.connect(self.ver3).search(keyword)

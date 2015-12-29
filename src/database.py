@@ -3,7 +3,7 @@
 
 __AUTHOR__	= "Fnkoc"
 __VERSION__	= "0.2.2"
-__DATE__	= "22/12/2015"
+__DATE__	= "28/12/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino
@@ -25,7 +25,15 @@ import csv
 from colors import *
 
 class connect(object):
+	def __init__(self, ver3):
+		self.ver3 = ver3
+
 	def listing(self):
+		if self.ver3 == True:
+			exception = FileNotFoundError
+		else:
+			exception = IOError
+
 		try:
 			with open("/etc/organon/tools.db", "r") as csvfile:
 				csvcontent = csv.reader(csvfile, delimiter=";")
@@ -33,30 +41,44 @@ class connect(object):
 				for row in csvcontent:
 					print(green + " [+] " + row[0] + yellow + " v" + row[1] + default)
 					print(row[4] + "\n")
-		except FileNotFoundError:
-			print(" [!] No database found! Use \"organon -S\" to sync with our servers")
 
-	
+		except exception:
+			print(red + " [!] " + default + "No database found! Use \"organon\
+ -S\" to sync with our servers")
+
 	def search(self, keyword):
-		with open("/etc/organon/tools.db", "r") as csvfile:
-			csvcontent = csv.reader(csvfile, delimiter=";")
+		if self.ver3 == True:
+			exception = FileNotFoundError
+		else:
+			exception = IOError
+		try:
+			with open("/etc/organon/tools.db", "r") as csvfile:
+				csvcontent = csv.reader(csvfile, delimiter=";")
 
-			for row in csvcontent:
-				#The following convert to lower case
-				#reference link: http://stackoverflow.com/questions/8265648/using-the-lowercase-function-with-csv-rows
-				row = ([r.lower() for r in row])
-				if keyword in row[0]:
-					print(green + " [+] " + row[0] + yellow + " v" + row[1] + default)
-					print(row[4] + "\n")
-				elif keyword in row[1]:
-					print(green + " [+] " + row[0] + yellow + " v" + row[1] + default)
-					print(row[4] + "\n")
-				elif keyword in row[2]:
-					print(green + " [+] " + row[0] + yellow + " v" + row[1] + default)
-					print(row[4] + "\n")
-				elif keyword in row[3]:
-					print(green + " [+] " + row[0] + yellow + " v" + row[1] + default)
-					print(row[4] + "\n")
-				elif keyword in row[4]:
-					print(green + " [+] " + row[0] + yellow + " v" + row[1] + default)
-					print(row[4] + "\n")
+				for row in csvcontent:
+					#The following convert to lower case
+					#reference link: http://stackoverflow.com/questions/8265648/using-the-lowercase-function-with-csv-rows
+					row = ([r.lower() for r in row])
+					if keyword in row[0]:
+						print(green + " [+] " + row[0] + yellow + " v" + row[1]\
+						 + default)
+						print(row[4] + "\n")
+					elif keyword in row[1]:
+						print(green + " [+] " + row[0] + yellow + " v" + row[1]\
+						 + default)
+						print(row[4] + "\n")
+					elif keyword in row[2]:
+						print(green + " [+] " + row[0] + yellow + " v" + row[1]\
+						 + default)
+						print(row[4] + "\n")
+					elif keyword in row[3]:
+						print(green + " [+] " + row[0] + yellow + " v" + row[1]\
+						 + default)
+						print(row[4] + "\n")
+					elif keyword in row[4]:
+						print(green + " [+] " + row[0] + yellow + " v" + row[1]\
+						 + default)
+						print(row[4] + "\n")
+		except exception:
+			print(red + " [!] " + default + "No database found! Use \"organon\
+ -S\" to sync with our servers")
