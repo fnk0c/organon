@@ -81,7 +81,6 @@ def install():
 		command = manager + dep
 		print(" [+] Installing dependencies")
 		check_call(command, shell = True)
-		check_call("sudo pip install -r requeriments.txt", shell = True)
 		print(" [+] Installing MAN page")
 		check_call("sudo install -Dm644 doc/organon.8 /usr/share/man/man8/", \
 		shell = True)
