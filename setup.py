@@ -26,61 +26,17 @@ from os import path, getuid
 from subprocess import check_call, CalledProcessError
 from platform import machine
 
-dependencies = {
-"arch2":["python2", "python2-pip"],
-"debian2":["python", "python-pip"],
-"arch3":["python", "python-pip"],
-"debian3":["python3", "python3-pip"]
-}
-
-py_version = {
-3:[dependencies["arch3"], dependencies["debian3"]],
-2:[dependencies["arch2"], dependencies["debian2"]],
-}
-
-distro = 0
-arch = 0
-debian = 1
-ver2 = 2
-ver3 = 3
-
 def install():
 	if path.isfile("/etc/apt/sources.list"):
 		distro = "debian"
-		manager = "sudo apt-get install "
-
-		if "2" in version[0]:
-			dep = str(py_version[ver2][debian]).replace("[", "")\
-			.replace("]", "").replace(",", "")
-		elif "3" in version[0]:
-			dep = str(py_version[ver3][debian]).replace("[", "")\
-			.replace("]", "").replace(",", "")
 
 	elif path.isfile("/etc/pacman.conf"):
 		distro = "arch"
-		manager = "sudo pacman -S "
 
-		# using wget cause urllib.request was not working 
-		if "2" in version[0]:
-			dep = str(py_version[ver2][arch]).replace("[", "").replace("]", "")\
-			.replace(",", "")
-		elif "3" in version[0]:
-			dep = str(py_version[ver3][arch]).replace("[", "").replace("]", "")\
-			.replace(",", "")
-
-	#I could have used re.sub to replace the chars, but it doesn't seems to be a
-	#great improve. Neither on layout nor in efficiency
-	else:
-		print("Installer not finished for this type os Linux.")
-		print("Please, install the following dependencies:")
-		for i in py_version[ver2][debian]:
-			print("\t%s" % i)
-		exit()
+	elif path.isfile("/etc/yum.conf"):
+		distro = "fedora"
 		
 	try:
-		command = manager + dep
-		print(" [+] Installing dependencies")
-		check_call(command, shell = True)
 		print(" [+] Installing MAN page")
 		check_call("sudo install -Dm644 doc/organon.8 /usr/share/man/man8/", \
 		shell = True)

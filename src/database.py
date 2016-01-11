@@ -82,3 +82,22 @@ class connect(object):
 		except exception:
 			print(red + " [!] " + default + "No database found! Use \"organon\
  -S\" to sync with our servers")
+
+	def dependencies(self, package):
+		if self.ver3 == True:
+			exception = FileNotFoundError
+		else:
+			exception = IOError
+
+		try:
+			with open("/etc/organon/tools.db", "r") as csvfile:
+				csvcontent = csv.reader(csvfile, delimiter=";")
+
+				for row in csvcontent:
+					if package in row[0]:
+						deps = str(row[3])
+						return(deps)
+
+		except exception:
+			print(red + " [!] " + default + "No database found! Use \"organon\
+ -S\" to sync with our servers")
