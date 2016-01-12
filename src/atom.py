@@ -21,10 +21,11 @@ __DATE__	= "28/12/2015"
 	(https://github.com/fnk0c/organon)
 """
 
-import os
 import database		#Retrieve database data
 import retrieve		#Retrieve source files and pkgconfig
 from colors import *
+from subprocess import check_call
+from os import listdir
 
 class actions(object):
 	def __init__(self, ver3, distro, arch):
@@ -35,25 +36,26 @@ class actions(object):
 	# UPDATE ORGANON ###########################################################
 	def update_organon(self):
 		print(green + "[+] Updating Organon" + default)
-		up = os.system("git reset --hard && git fetch && git pull")
-
-		if up != 0:
+		try:
+			check_call("git reset --hard && git fetch && git pull")
+			print(" [+] Organon was successfully updated")
+		except Exception:
 			print(" [-] Couldn\'t retrieve update. Please download the latest \
 version from https://github.com/fnk0c/organon")
-		else:
-			print(" [+] Organon was successfully updated")
+			exit()
+
 
 	def update_packages(self):
 		print("coming soon")
 
-	#CHECK IF PATH IS /USR/SHARE/ORGANON
-	#THIS CHECK HAPPENS BECAUSE WHEN YOU RUN ./INSTALL.SH THE SCRIPT IS MOVED 
-	#TO /USR/SHARE/. INSTALL.SH ALSO INSTALL ALL DEPENDENCIES NEEDED, CREATE 
-	#THE SYMBOLICS LINKS AND .cache DIRECTORY
 	def check_install(self):
+		#CHECK IF PATH IS /USR/SHARE/ORGANON
+		#THIS CHECK HAPPENS BECAUSE WHEN YOU RUN ./INSTALL.SH THE SCRIPT IS MOVED 
+		#TO /USR/SHARE/. INSTALL.SH ALSO INSTALL ALL DEPENDENCIES NEEDED, CREATE 
+		#THE SYMBOLICS LINKS AND .cache DIRECTORY
+
 		if self.ver3 == True:
-			try: raw_input
-			except: raw_input = input
+			raw_input = input
 
 		if os.getcwd() != "/usr/share/organon":
 			from time import sleep
@@ -77,10 +79,14 @@ to install dependencies and configure Organon" + default)
 		if self.ver3 == True:
 			raw_input = input
 
-		#RESUME ACTIONS TO BE DONE
-		print("\n Packages (" + str(len(pkgs)) + ") " + " ".join(pkgs))
-		choice = raw_input("\n %s[+]%s Continue the installation? [Y/n] " % \
-		(green, default)).lower()
+		# RESUME ACTIONS TO BE DONE
+		try:
+			print("\n Packages (" + str(len(pkgs)) + ") " + " ".join(pkgs))
+			choice = raw_input("\n %s[+]%s Continue the installation? [Y/n] " % \
+			(green, default)).lower()
+		except KeyboardInterrupt:
+			print(" [-] Aborted")
+			exit()
 
 		# CHECK IF USER WANT TO CONTINUE
 		if choice != "y" and len(choice) != 0:
@@ -89,9 +95,9 @@ to install dependencies and configure Organon" + default)
 		elif choice == "y" or len(choice) == 0:
 			for package in pkgs:
 				# CHECK IF ALREADY INSTALLED
-				if package in os.listdir("/usr/bin"):
+				if package in listdir("/usr/bin"):
 					print(" [!] %s already installed" % package)
-				elif package in os.listdir("/usr/local/bin"):
+				elif package in listdir("/usr/local/bin"):
 					print(" [!] %s already installed" % package)
 				else:
 					#call module responsable to download package
@@ -104,56 +110,29 @@ to install dependencies and configure Organon" + default)
 					install = retrieve.install(package, self.ver3)
 					install.read()
 					install.install_deps(self.distro)
+					install.make()
+					install.symlink()
 
 	def uninstall(self, pkgs, config, dep):
 		if self.ver3 == True:
 			raw_input = input
 
-		print("\n Packages (" + str(len(pkgs)) + ") " + " ".join(pkgs))
-		choice = raw_input("\n [+] Remove these packages? [Y/n] ").lower()
+		try:
+			print("\n Packages (" + str(len(pkgs)) + ") " + " ".join(pkgs))
+			choice = raw_input("\n [+] Remove these packages? [Y/n] ").lower()
+		except KeyboardInterrupt:
+			print("\n [-] Aborted")
+			exit()
 
 		# CHECK IF USER WANT TO CONTINUE #######################################
 		if choice != "y" and len(choice) != 0:
 			print(" [-] Aborted")
 			exit()
 
-		else:
+		elif choice == "y" or len(choice) == 0:
 			# REMOVE PROCESS ###################################################
 			for package in pkgs:
-				print(" [+] Deleting %s source files..." \
-% package)
-				try:
-					if package in os.listdir("/usr/share"):
-						os.system("sudo rm -rf /usr/share/%s" % package)
-					elif package in os.listdir("/usr/local/share"):
-						os.system("sudo rm -rf /usr/local/share/%s" % package)
-					elif package in os.listdir("/opt"):
-						os.system("sudo rm -rf /opt/%s" % package)
-					elif package in os.listdir("/usr/bin"):
-						os.system("sudo rm -rf /usr/bin/%s" % package)
-					else:
-						print(" [-] %s doesn\'t seem to be installed" % package)
-				except Exception as e:
-					print(e)
-
-				print(" [+] Deleting symlink...")
-				try:
-					if package in os.listdir("/usr/bin"):
-						os.system("sudo rm -rf /usr/bin/%s" % package)
-					elif package in os.listdir("/usr/local/bin"):
-						os.system("sudo rm -rf /usr/local/bin/%s" % package)
-				except Exception as e:
-					print(e)
-
-				if config == True:
-					if package in os.listdir("/etc/"):
-						print(" [+] Removing configuration files...")
-						os.system("sudo rm -rf /etc/%s" % package)
-					else:
-						print(" [!] No configuration file found")
-
-				if dep == True:
-					print(" [+] Removing dependencies...")
+				print(" [+] Deleting %s source files...")
 
 	def sync_db(self):
 		sync = retrieve.download(None, self.distro, self.arch)

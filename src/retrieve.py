@@ -24,6 +24,7 @@ __DATE__ = "28/12/2015"
 from re import findall
 from subprocess import check_call, CalledProcessError
 from colors import *
+from os import chdir
 
 class download(object):
 	def __init__(self, pkg_name, distro, arch):
@@ -62,37 +63,6 @@ class download(object):
 
 #class install(download):
 class install(object):
-	#Template used to do the install
-	script_template = \
-"""#!/bin/bash
-
-#Copy organon to /usr/share
-cp -R /var/cache/organon/pkgname /usr/share/
-
-echo \#\!/bin/bash >> /usr/bin/pkgname
-echo cd /usr/share/pkgname >> /usr/bin/pkgname
-echo exec python pkgname.py \"\$\@\" >> /usr/bin/pkgname
-
-chmod +x /usr/bin/pkgname
-chmod 777 /usr/share/pkgname
-"""
-	link_template = \
-"""#!/bin/bash
-
-#Copy organon to /usr/share
-cp -R /var/cache/organon/pkgname /usr/share
-
-ln -s /usr/share/pkgname/pkgname /usr/bin/pkgname
-"""
-	#Store extension
-	EXT = {
-	"python":"py",
-	"ruby":"rb",
-	"sh":"sh",
-	"php":"php",
-	"perl":"pl",
-	}
-
 	def __init__(self, pkg_name, ver3):
 		self.pkg_name = pkg_name
 		self.ver3 = ver3
@@ -109,16 +79,14 @@ ln -s /usr/share/pkgname/pkgname /usr/bin/pkgname
 		self.version = pkgconfig[version + 2]
 		installer = pkgconfig.index("installer")
 		self.installer = pkgconfig[installer + 2]
-
+		Type = pkgconfig.index("type")
+		self.Type = pkgconfig[installer + 2]
 
 		#retrieve compile/extraction process
 		process_b = self.pkg_content.find("{")
 		process_e = self.pkg_content.find("}")
 		process = self.pkg_content[process_b + 1:process_e]
 		self.process = process.split("\n")
-		
-		
-		self.deps = findall("dependencies = (.*)", self.pkg_content)
 		
 	def install_deps(self, distro):
 		import database
@@ -131,4 +99,65 @@ ln -s /usr/share/pkgname/pkgname /usr/bin/pkgname
 		elif distro == "debian":
 			manager = "sudo apt-get install "
 		
-		check_call(manager + deps)
+		check_call(manager + deps, shell = True)
+
+	def make(self):
+		check_call("tar -xzvf /var/cache/organon/%s.tar.gz -C /tmp" % self.pkg_name, shell = True)
+
+		with open("/tmp/%s.sh" % self.pkg_name, "w") as shell:
+			shell.write("#!/bin/bash\n\n")
+			shell.write("cd /tmp/%s*\n" % self.pkg_name)
+			for command in self.process:
+				if command == "":
+					pass
+				else:
+					shell.write(command)
+		check_call("sh /tmp/%s.sh" % self.pkg_name, shell = True)
+
+	def symlink(self):
+		if self.installer == "none":
+			pass
+		elif self.installer == "script":
+			#Template used to do the install
+			script_template = \
+"""#!/bin/bash
+
+#Copy organon to /usr/share
+cp -R /tmp/pkgname /usr/share/
+
+echo \#\!/bin/bash >> /usr/bin/pkgname
+echo cd /usr/share/pkgname >> /usr/bin/pkgname
+echo exec python pkgname.py \"\$\@\" >> /usr/bin/pkgname
+
+chmod +x /usr/bin/pkgname
+chmod 777 /usr/share/pkgname
+"""
+
+			ext = {
+"python":"py",
+"ruby":"rb",
+"shell":"sh",
+"php":"php",
+"perl":"pl"}
+			with open("/tmp/%s.sh" % self.pkg_name, "w") as symlink:
+				symlink.write(script_template.replace("pkgname", self.pkg_name)\
+				.replace("python", self.Type).replace(".py", ".%s"\
+				 % ext[self.Type]))
+
+		elif self.install == "symlink":
+			link_template = \
+"""#!/bin/bash
+
+#Copy organon to /usr/share
+cp -R /tmp/pkgname /usr/share
+
+ln -s /usr/share/pkgname/pkgname* /usr/bin/pkgname
+"""
+
+			with open("/tmp/%s.sh" % self.pkg_name, "w") as symlink:
+				symlink.write(link_template)
+		
+		try:
+			check_call("sh /tmp/%s.sh" % self.pkg_name, shell = True)
+		except Exception:
+			pass
