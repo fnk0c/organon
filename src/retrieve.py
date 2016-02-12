@@ -33,6 +33,7 @@ class download(object):
 		self.arch = arch
 
 	def get_mirror(self):
+		#Opens /etc/organon/mirrors to get mirror address
 		with open("/etc/organon/mirrors", "r") as mirror:
 			mirror = mirror.readline()
 			mirror = mirror.replace("\n", "")
@@ -42,6 +43,7 @@ class download(object):
 		self.pkg_mirror = mirror + "mirror/" + self.distro + "/pkgconfig/"
 
 	def get_files(self):
+		#Download source files of programs
 		src = self.src_mirror + self.pkg_name + ".tar.gz"
 		pkg = self.pkg_mirror + self.pkg_name + ".conf"
 		print(src)
@@ -57,11 +59,11 @@ class download(object):
 		check_call("sudo wget -N -c -P /var/cache/organon %s" % pkg, shell = True)
 
 	def sync(self):
-#		command = "sudo rsync -Cravzp %sdb/tools.db /etc/organon/" % self.src_mirror
+		#Sync local database with server's database
 		command = "sudo wget -N -P /etc/organon/ %smirror/%s/tools.db" % (self.mirror, self.distro)
 		check_call(command, shell = True)
 
-#class install(download):
+
 class install(object):
 	def __init__(self, pkg_name, ver3):
 		self.pkg_name = pkg_name
@@ -88,17 +90,23 @@ class install(object):
 		process = self.pkg_content[process_b + 1:process_e]
 		self.process = process.split("\n")
 		
-	def install_deps(self, distro):
+	def install_deps(self, distro, force_yes):
 		import database
 		
 		db = database.connect(self.ver3)
 		deps = db.dependencies(self.pkg_name)
 
 		if distro == "arch":
-			manager = "sudo pacman -S "
+			if force_yes == True:
+				manager = "sudo pacman --noconfirm -S "
+			else:
+				manager = "sudo pacman -S "
 		elif distro == "debian":
-			manager = "sudo apt-get install "
-		
+			if force_yes == True:
+				manager = "sudo apt-get -f install "
+			else:
+				manager = "sudo apt-get install "
+
 		check_call(manager + deps, shell = True)
 
 	def make(self):

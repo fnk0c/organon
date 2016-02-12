@@ -68,6 +68,8 @@ parser.add_argument("-L", action = "store_true",
 	help = "List all packages available")
 parser.add_argument("--clean", action = "store_true",
 	help = "Clean Organon\'s cache")
+parser.add_argument("--yes", action = "store_true",
+	help = "Assume yes to all questions")
 
 args = parser.parse_args()
 
@@ -114,7 +116,7 @@ def main():
 
 	### - INSTALL PROGRAM - ###
 	elif args.i:
-		core.install(args.i)
+		core.install(args.i, args.yes)
 
 	### - REMOVE PROGRAM - ###
 	elif args.r:

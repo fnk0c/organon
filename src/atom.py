@@ -74,19 +74,22 @@ to install dependencies and configure Organon" + default)
 			else:
 				exit()
 
-	def install(self, pkgs):
+	def install(self, pkgs, force_yes):
 		#PYTHON 2 AND 3 SUPPORT
 		if self.ver3 == True:
 			raw_input = input
 
-		# RESUME ACTIONS TO BE DONE
-		try:
-			print("\n Packages (" + str(len(pkgs)) + ") " + " ".join(pkgs))
-			choice = raw_input("\n %s[+]%s Continue the installation? [Y/n] " % \
-			(green, default)).lower()
-		except KeyboardInterrupt:
-			print(" [-] Aborted")
-			exit()
+		if force_yes != True:
+			# RESUME ACTIONS TO BE DONE
+			try:
+				print("\n Packages (" + str(len(pkgs)) + ") " + " ".join(pkgs))
+				choice = raw_input("\n %s[+]%s Continue the installation? [Y/n] " % \
+				(green, default)).lower()
+			except KeyboardInterrupt:
+				print(" [-] Aborted")
+				exit()
+		else:
+			choice = "y"
 
 		# CHECK IF USER WANT TO CONTINUE
 		if choice != "y" and len(choice) != 0:
@@ -109,7 +112,7 @@ to install dependencies and configure Organon" + default)
 
 					install = retrieve.install(package, self.ver3)
 					install.read()
-					install.install_deps(self.distro)
+					install.install_deps(self.distro, force_yes)
 					install.make()
 					install.symlink()
 
