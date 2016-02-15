@@ -63,6 +63,7 @@ class download(object):
 			check_call(command, shell = True)
 
 		check_call("sudo wget -N -c -P /var/cache/organon %s" % pkg, shell = True)
+		return(server_pkgname)
 
 	def sync(self):
 		#Sync local database with server's database
@@ -120,9 +121,10 @@ class install(object):
 
 		check_call(manager + deps, shell = True)
 
-	def make(self):
+	def make(self, server_pkgnames):
 		check_call("tar -xzvf /var/cache/organon/*%s*.tar.gz -C /tmp" % self.pkg_name, shell = True)
 
+###OK UNTIL HERE
 		with open("/tmp/%s.sh" % self.pkg_name, "w") as shell:
 			shell.write("#!/bin/bash\n\n")
 			shell.write("cd /tmp/%s*\n" % self.pkg_name)

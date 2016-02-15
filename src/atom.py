@@ -108,12 +108,12 @@ to install dependencies and configure Organon" + default)
 					#define server to be used
 					down.get_mirror()
 					#download source em pkgconfig
-					down.get_files()
+					server_pkgname = down.get_files()
 
 					install = retrieve.install(package, self.ver3)
 					install.read()
 					install.install_deps(self.distro, force_yes)
-#					install.make()
+					install.make(server_pkgname)
 #					install.symlink()
 
 	def uninstall(self, pkgs, config, dep):
