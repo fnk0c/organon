@@ -104,7 +104,7 @@ to install dependencies and configure Organon" + default)
 					print(" [!] %s already installed" % package)
 				else:
 					#call module responsable to download package
-					down = retrieve.download(package, self.distro, self.arch)
+					down = retrieve.download(package, self.distro, self.arch, self.ver3)
 					#define server to be used
 					down.get_mirror()
 					#download source em pkgconfig
@@ -113,8 +113,8 @@ to install dependencies and configure Organon" + default)
 					install = retrieve.install(package, self.ver3)
 					install.read()
 					install.install_deps(self.distro, force_yes)
-					install.make()
-					install.symlink()
+#					install.make()
+#					install.symlink()
 
 	def uninstall(self, pkgs, config, dep):
 		if self.ver3 == True:

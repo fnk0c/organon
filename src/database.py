@@ -39,7 +39,7 @@ class connect(object):
 				csvcontent = csv.reader(csvfile, delimiter=";")
 
 				for row in csvcontent:
-					print(green + " [+] " + row[0] + yellow + " v" + row[1] + default)
+					print(green + " [+] " + row[0] + yellow + " v " + row[1] + default)
 					print(row[4] + "\n")
 
 		except exception:
@@ -60,23 +60,23 @@ class connect(object):
 					#reference link: http://stackoverflow.com/questions/8265648/using-the-lowercase-function-with-csv-rows
 					row = ([r.lower() for r in row])
 					if keyword in row[0]:
-						print(green + " [+] " + row[0] + yellow + " v" + row[1]\
+						print(green + " [+] " + row[0] + yellow + " v " + row[1]\
 						 + default)
 						print(row[4] + "\n")
 					elif keyword in row[1]:
-						print(green + " [+] " + row[0] + yellow + " v" + row[1]\
+						print(green + " [+] " + row[0] + yellow + " v " + row[1]\
 						 + default)
 						print(row[4] + "\n")
 					elif keyword in row[2]:
-						print(green + " [+] " + row[0] + yellow + " v" + row[1]\
+						print(green + " [+] " + row[0] + yellow + " v " + row[1]\
 						 + default)
 						print(row[4] + "\n")
 					elif keyword in row[3]:
-						print(green + " [+] " + row[0] + yellow + " v" + row[1]\
+						print(green + " [+] " + row[0] + yellow + " v " + row[1]\
 						 + default)
 						print(row[4] + "\n")
 					elif keyword in row[4]:
-						print(green + " [+] " + row[0] + yellow + " v" + row[1]\
+						print(green + " [+] " + row[0] + yellow + " v " + row[1]\
 						 + default)
 						print(row[4] + "\n")
 		except exception:
@@ -100,4 +100,23 @@ class connect(object):
 
 		except exception:
 			print(red + " [!] " + default + "No database found! Use \"organon\
+ -S\" to sync with our servers")
+
+	def server_pkgname(self, package):
+			if self.ver3 == True:
+				exception = FileNotFoundError
+			else:
+				exception = IOError
+
+			try:
+				with open("/etc/organon/tools.db", "r") as csvfile:
+					csvcontent = csv.reader(csvfile, delimiter=";")
+
+					for row in csvcontent:
+						if package in row[0]:
+							name = str(row[2])
+							return(name)
+
+			except exception:
+				print(red + " [!] " + default + "No database found! Use \"organon\
  -S\" to sync with our servers")

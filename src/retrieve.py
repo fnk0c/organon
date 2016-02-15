@@ -27,10 +27,11 @@ from colors import *
 from os import chdir
 
 class download(object):
-	def __init__(self, pkg_name, distro, arch):
+	def __init__(self, pkg_name, distro, arch, ver3):
 		self.pkg_name = pkg_name
 		self.distro = distro
 		self.arch = arch
+		self.ver3 = ver3
 
 	def get_mirror(self):
 		#Opens /etc/organon/mirrors to get mirror address
@@ -44,9 +45,14 @@ class download(object):
 
 	def get_files(self):
 		#Download source files of programs
-		src = self.src_mirror + self.pkg_name + ".tar.gz"
+		
+		import database
+		
+		db = database.connect(self.ver3)
+		server_pkgname = db.server_pkgname(self.pkg_name)
+		
+		src = self.src_mirror + server_pkgname
 		pkg = self.pkg_mirror + self.pkg_name + ".conf"
-		print(src)
 
 		try:
 			command = "sudo wget -c -P /var/cache/organon %s" % src
@@ -106,11 +112,16 @@ class install(object):
 				manager = "sudo apt-get -f install "
 			else:
 				manager = "sudo apt-get install "
+		elif distro == "fedora":
+			if force_yes == True:
+				manager = "sudo yum -f install "
+			else:
+				manager = "sudo yum install "
 
 		check_call(manager + deps, shell = True)
 
 	def make(self):
-		check_call("tar -xzvf /var/cache/organon/%s.tar.gz -C /tmp" % self.pkg_name, shell = True)
+		check_call("tar -xzvf /var/cache/organon/*%s*.tar.gz -C /tmp" % self.pkg_name, shell = True)
 
 		with open("/tmp/%s.sh" % self.pkg_name, "w") as shell:
 			shell.write("#!/bin/bash\n\n")
