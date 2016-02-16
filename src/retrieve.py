@@ -88,8 +88,11 @@ class install(object):
 		self.version = pkgconfig[version + 2]
 		installer = pkgconfig.index("installer")
 		self.installer = pkgconfig[installer + 2]
-		Type = pkgconfig.index("type")
-		self.Type = pkgconfig[installer + 2]
+		try:
+			Type = pkgconfig.index("type")
+			self.Type = pkgconfig[installer + 2]
+		except ValueError:
+			pass
 
 		#retrieve compile/extraction process
 		process_b = self.pkg_content.find("{")
@@ -124,7 +127,6 @@ class install(object):
 	def make(self, server_pkgnames):
 		check_call("tar -xzvf /var/cache/organon/*%s*.tar.gz -C /tmp" % self.pkg_name, shell = True)
 
-###OK UNTIL HERE
 		with open("/tmp/%s.sh" % self.pkg_name, "w") as shell:
 			shell.write("#!/bin/bash\n\n")
 			shell.write("cd /tmp/%s*\n" % self.pkg_name)
@@ -135,6 +137,7 @@ class install(object):
 					shell.write(command)
 		check_call("sh /tmp/%s.sh" % self.pkg_name, shell = True)
 
+###OK UNTIL HERE
 	def symlink(self):
 		if self.installer == "none":
 			pass
