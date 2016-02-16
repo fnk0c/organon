@@ -163,7 +163,7 @@ chmod 777 /usr/share/pkgname
 "shell":"sh",
 "php":"php",
 "perl":"pl"}
-			with open("/tmp/%s.sh" % self.pkg_name, "w") as symlink:
+			with open("/tmp/install_%s.sh" % self.pkg_name, "w") as symlink:
 				symlink.write(script_template.replace("pkgname", self.pkg_name)\
 				.replace("python", self.Type).replace(".py", ".%s"\
 				 % ext[self.Type]))
@@ -178,10 +178,10 @@ cp -R /tmp/pkgname /usr/share
 ln -s /usr/share/pkgname/pkgname* /usr/bin/pkgname
 """
 
-			with open("/tmp/%s.sh" % self.pkg_name, "w") as symlink:
+			with open("/tmp/install_%s.sh" % self.pkg_name, "w") as symlink:
 				symlink.write(link_template)
 		
 		try:
-			check_call("sh /tmp/%s.sh" % self.pkg_name, shell = True)
+			check_call("sh /tmp/install_%s.sh" % self.pkg_name, shell = True)
 		except Exception:
 			pass
