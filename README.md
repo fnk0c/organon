@@ -2,10 +2,6 @@
 
 This program focuses on automating the download, installation and compilation of pentest tools from source
 
-# ATTENTION!
-
-## ** This tool is no longer working! Server is down ** .
-
 Tool developed for Linux systems (APT and Pacman)
 
 Authors:
@@ -34,30 +30,32 @@ Tested on:
 
 Screenshot
 ----------
-![Screenshot](https://i.imgur.com/mAKhkRC.png)
+![Screenshot](http://i.imgur.com/xjBVGMG.png)
 
 Help
 ----
 ```
-usage: organon [-h] [-a] [-v] [-i I [I ...]] [-r R [R ...]] [--dependencies]
-               [--config] [-U] [-u] [-S] [-s S] [-L] [--clean]
+usage: organon [-h] [-a] [-v] [-i I [I ...]] [-r R [R ...]] [--deps] [--conf]
+               [-U] [-u] [-S] [-s S] [-L] [--clean] [--yes]
 
 Package manager that focus on Pentest tools
 
 optional arguments:
-  -h, --help      show this help message and exit
-  -a, --about     About this tool
-  -v, --version   Show version and exit
-  -i I [I ...]    Install packages
-  -r R [R ...]    Remove packages
-  --dependencies  Remove dependencies (use with -r)
-  --config        Remove configuration files (use with -r)
-  -U              Update Organon
-  -u              Update packages
-  -S              Synchronize database
-  -s S            Search for packages
-  -L              List all packages available
-  --clean         Clean Organon's cache
+  -h, --help     show this help message and exit
+  -a, --about    About this tool
+  -v, --version  Show version and exit
+  -i I [I ...]   Install packages
+  -r R [R ...]   Remove packages
+  --deps         Remove dependencies (use with -r)
+  --conf         Remove configuration files (use with -r)
+  -U             Update Organon
+  -u             Update packages
+  -S             Synchronize database
+  -s S           Search for packages
+  -L             List all packages available
+  --clean        Clean Organon's cache
+  --yes          Assume yes to all questions
+
 
 organon -h
 	Shows help

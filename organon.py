@@ -2,8 +2,8 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.2.2"
-__DATE__	= "22/12/2015"
+__VERSION__	= "0.2.3"
+__DATE__	= "15/02/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino
@@ -52,9 +52,9 @@ parser.add_argument("-i", nargs = "+",
 	help = "Install packages")
 parser.add_argument("-r", nargs = "+",
 	help = "Remove packages")
-parser.add_argument("--dependencies", action = "store_true",
+parser.add_argument("--deps", action = "store_true",
 	help = "Remove dependencies (use with -r)")
-parser.add_argument("--config", action = "store_true",
+parser.add_argument("--conf", action = "store_true",
 	help = "Remove configuration files (use with -r)")
 parser.add_argument("-U", action = "store_true",
 	help = "Update Organon")
@@ -120,21 +120,21 @@ def main():
 
 	### - REMOVE PROGRAM - ###
 	elif args.r:
-		config = False
+		conf = False
 		deps = False
-		if args.config == True and args.dependencies == True:
-			config = True
+		if args.conf == True and args.deps == True:
+			conf = True
 			deps = True
 
-		elif args.config == True and args.dependencies == False:
-			config = True
+		elif args.conf == True and args.deps == False:
+			conf = True
 			deps = False
 
-		elif args.config == False and args.dependencies == True:
-			config = False
+		elif args.conf == False and args.deps == True:
+			conf = False
 			deps = True
 
-		core.uninstall(args.r, config, deps)
+		core.uninstall(args.r, conf, deps)
 
 	### - SYNCHRONIZE DATABASE - ###
 	elif args.S:

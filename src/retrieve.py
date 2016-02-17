@@ -5,7 +5,7 @@
 #https://github.com/fnk0c/organon
 
 __AUTHOR__ 	= "Fnkoc"
-__DATE__ = "28/12/2015"
+__DATE__	= "15/02/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino & Ygor Máximo

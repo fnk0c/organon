@@ -6,9 +6,9 @@
 Organon \- Package manager that focus on pentest tools
 
 .SH SYNOPSIS
-usage: organon [-h] [-a] [-v] [-i I [I ...]] [-r R [R ...]]
-       [--dependencies] [--config] [-U] [-u] [-S S] [-s S]
-       [-L] [--clean]
+usage: organon [-h] [-a] [-v] [-i I [I ...]] [-r R [R ...]] [--deps] [--conf]
+               [-U] [-u] [-S] [-s S] [-L] [--clean] [--yes]
+
 
 .SH DESCRIPTION
 Organon is a program that focuses on automating the download, installation and compilation of pentest tools from source
@@ -26,20 +26,21 @@ Organon is a program that focuses on automating the download, installation and c
   * Arch Linux
 
 .SH OPTIONS
+  -h, --help     show this help message and exit
+  -a, --about    About this tool
+  -v, --version  Show version and exit
+  -i I [I ...]   Install packages
+  -r R [R ...]   Remove packages
+  --deps         Remove dependencies (use with -r)
+  --conf         Remove configuration files (use with -r)
+  -U             Update Organon
+  -u             Update packages
+  -S             Synchronize database
+  -s S           Search for packages
+  -L             List all packages available
+  --clean        Clean Organon's cache
+  --yes          Assume yes to all questions
 
-  -h, --help      show this help message and exit
-  -a, --about     About this tool
-  -v, --version   Show version and exit
-  -i I [I ...]    Install packages
-  -r R [R ...]    Remove packages
-  --dependencies  Remove dependencies (use with -r)
-  --config        Remove configuration files (use with -r)
-  -U              Update Organon
-  -u              Update packages
-  -S S            Synchronize database
-  -s S            Search for packages
-  -L              List all packages available
-  --clean         Clean Organon's cache
 
 organon -h
 
@@ -91,13 +92,17 @@ Clean /var/cache/organon directory
 .SH EXAMPLES
 organon -i aircrack-ng reaver cangibrina
 
+organon -i aircrack-ng reaver cangibrina --yes
+
 organon -s scanner
 
-organon -l
+organon -S
+
+organon -L
 
 organon -r nmap
 
-organon -r nmap --dependencies --config
+organon -r nmap --deps --conf
 
 .SH AUTHORS
   * Fnkoc

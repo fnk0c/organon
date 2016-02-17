@@ -2,8 +2,7 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.2.2"
-__DATE__	= "28/12/2015"
+__DATE__	= "15/02/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino
@@ -138,7 +137,7 @@ to install dependencies and configure Organon" + default)
 				print(" [+] Deleting %s source files...")
 
 	def sync_db(self):
-		sync = retrieve.download(None, self.distro, self.arch)
+		sync = retrieve.download(None, self.distro, self.arch, self.ver3)
 		sync.get_mirror()
 		sync.sync()
 
