@@ -3,7 +3,7 @@
 
 __AUTHOR__	= "Fnkoc"
 __VERSION__	= "0.2.3"
-__DATE__	= "15/02/2015"
+__DATE__	= "21/02/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino
@@ -134,7 +134,7 @@ def main():
 			conf = False
 			deps = True
 
-		core.uninstall(args.r, conf, deps)
+		core.uninstall(args.r, conf, deps, args.yes)
 
 	### - SYNCHRONIZE DATABASE - ###
 	elif args.S:

@@ -2,7 +2,6 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__DATE__	= "15/02/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino
@@ -43,16 +42,11 @@ class actions(object):
 version from https://github.com/fnk0c/organon")
 			exit()
 
-
 	def update_packages(self):
 		print("coming soon")
 
 	def check_install(self):
 		#CHECK IF PATH IS /USR/SHARE/ORGANON
-		#THIS CHECK HAPPENS BECAUSE WHEN YOU RUN ./INSTALL.SH THE SCRIPT IS MOVED 
-		#TO /USR/SHARE/. INSTALL.SH ALSO INSTALL ALL DEPENDENCIES NEEDED, CREATE 
-		#THE SYMBOLICS LINKS AND .cache DIRECTORY
-
 		if self.ver3 == True:
 			raw_input = input
 
@@ -115,16 +109,19 @@ to install dependencies and configure Organon" + default)
 					install.make(server_pkgname)
 #					install.symlink()
 
-	def uninstall(self, pkgs, config, dep):
+	def uninstall(self, pkgs, config, dep, force_yes):
 		if self.ver3 == True:
 			raw_input = input
 
-		try:
-			print("\n Packages (" + str(len(pkgs)) + ") " + " ".join(pkgs))
-			choice = raw_input("\n [+] Remove these packages? [Y/n] ").lower()
-		except KeyboardInterrupt:
-			print("\n [-] Aborted")
-			exit()
+		if force_yes != True:
+			try:
+				print("\n Packages (" + str(len(pkgs)) + ") " + " ".join(pkgs))
+				choice = raw_input("\n [+] Remove these packages? [Y/n] ").lower()
+			except KeyboardInterrupt:
+				print("\n [-] Aborted")
+				exit()
+		else:
+			choice = "y"
 
 		# CHECK IF USER WANT TO CONTINUE #######################################
 		if choice != "y" and len(choice) != 0:
