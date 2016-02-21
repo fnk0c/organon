@@ -90,7 +90,7 @@ class install(object):
 		self.installer = pkgconfig[installer + 2]
 		try:
 			Type = pkgconfig.index("type")
-			self.Type = pkgconfig[installer + 2]
+			self.Type = pkgconfig[Type + 2]
 		except ValueError:
 			pass
 
@@ -140,7 +140,6 @@ class install(object):
 					shell.write(command)
 		check_call("sh /tmp/%s.sh" % self.pkg_name, shell = True)
 
-###OK UNTIL HERE
 	def symlink(self):
 		if self.installer == "none":
 			pass
@@ -150,14 +149,20 @@ class install(object):
 """#!/bin/bash
 
 #Copy organon to /usr/share
-cp -R /tmp/pkgname /usr/share/
+rm /tmp/pkgname.conf /tmp/pkgname.sh
+mv /tmp/pkgname* /tmp/pkgname
+sudo cp -R /tmp/pkgname /usr/share/
 
-echo \#\!/bin/bash >> /usr/bin/pkgname
-echo cd /usr/share/pkgname >> /usr/bin/pkgname
-echo exec python pkgname.py \"\$\@\" >> /usr/bin/pkgname
+echo '\#\!/bin/bash' | sudo tee --append /usr/bin/pkgname
+echo 'cd /usr/share/pkgname' | sudo tee --append /usr/bin/pkgname
+echo 'exec python pkgname.py \$\@' | sudo tee --append /usr/bin/pkgname
 
-chmod +x /usr/bin/pkgname
-chmod 777 /usr/share/pkgname
+#echo \#\!/bin/bash >> /usr/bin/pkgname
+#echo cd /usr/share/pkgname >> /usr/bin/pkgname
+#echo exec python pkgname.py \"\$\@\" >> /usr/bin/pkgname
+
+sudo chmod +x /usr/bin/pkgname
+sudo chmod 777 /usr/share/pkgname
 """
 
 			ext = {
@@ -166,10 +171,10 @@ chmod 777 /usr/share/pkgname
 "shell":"sh",
 "php":"php",
 "perl":"pl"}
+
 			with open("/tmp/install_%s.sh" % self.pkg_name, "w") as symlink:
 				symlink.write(script_template.replace("pkgname", self.pkg_name)\
-				.replace("python", self.Type).replace(".py", ".%s"\
-				 % ext[self.Type]))
+				.replace("python", self.Type).replace(".py", ".%s" % ext[self.Type]))
 
 		elif self.install == "symlink":
 			link_template = \
