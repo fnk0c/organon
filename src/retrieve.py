@@ -105,24 +105,27 @@ class install(object):
 		
 		db = database.connect(self.ver3)
 		deps = db.dependencies(self.pkg_name)
+		
+		if deps != "NULL":
+			if distro == "arch":
+				if force_yes == True:
+					manager = "sudo pacman --noconfirm -S "
+				else:
+					manager = "sudo pacman -S "
+			elif distro == "debian":
+				if force_yes == True:
+					manager = "sudo apt-get -f install "
+				else:
+					manager = "sudo apt-get install "
+			elif distro == "fedora":
+				if force_yes == True:
+					manager = "sudo yum -f install "
+				else:
+					manager = "sudo yum install "
 
-		if distro == "arch":
-			if force_yes == True:
-				manager = "sudo pacman --noconfirm -S "
-			else:
-				manager = "sudo pacman -S "
-		elif distro == "debian":
-			if force_yes == True:
-				manager = "sudo apt-get -f install "
-			else:
-				manager = "sudo apt-get install "
-		elif distro == "fedora":
-			if force_yes == True:
-				manager = "sudo yum -f install "
-			else:
-				manager = "sudo yum install "
-
-		check_call(manager + deps, shell = True)
+			check_call(manager + deps, shell = True)
+		else:
+			pass
 
 	def make(self, server_pkgnames):
 		check_call("tar -xzvf /var/cache/organon/*%s*.tar.gz -C /tmp" % self.pkg_name, shell = True)
