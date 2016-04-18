@@ -3,7 +3,7 @@
 
 __AUTHOR__	= "Fnkoc"
 __VERSION__	= "0.2.1"
-__DATE__	= "30/10/2015"
+__DATE__	= "16/04/2016"
 
 """
 	Copyright (C) 2015  Franco Colombino
@@ -37,15 +37,7 @@ def install():
 		distro = "fedora"
 		
 	try:
-		print(" [+] Installing MAN page")
-		check_call("sudo install -Dm644 doc/organon.8 /usr/share/man/man8/", \
-		shell = True)
-		print(" [+] Creating organon\'s cache")
-		check_call("sudo mkdir /var/cache/organon", shell = True)
-		print(" [+] Moving organon to /usr/share")
-		check_call("sudo mv ../organon /usr/share", shell = True)
 		print(" [+] Creating symlink")
-
 		with open("organon", "w") as symlink:
 			symlink.write(\
 """
@@ -57,20 +49,29 @@ python organon.py $@""")
 		check_call("sudo mv organon /usr/bin", shell = True)
 		print(" [+] Changing permission")
 		check_call("sudo chmod +x /usr/bin/organon", shell = True)
-		print(" [+] Cleaning files")
+
+		print(" [+] creating configuration file")
+		with open("organon.conf", "w") as conf:
+			conf.write("distro = %s" % distro)
+			conf.write("\narch = %s" % machine())
+	
+		check_call("sudo mkdir /etc/organon && sudo mv organon.conf /etc/organon", \
+		shell = True)
+		check_call("sudo cp etc/mirrors /etc/organon", shell = True)
+
+		print(" [+] Installing MAN page")
+		check_call("sudo install -Dm644 doc/organon.8 /usr/share/man/man8/", \
+		shell = True)
+		print(" [+] Creating organon\'s cache")
+		check_call("sudo mkdir /var/cache/organon", shell = True)
+		print(" [+] Moving organon to /usr/share")
+		check_call("sudo mv ../organon /usr/share", shell = True)
+
 	
 	except (CalledProcessError, KeyboardInterrupt) as e:
 		print(" [!] ainn. Something went wrong")
 		print(e)
 		exit()
-
-	with open("organon.conf", "w") as conf:
-		conf.write("distro = %s" % distro)
-		conf.write("\narch = %s" % machine())
-	
-	check_call("sudo mkdir /etc/organon && sudo mv organon.conf /etc/organon", \
-	shell = True)
-	check_call("sudo cp etc/mirrors /etc/organon", shell = True)
 
 def uninstall():
 	check_call("sudo rm -rf /usr/share/organon /var/cache/organon /etc/organon\
