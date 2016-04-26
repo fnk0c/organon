@@ -2,8 +2,8 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.2.3"
-__DATE__	= "21/02/2015"
+__VERSION__	= "0.2.4"
+__DATE__	= "26/04/2016"
 
 """
 	Copyright (C) 2015  Franco Colombino

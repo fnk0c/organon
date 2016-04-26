@@ -35,7 +35,7 @@ class actions(object):
 	def update_organon(self):
 		print(green + "[+] Updating Organon" + default)
 		try:
-			check_call("git reset --hard && git fetch && git pull")
+			check_call("git reset --hard && git pull")
 			print(" [+] Organon was successfully updated")
 		except Exception:
 			print(" [-] Couldn\'t retrieve update. Please download the latest \
