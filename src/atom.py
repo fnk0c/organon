@@ -97,16 +97,17 @@ to install dependencies and configure Organon" + default)
 					print(" [!] %s already installed" % package)
 				else:
 					#call module responsable to download package
-#					down = retrieve.download(package, self.distro, self.arch, self.ver3)
+					down = retrieve.download(package, self.distro, self.arch, self.ver3)
 					#define server to be used
-#					down.get_mirror()
+					down.get_mirror()
 					#download source em pkgconfig
-#					server_pkgname = down.get_files()
+					server_pkgname = down.pkgconfig()
 
 					install = retrieve.install(package, self.ver3)
-					install.read()
+					s = install.read()
+					down.source(s[0])
 					install.install_deps(self.distro, force_yes)
-#					install.make(server_pkgname)
+					install.make(server_pkgname, s[1])
 					install.symlink()
 
 	def uninstall(self, pkgs, config, dep, force_yes):

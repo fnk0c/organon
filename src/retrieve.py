@@ -43,7 +43,7 @@ class download(object):
 		self.src_mirror = mirror + "mirror/source/" + self.arch + "/"
 		self.pkg_mirror = mirror + "mirror/" + self.distro + "/pkgconfig/"
 
-	def get_files(self):
+	def pkgconfig(self):
 		#Download source files of programs
 		
 		import database
@@ -51,19 +51,20 @@ class download(object):
 		db = database.connect(self.ver3)
 		server_pkgname = db.server_pkgname(self.pkg_name)
 		
-		src = self.src_mirror + server_pkgname
 		pkg = self.pkg_mirror + self.pkg_name + ".conf"
-
-		try:
-			command = "sudo wget -c -P /var/cache/organon %s" % src
-			check_call(command, shell = True)
-		except (Exception, CalledProcessError, FileNotFoundError):
-			command = command.replace("x86_64", "any").replace("x86", "any")
-			print(command)
-			check_call(command, shell = True)
 
 		check_call("sudo wget -N -c -P /var/cache/organon %s" % pkg, shell = True)
 		return(server_pkgname)
+
+	def source(self, url):
+		if "github" in url:
+			command = "cd /var/cache/organon/ ; sudo git clone %s" % url
+		else:
+			command = "sudo wget -N -c -P /var/cache/organon %s" % url
+		try:
+			check_call(command, shell = True)
+		except Exception as e:
+			pass
 
 	def sync(self):
 		#Sync local database with server's database
@@ -88,6 +89,11 @@ class install(object):
 		self.version = pkgconfig[version + 2]
 		installer = pkgconfig.index("installer")
 		self.installer = pkgconfig[installer + 2]
+		arch = pkgconfig.index("arch")
+		self.arch = pkgconfig[arch + 2]
+		source = pkgconfig.index("source")
+		self.source = pkgconfig[source + 2]
+
 		try:
 			Type = pkgconfig.index("type")
 			self.Type = pkgconfig[Type + 2]
@@ -98,8 +104,8 @@ class install(object):
 		process_b = self.pkg_content.find("{")
 		process_e = self.pkg_content.find("}")
 		process = self.pkg_content[process_b + 1:process_e]
-		self.process = process.split("\n")
-		
+		process = process.split("\n")
+		return(self.source, process)		
 	def install_deps(self, distro, force_yes):
 		import database
 		
@@ -127,13 +133,16 @@ class install(object):
 		else:
 			pass
 
-	def make(self, server_pkgnames):
-		check_call("tar -xzvf /var/cache/organon/*%s*.tar.gz -C /tmp" % self.pkg_name, shell = True)
+	def make(self, server_pkgnames, process):
+		if self.version == "git":
+			check_call("cp -R /var/cache/organon/%s /tmp" %self.pkg_name, shell = True)
+		else:
+			check_call("tar -xzvf /var/cache/organon/*%s*.tar.gz -C /tmp" % self.pkg_name, shell = True)
 
 		with open("/tmp/%s.sh" % self.pkg_name, "w") as shell:
 			shell.write("#!/bin/bash\n\n")
 			shell.write("cd /tmp/%s*\n" % self.pkg_name)
-			for command in self.process:
+			for command in process:
 				if command == "":
 					pass
 				else:
@@ -149,23 +158,20 @@ class install(object):
 """#!/bin/bash
 
 #Copy organon to /usr/share
-rm /tmp/pkgname.conf /tmp/pkgname.sh
-mv /tmp/pkgname* /tmp/pkgname
+rm /tmp/pkgname.sh
+#mv /tmp/pkgname* /tmp/pkgname
 sudo cp -R /tmp/pkgname /usr/share/
 
-echo '\#\!/bin/bash' | sudo tee --append /usr/bin/pkgname
+echo '#!/bin/bash' | sudo tee --append /usr/bin/pkgname
 echo 'cd /usr/share/pkgname' | sudo tee --append /usr/bin/pkgname
-echo 'exec python pkgname.py \$\@' | sudo tee --append /usr/bin/pkgname
-
-#echo \#\!/bin/bash >> /usr/bin/pkgname
-#echo cd /usr/share/pkgname >> /usr/bin/pkgname
-#echo exec python pkgname.py \"\$\@\" >> /usr/bin/pkgname
+echo 'exec python pkgname.py $@' | sudo tee --append /usr/bin/pkgname
 
 sudo chmod +x /usr/bin/pkgname
 sudo chmod 777 /usr/share/pkgname
 """
 
 			ext = {
+"python2":"py",
 "python":"py",
 "ruby":"rb",
 "shell":"sh",
