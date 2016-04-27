@@ -146,7 +146,7 @@ class install(object):
 				if command == "":
 					pass
 				else:
-					shell.write(command)
+					shell.write(str(command) + "\n")
 		check_call("sh /tmp/%s.sh" % self.pkg_name, shell = True)
 
 	def symlink(self):
