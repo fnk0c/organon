@@ -131,8 +131,12 @@ to install dependencies and configure Organon" + default)
 
 		elif choice == "y" or len(choice) == 0:
 			# REMOVE PROCESS ###################################################
+			import cleaner
+
+			u = cleaner.uninstall(config, dep, self.ver3)
 			for package in pkgs:
-				print(" [+] Deleting %s source files...")
+				u.pkg(package, self.distro)
+
 
 	def sync_db(self):
 		sync = retrieve.download(None, self.distro, self.arch, self.ver3)
