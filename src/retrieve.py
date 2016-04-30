@@ -137,13 +137,13 @@ class install(object):
 		if self.version == "git":
 			check_call("cp -R /var/cache/organon/%s /tmp" % server_pkgname, shell = True)
 		else:
-			check_call("tar -xzvf /var/cache/organon/*%s*.tar.gz -C /tmp" % \
+			check_call("tar -xvf /var/cache/organon/%s -C /tmp" % \
 			server_pkgname, shell = True)
 
 		with open("/tmp/%s.sh" % self.pkg_name, "w") as shell:
 			shell.write("#!/bin/bash\n\n")
 			shell.write("mv /tmp/%s /tmp/%s\n" % (server_pkgname, self.pkg_name))
-			shell.write("cd /tmp/%s*\n" % self.pkg_name)
+			shell.write("cd /tmp/%s\n" % self.pkg_name)
 			for command in process:
 				if command == "":
 					pass
