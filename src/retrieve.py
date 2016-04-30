@@ -133,14 +133,16 @@ class install(object):
 		else:
 			pass
 
-	def make(self, server_pkgnames, process):
+	def make(self, server_pkgname, process):
 		if self.version == "git":
-			check_call("cp -R /var/cache/organon/%s /tmp" %self.pkg_name, shell = True)
+			check_call("cp -R /var/cache/organon/%s /tmp" % server_pkgname, shell = True)
 		else:
-			check_call("tar -xzvf /var/cache/organon/*%s*.tar.gz -C /tmp" % self.pkg_name, shell = True)
+			check_call("tar -xzvf /var/cache/organon/*%s*.tar.gz -C /tmp" % \
+			server_pkgname, shell = True)
 
 		with open("/tmp/%s.sh" % self.pkg_name, "w") as shell:
 			shell.write("#!/bin/bash\n\n")
+			shell.write("mv /tmp/%s /tmp/%s\n" % (server_pkgname, self.pkg_name))
 			shell.write("cd /tmp/%s*\n" % self.pkg_name)
 			for command in process:
 				if command == "":
@@ -159,7 +161,6 @@ class install(object):
 
 #Copy organon to /usr/share
 rm /tmp/pkgname.sh
-#mv /tmp/pkgname* /tmp/pkgname
 sudo cp -R /tmp/pkgname /usr/share/
 
 echo '#!/bin/bash' | sudo tee --append /usr/bin/pkgname
