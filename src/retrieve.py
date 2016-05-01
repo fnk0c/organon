@@ -135,14 +135,29 @@ class install(object):
 
 	def make(self, server_pkgname, process):
 		if self.version == "git":
-			check_call("cp -R /var/cache/organon/%s /tmp" % server_pkgname, shell = True)
+			check_call("cp -R /var/cache/organon/%s /tmp" % \
+			server_pkgname, shell = True)
+
+		elif server_pkgname[-3:] == "rar":
+			check_call("unrar e /var/cache/organon/%s /tmp" % \
+			server_pkgname, shell = True)
+
+		elif server_pkgname[-3:] == "zip":
+			check_call("unzip /var/cache/organon/%s -d /tmp/%s" % \
+			(server_pkgname, self.pkg_name), shell = True)
+
 		else:
 			check_call("tar -xvf /var/cache/organon/%s -C /tmp" % \
 			server_pkgname, shell = True)
 
 		with open("/tmp/%s.sh" % self.pkg_name, "w") as shell:
 			shell.write("#!/bin/bash\n\n")
-			shell.write("mv /tmp/%s /tmp/%s\n" % (server_pkgname, self.pkg_name))
+			shell.write("mv /tmp/%s /tmp/%s\n" % (server_pkgname.\
+			replace(".tar.gz", "").\
+			replace(".tar.bz2", "").\
+			replace(".rar", "").\
+			replace(".zip", ""), self.pkg_name))
+
 			shell.write("cd /tmp/%s\n" % self.pkg_name)
 			for command in process:
 				if command == "":
