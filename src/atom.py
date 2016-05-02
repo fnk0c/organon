@@ -102,7 +102,7 @@ to install dependencies and configure Organon" + default)
 					down.get_mirror()
 					#download source em pkgconfig
 					server_pkgname = down.pkgconfig()
-
+					exit()
 					install = retrieve.install(package, self.ver3)
 					s = install.read()
 					down.source(s[0])

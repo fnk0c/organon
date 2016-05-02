@@ -40,8 +40,7 @@ class download(object):
 			mirror = mirror.replace("\n", "")
 
 		self.mirror = mirror
-		self.src_mirror = mirror + "mirror/source/" + self.arch + "/"
-		self.pkg_mirror = mirror + "mirror/" + self.distro + "/pkgconfig/"
+		self.pkg_mirror = mirror + "mirror/" + self.distro + "/" + self.arch + "/pkgconfig/"
 
 	def pkgconfig(self):
 		#Download source files of programs
