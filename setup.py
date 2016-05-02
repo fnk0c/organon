@@ -29,13 +29,16 @@ from platform import machine
 def install():
 	if path.isfile("/etc/apt/sources.list"):
 		distro = "debian"
+		command = "sudo apt-get install unrar unzip wget"
 
 	elif path.isfile("/etc/pacman.conf"):
 		distro = "arch"
+		command = "sudo pacman -S unrar unzip wget"
 
 	elif path.isfile("/etc/yum.conf"):
 		distro = "fedora"
-		
+		command = "sudo yum install unrar unzip wget"
+
 	try:
 		print(" [+] Creating symlink")
 		with open("organon", "w") as symlink:
@@ -66,7 +69,8 @@ python organon.py $@""")
 		check_call("sudo mkdir /var/cache/organon", shell = True)
 		print(" [+] Moving organon to /usr/share")
 		check_call("sudo mv ../organon /usr/share", shell = True)
-
+		print(" [+] Installing dependencies")
+		check_call(command, shell = True)
 	
 	except (CalledProcessError, KeyboardInterrupt) as e:
 		print(" [!] ainn. Something went wrong")
