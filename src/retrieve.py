@@ -152,11 +152,15 @@ class install(object):
 
 		with open("/tmp/%s.sh" % self.pkg_name, "w") as shell:
 			shell.write("#!/bin/bash\n\n")
-			shell.write("mv /tmp/%s /tmp/%s\n" % (server_pkgname.\
+			shell.write("if [ \"teste\" != \"teste\" ]\n")
+			shell.write("then\n")
+			shell.write("\tmv /tmp/%s /tmp/%s\n" % (server_pkgname.\
 			replace(".tar.gz", "").\
 			replace(".tar.bz2", "").\
 			replace(".rar", "").\
 			replace(".zip", ""), self.pkg_name))
+			shell.write("else\n\tcontinue\nfi\n")
+			
 
 			shell.write("cd /tmp/%s\n" % self.pkg_name)
 			for command in process:

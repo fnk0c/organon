@@ -3,7 +3,7 @@
 
 __AUTHOR__	= "Fnkoc"
 __VERSION__	= "0.2.4"
-__DATE__	= "30/04/2016"
+__DATE__	= "02/05/2016"
 
 """
 	Copyright (C) 2015  Franco Colombino
@@ -90,7 +90,7 @@ def main():
 	core = atom.actions(ver3, distro, arch)
 
 	#Check if organon is correctly installed
-#	core.check_install()
+	core.check_install()
 	
 	### - OPEN MAN PAGE - ###
 	if args.about:
@@ -154,9 +154,15 @@ if __name__ == "__main__":
 		print(banner)
 		parser.print_help()
 	else:
-		with open("/etc/organon/organon.conf", "r") as conf:
-			conf = conf.readlines()
-			distro = conf[0].split("=")[1].replace("\n", "").replace(" ", "")
-			arch = conf[1].split("=")[1].replace("\n", "").replace(" ", "")
+		try:
+			with open("/etc/organon/organon.conf", "r") as conf:
+				conf = conf.readlines()
+				distro = conf[0].split("=")[1].replace("\n", "").replace(" ", "")
+				arch = conf[1].split("=")[1].replace("\n", "").replace(" ", "")
+		except FileNotFoundError:
+			print(" [!] No configuration file found (/etc/organon/organon.conf")
+			print("Did you installed organon?")
+			print("python setup.py install")
+			exit()
 		py_version()
 		main()
