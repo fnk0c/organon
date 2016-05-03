@@ -47,6 +47,8 @@ version from https://github.com/fnk0c/organon")
 
 	def check_install(self):
 		#CHECK IF PATH IS /USR/SHARE/ORGANON
+		import os
+		
 		if self.ver3 == True:
 			raw_input = input
 
