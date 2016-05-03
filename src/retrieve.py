@@ -145,6 +145,13 @@ class install(object):
 			check_call("unzip /var/cache/organon/%s -d /tmp/%s" % \
 			(server_pkgname, self.pkg_name), shell = True)
 
+		elif server_pkgname[-3:] == "run":
+			check_call("sudo chmod +x /var/cache/organon/%s" % \
+			server_pkgname, shell = True)
+			check_call("sudo /var/cache/organon/%s" % server_pkgname, \
+			shell = True)
+			exit()
+
 		else:
 			check_call("tar -xvf /var/cache/organon/%s -C /tmp" % \
 			server_pkgname, shell = True)
