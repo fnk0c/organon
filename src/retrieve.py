@@ -67,7 +67,7 @@ class download(object):
 
 	def sync(self):
 		#Sync local database with server's database
-		command = "sudo wget -N -P /etc/organon/ %smirror/%s/tools.db" % (self.mirror, self.distro)
+		command = "sudo wget -N -P /etc/organon/ %smirror/%s/%s/tools.db" % (self.mirror, self.distro, self.arch)
 		check_call(command, shell = True)
 
 
