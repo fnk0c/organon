@@ -158,7 +158,7 @@ class install(object):
 
 		with open("/tmp/%s.sh" % self.pkg_name, "w") as shell:
 			shell.write("#!/bin/bash\n\n")
-			shell.write("if [ \"teste\" != \"teste\" ]\n")
+			shell.write("if [ \"%s\" != \"%s\" ]\n" % (server_pkgname, self.pkg_name))
 			shell.write("then\n")
 			shell.write("\tmv /tmp/%s /tmp/%s\n" % (server_pkgname.\
 			replace(".tar.gz", "").\
