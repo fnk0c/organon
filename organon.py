@@ -2,8 +2,8 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.2.4"
-__DATE__	= "02/05/2016"
+__VERSION__	= "0.2.5"
+__DATE__	= "06/05/2016"
 
 """
 	Copyright (C) 2015  Franco Colombino
@@ -70,6 +70,8 @@ parser.add_argument("--clean", action = "store_true",
 	help = "Clean Organon\'s cache")
 parser.add_argument("--yes", action = "store_true",
 	help = "Assume yes to all questions")
+parser.add_argument("-Li", action = "store_true",
+	help = argparse.SUPPRESS)
 
 args = parser.parse_args()
 
@@ -147,6 +149,10 @@ def main():
 	### - LIST DATABASE - ###
 	elif args.L:
 		core.enum_db()
+	
+	### - LIST INSTALLED TOOLS - ###
+	elif args.Li:
+		core.installed()
 
 if __name__ == "__main__":
 	if len(argv) == 1:

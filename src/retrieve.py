@@ -104,7 +104,7 @@ class install(object):
 		process_e = self.pkg_content.find("}")
 		process = self.pkg_content[process_b + 1:process_e]
 		process = process.split("\n")
-		return(self.source, process)		
+		return(self.source, process, self.version)		
 	def install_deps(self, distro, force_yes):
 		import database
 		

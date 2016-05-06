@@ -21,6 +21,7 @@ __AUTHOR__	= "Fnkoc"
 
 import database		#Retrieve database data
 import retrieve		#Retrieve source files and pkgconfig
+import abdala
 from colors import *
 from subprocess import check_call
 from os import listdir
@@ -111,6 +112,10 @@ to install dependencies and configure Organon" + default)
 					install.make(server_pkgname, s[1])
 					install.symlink()
 
+					add2installed = abdala.local(self.ver3)
+					itens = add2installed.listing()
+					add2installed.add(package, s[2], itens)
+
 	def uninstall(self, pkgs, config, dep, force_yes):
 		if self.ver3 == True:
 			raw_input = input
@@ -150,3 +155,9 @@ to install dependencies and configure Organon" + default)
 	def search_db(self, keyword):
 		print(green + " [+] " + default + "Searching for: " + keyword)
 		database.connect(self.ver3).search(keyword)
+
+	def installed(self):
+		itens = abdala.local(self.ver3).listing()
+		
+		for i in itens:
+			print(i[0] + " ==> " + i[1])
