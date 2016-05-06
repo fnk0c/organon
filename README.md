@@ -27,6 +27,7 @@ Tested on:
 * Arch Linux
 * Manjaro
 * Debian 8
+* Apricity OS 1.4
 
 Screenshot
 ----------
