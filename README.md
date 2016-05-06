@@ -92,6 +92,9 @@ organon -s [PACKAGE]
 organon -L
 	Lists all the availables tools to install
 
+organon -Li
+	List all tools already installed
+
 organon --clean
 	Clean /var/cache/organon directory
 ```
@@ -105,20 +108,3 @@ Since it's still on development phase bugs are expected. Please, **report to us!
 Be Part of development
 ----------------------
 Send us a message on facebook
-
-About current version
----------------------
-#### `v0.2.2`
-- All features from previous versions + review of the code  
- - Using rsync to do package tracking
- - Download application according to platform (x86 ou x86_64)
- - MySQL database replaced by CSV file
-
-About previous version
----------------------
-#### `v0.2.1`
-- All features from previous versions + review of the code  
- - Installation script re-wrote and optimized  
- - Remove ruby  
- - All scripts are made in python  
-
