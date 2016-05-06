@@ -58,8 +58,7 @@ python organon.py $@""")
 			conf.write("distro = %s" % distro)
 			conf.write("\narch = %s" % machine())
 	
-		check_call("sudo mkdir /etc/organon && sudo mv organon.conf /etc/organon", \
-		shell = True)
+		check_call("sudo mkdir /etc/organon && sudo mv organon.conf /etc/organon && touch /etc/organon/installed.db", shell = True)
 		check_call("sudo cp etc/mirrors /etc/organon", shell = True)
 
 		print(" [+] Installing MAN page")
