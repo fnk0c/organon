@@ -134,7 +134,7 @@ class install(object):
 
 	def make(self, server_pkgname, process):
 		if self.version == "git":
-			check_call("cp -R /var/cache/organon/%s /tmp" % \
+			check_call("cp -Rf /var/cache/organon/%s /tmp" % \
 			server_pkgname, shell = True)
 
 		elif server_pkgname[-3:] == "rar":
