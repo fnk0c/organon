@@ -2,8 +2,6 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.2.1"
-__DATE__	= "16/04/2016"
 
 """
 	Copyright (C) 2015  Franco Colombino
@@ -58,7 +56,7 @@ python organon.py $@""")
 			conf.write("distro = %s" % distro)
 			conf.write("\narch = %s" % machine())
 	
-		check_call("sudo mkdir /etc/organon && sudo mv organon.conf /etc/organon && touch /etc/organon/installed.db", shell = True)
+		check_call("sudo mkdir /etc/organon && sudo mv organon.conf /etc/organon && sudo touch /etc/organon/installed.db", shell = True)
 		check_call("sudo cp etc/mirrors /etc/organon", shell = True)
 
 		print(" [+] Installing MAN page")
