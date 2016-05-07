@@ -58,6 +58,7 @@ python organon.py $@""")
 	
 		check_call("sudo mkdir /etc/organon && sudo mv organon.conf /etc/organon && sudo touch /etc/organon/installed.db", shell = True)
 		check_call("sudo cp etc/mirrors /etc/organon", shell = True)
+		check_call("sudo chmod 777 /etc/organon/installed.db", shell = True)
 
 		print(" [+] Installing MAN page")
 		check_call("sudo install -Dm644 doc/organon.8 /usr/share/man/man8/", \
