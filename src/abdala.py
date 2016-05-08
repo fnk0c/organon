@@ -31,3 +31,9 @@ class local(object):
 			for i in itens:
 				csvcontent.writerow(i)
 			csvcontent.writerow([pkg, pkg_ver])
+
+	def remove(self, pkg):
+		from subprocess import check_call
+		
+		check_call("sudo sed -i '/%s/d' /etc/organon/installed.db" % pkg, \
+		shell = True)

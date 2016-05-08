@@ -143,6 +143,8 @@ to install dependencies and configure Organon" + default)
 			for package in pkgs:
 				u.pkg(package, self.distro)
 
+				add2installed = abdala.local(self.ver3)
+				add2installed.remove(package)
 
 	def sync_db(self):
 		sync = retrieve.download(None, self.distro, self.arch, self.ver3)

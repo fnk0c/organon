@@ -114,9 +114,9 @@ class install(object):
 		if deps != "NULL":
 			if distro == "arch":
 				if force_yes == True:
-					manager = "sudo pacman --noconfirm -S "
+					manager = "sudo pacman --needed --noconfirm -S "
 				else:
-					manager = "sudo pacman -S "
+					manager = "sudo pacman --needed -S "
 			elif distro == "debian":
 				if force_yes == True:
 					manager = "sudo apt-get -f install "
