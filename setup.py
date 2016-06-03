@@ -19,7 +19,9 @@ __AUTHOR__	= "Fnkoc"
 	(https://github.com/fnk0c/organon)
 """
 
-from sys import version, argv
+from sys import version, argv, path
+path.append("src/")
+from colors import *
 from os import path, getuid
 from subprocess import check_call, CalledProcessError
 from platform import machine
@@ -28,14 +30,17 @@ def install():
 	if path.isfile("/etc/apt/sources.list"):
 		distro = "debian"
 		command = "sudo apt-get install unrar unzip wget"
+		py = "python3"
 
 	elif path.isfile("/etc/pacman.conf"):
 		distro = "arch"
 		command = "sudo pacman -S unrar unzip wget"
+		py = "python"
 
 	elif path.isfile("/etc/yum.conf"):
 		distro = "fedora"
 		command = "sudo yum install unrar unzip wget"
+		py = "python3"
 
 	try:
 		print(" [+] Creating symlink")
@@ -45,10 +50,10 @@ def install():
 #!/bin/bash
 			
 cd /usr/share/organon
-python organon.py $@""")
+python organon.py $@""").replace("python", py)
 
 		check_call("sudo mv organon /usr/bin", shell = True)
-		print(" [+] Changing permission")
+		print(green + " [+] Changing permission")
 		check_call("sudo chmod +x /usr/bin/organon", shell = True)
 
 		print(" [+] creating configuration file")
@@ -67,12 +72,12 @@ python organon.py $@""")
 		check_call("sudo mkdir /var/cache/organon", shell = True)
 		print(" [+] Moving organon to /usr/share")
 		check_call("sudo mv ../organon /usr/share", shell = True)
-		print(" [+] Installing dependencies")
+		print(" [+] Installing dependencies" + default)
 		check_call(command, shell = True)
 	
 	except (CalledProcessError, KeyboardInterrupt) as e:
-		print(" [!] ainn. Something went wrong")
-		print(e)
+		print(red + " [!] ainn. Something went wrong")
+		print(e + default)
 		exit()
 
 def uninstall():
@@ -80,8 +85,17 @@ def uninstall():
 	/usr/bin/organon", shell = True)
 
 if __name__ == "__main__":
-	if len(argv) == 1 or argv[1] == "help":
-		print("Usage: python setup.py {install || uninstall}")
+	if version[0] != 3:
+		print("%s [!] Please execute Organon with Python 3.x %s"\
+		%(red, default))
+		print("""
+Arch/Manjaro	%s>>%s pacman -S python
+Debian/Ubuntu	%s>>%s apt-get install python3
+Fedora/CentOS	%s>>%s yum install python3
+""" %(yellow, default,yellow, default,yellow, default))
+		
+	if len(argv) == 1 or argv[1] == "--help":
+		print("Usage: python setup.py [install || uninstall]")
 		exit()
 	else:
 		if getuid() == 0:
