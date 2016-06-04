@@ -197,6 +197,7 @@ sudo chmod 777 /usr/share/pkgname
 """
 
 			ext = {
+"python3":"py",
 "python2":"py",
 "python":"py",
 "ruby":"rb",
