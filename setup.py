@@ -29,7 +29,7 @@ from platform import machine
 def install():
 	if path.isfile("/etc/apt/sources.list"):
 		distro = "debian"
-		command = "sudo apt-get install unrar unzip wget"
+		command = "sudo apt-get install unrar-free unzip wget"
 		py = "python3"
 
 	elif path.isfile("/etc/pacman.conf"):
@@ -50,7 +50,7 @@ def install():
 #!/bin/bash
 			
 cd /usr/share/organon
-python organon.py $@""").replace("python", py)
+%s organon.py $@""" % py)
 
 		check_call("sudo mv organon /usr/bin", shell = True)
 		print(green + " [+] Changing permission")
@@ -77,7 +77,7 @@ python organon.py $@""").replace("python", py)
 	
 	except (CalledProcessError, KeyboardInterrupt) as e:
 		print(red + " [!] ainn. Something went wrong")
-		print(e + default)
+		print(str(e) + str(default))
 		exit()
 
 def uninstall():
@@ -85,7 +85,7 @@ def uninstall():
 	/usr/bin/organon", shell = True)
 
 if __name__ == "__main__":
-	if version[0] != 3:
+	if version[0] != "3":
 		print("%s [!] Please execute Organon with Python 3.x %s"\
 		%(red, default))
 		print("""
