@@ -201,7 +201,7 @@ sudo chmod 777 /usr/share/pkgname
 "python2":"py",
 "python":"py",
 "ruby":"rb",
-"shell":"sh",
+"bash":"sh",
 "php":"php",
 "perl":"pl"}
 
