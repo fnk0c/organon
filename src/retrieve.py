@@ -5,7 +5,6 @@
 #https://github.com/fnk0c/organon
 
 __AUTHOR__ 	= "Fnkoc"
-__DATE__	= "15/02/2015"
 
 """
 	Copyright (C) 2015  Franco Colombino & Ygor Máximo
@@ -21,10 +20,11 @@ __DATE__	= "15/02/2015"
     GNU General Public License for more details.
 """
 
+from os import chdir
 from re import findall
 from subprocess import check_call, CalledProcessError
+
 from colors import *
-from os import chdir
 
 class download(object):
 	def __init__(self, pkg_name, distro, arch, ver3):

@@ -2,8 +2,8 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.2.5"
-__DATE__	= "08/05/2016"
+__VERSION__	= "0.2.6"
+__DATE__	= "04/07/2016"
 
 """
 	Copyright (C) 2015  Franco Colombino
@@ -24,6 +24,7 @@ __DATE__	= "08/05/2016"
 from sys import path, argv, version
 from os import system
 import argparse
+
 path.append("src/")
 import atom
 from colors import *
@@ -171,4 +172,12 @@ if __name__ == "__main__":
 			print("python setup.py install")
 			exit()
 		py_version()
-		main()
+		
+		try:
+			main()
+		except KeyboardInterrupt:
+			print(red + "\n\n [!] User aborted" + default)
+			exit()
+		except Exception as e:
+			print(red + str(e) + default)
+			raise(e)
