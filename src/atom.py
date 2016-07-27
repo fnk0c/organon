@@ -22,6 +22,7 @@ __AUTHOR__	= "Fnkoc"
 import database		#Retrieve database data
 import retrieve		#Retrieve source files and pkgconfig
 import abdala
+import update
 from colors import *
 from subprocess import check_call
 from os import listdir
@@ -34,17 +35,10 @@ class actions(object):
 
 	# UPDATE ORGANON ###########################################################
 	def update_organon(self):
-		print(green + "[+] Updating Organon" + default)
-		try:
-			check_call("git reset --hard && git pull", shell = True)
-			print(" [+] Organon was successfully updated")
-		except Exception:
-			print(" [-] Couldn\'t retrieve update. Please download the latest \
-version from https://github.com/fnk0c/organon")
-			exit()
+		up = update.xereca(self.ver3).organon()
 
 	def update_packages(self):
-		print("coming soon")
+		up = update.xereca(self.ver3).tools()
 
 	def check_install(self):
 		#CHECK IF PATH IS /USR/SHARE/ORGANON

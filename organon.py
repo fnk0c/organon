@@ -2,8 +2,8 @@
 #coding=utf-8
 
 __AUTHOR__	= "Fnkoc"
-__VERSION__	= "0.2.6"
-__DATE__	= "04/07/2016"
+__VERSION__	= "0.2.7"
+__DATE__	= "26/07/2016"
 
 """
 	Copyright (C) 2015  Franco Colombino
@@ -93,7 +93,7 @@ def main():
 	core = atom.actions(ver3, distro, arch)
 
 	#Check if organon is correctly installed
-	core.check_install()
+	#core.check_install()
 	
 	### - OPEN MAN PAGE - ###
 	if args.about:
