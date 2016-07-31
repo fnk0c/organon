@@ -82,7 +82,7 @@ class connect(object):
 			print(red + " [!] " + default + "No database found! Use \"organon\
  -S\" to sync with our servers")
 
-	def dependencies(self, package):
+	def dependencies(self, package, version):
 		if self.ver3 == True:
 			exception = FileNotFoundError
 		else:
@@ -94,8 +94,12 @@ class connect(object):
 
 				for row in csvcontent:
 					if package in row[0]:
-						deps = str(row[3])
-						return(deps)
+						if version == True:
+							version = str(row[1])
+							return(version)
+						else:
+							deps = str(row[3])
+							return(deps)
 
 		except exception:
 			print(red + " [!] " + default + "No database found! Use \"organon\

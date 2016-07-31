@@ -109,7 +109,7 @@ class install(object):
 		import database
 		
 		db = database.connect(self.ver3)
-		deps = db.dependencies(self.pkg_name)
+		deps = db.dependencies(self.pkg_name, False)
 		
 		if deps != "NULL":
 			if distro == "arch":

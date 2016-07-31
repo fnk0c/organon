@@ -3,7 +3,7 @@
 
 __AUTHOR__	= "Fnkoc"
 __VERSION__	= "0.2.7"
-__DATE__	= "26/07/2016"
+__DATE__	= "31/07/2016"
 
 """
 	Copyright (C) 2015  Franco Colombino
