@@ -35,7 +35,7 @@ class xereca(object):
 			print(green + " [+]" + default + " Attemping to update %s" % i[0])
 			if i[1] == "git":
 				path = "/usr/share/%s" % i[0]
-				#check_call("cd %s && sudo git pull" % path, shell = True)
+				check_call("cd %s && sudo git pull" % path, shell = True)
 			else:
 				ver = connect(self.ver3).dependencies(i[0], True)
 				if ver == i[1]:
