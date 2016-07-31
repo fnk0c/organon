@@ -20,7 +20,7 @@ Install
 	cd organon
 	python setup.py install
 
-[With screenshot](http://organon.ddns.net/install)
+[With screenshot](https://projetos.cienciahacker.ch/organon/install/install.html)
 
 Tested on:
 ----------
