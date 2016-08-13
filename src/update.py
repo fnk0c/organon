@@ -20,8 +20,8 @@ __AUTHOR__	= "Fnkoc"
 """
 
 import abdala
+import atom
 from database import connect
-from atom import actions
 from colors import *
 from subprocess import check_call
 
@@ -41,8 +41,8 @@ class xereca(object):
 				if ver == i[1]:
 					print("Already up to date")
 				else:
-					actions(self.ver3).uninstall(i, False, False, True)
-					actions(self.ver3).install(i, True)
+					atom.actions(self.ver3).uninstall(i, False, False, True)
+					atom.actions(self.ver3).install(i, True)
 
 	def organon(self):
 		print(green + "[+] Updating Organon" + default)
