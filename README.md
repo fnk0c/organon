@@ -25,9 +25,14 @@ Install
 Tested on:
 ----------
 * Arch Linux
-* Manjaro
-* Debian 8
 * Apricity OS 1.4
+* Debian 7.8 Wheezy
+* Debian 8 Jessie
+* Elementary OS Luna
+* Linux Mint 17.1
+* Manjaro 0.8.13
+* Ubuntu 14.04 x86_64
+* Ubuntu 14.10 x86_64
 
 Screenshot
 ----------
