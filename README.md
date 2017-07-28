@@ -4,6 +4,8 @@ This program focuses on automating the download, installation and compilation of
 
 Tool developed for Linux systems (APT and Pacman)
 
+### [Mirror's repository](https://github.com/fnk0c/organon-packages)  
+
 Authors:
 --------
 * [Franco Colombino (Fnkoc)](https://github.com/fnk0c)  
@@ -11,16 +13,20 @@ Authors:
 
 Requirements
 -------------
-1. Python >=2.7 or >=3.4    
-2. GNU/Linux system based on Debian and Arch
+|Item|Description|
+|------|-------------|
+|GNU/Linux |Arch or Debian Based|
+|Python|3.4 or newer|
+|Unrar|Extract .rar|
+|unzip|Extract .zip|
+|wget|Retrieve files HTTP, HTTPS and FTP|
+|tar|Extract .tar files|
 
 Install
 -------
 	git clone https://github.com/fnk0c/organon.git
 	cd organon
 	python setup.py install
-
-[With screenshot](https://projetos.cienciahacker.ch/organon/install/install.html)
 
 Tested on:
 ----------
@@ -76,11 +82,11 @@ organon -i [PACKAGE]
 	Install an specific package
 
 organon -r [PACKAGE]
-  Remove an specific package
-  --dependencies
+  	Remove an specific package
+ 	 --dependencies
   	Remove package dependencies
-	--config
-		Remove package configuration files
+  	--config
+  	Remove package configuration files
 
 organon -U
 	Search and download updates for Organon
@@ -107,7 +113,6 @@ organon --clean
 BUGS
 ----
 Since it's still on development phase bugs are expected. Please, **report to us!** or open an **Issue**
-* fb.com/franco.colombino
 * fb.com/cienciahacker
 
 Be Part of development
