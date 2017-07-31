@@ -36,8 +36,15 @@ class download(object):
 	def get_mirror(self):
 		#Opens /etc/organon/mirrors to get mirror address
 		with open("/etc/organon/mirrors", "r") as mirror:
-			mirror = mirror.readline()
-			mirror = mirror.replace("\n", "")
+			mirror = mirror.readlines()
+			for address in mirror:
+				if "#" in address:
+					pass
+				elif address[0] == "\n":
+					pass
+				else:
+					mirror = address.replace("\n", "")
+					break
 
 		self.mirror = mirror
 		self.pkg_mirror = mirror + "mirror/" + self.distro + "/" + self.arch + "/pkgconfig/"
