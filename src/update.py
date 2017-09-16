@@ -24,6 +24,7 @@ import atom
 from database import connect
 from colors import *
 from subprocess import check_call
+from hashlib import md5
 
 class xereca(object):
 	def __init__(self, ver3):
@@ -48,6 +49,16 @@ class xereca(object):
 		print(green + "[+] Updating Organon" + default)
 		try:
 			check_call("git reset --hard && git pull", shell = True)
+			old_checksum = md5(open("/etc/organon/mirrors", "rb")).hexdigest()
+			new_checksum = md5(open("/usr/share/organon/etc/mirrors",
+			"rb")).hexdigest()
+
+			if old_checksum != new_checksum:
+				check_call("cp /usr/share/organon/etc/mirrors /etc/organon/mirrors"\
+				, shell = True)
+				
+				print(" [+] Mirror list updated")
+
 			print(" [+] Organon was successfully updated")
 		except Exception:
 			print(" [-] Couldn\'t retrieve update. Please download the latest \
