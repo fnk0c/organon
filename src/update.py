@@ -49,15 +49,13 @@ class xereca(object):
 		print(green + "[+] Updating Organon" + default)
 		try:
 			check_call("git reset --hard && git pull", shell = True)
-			old_checksum = md5(open("/etc/organon/mirrors", "rb")).hexdigest()
-			new_checksum = md5(open("/usr/share/organon/etc/mirrors",
-			"rb")).hexdigest()
+			old_checksum = md5(open("/etc/organon/mirrors", "rb").read()).hexdigest()
+			new_checksum = md5(open("/usr/share/organon/etc/mirrors", "rb").read()).hexdigest()
 
 			if old_checksum != new_checksum:
-				check_call("cp /usr/share/organon/etc/mirrors /etc/organon/mirrors"\
-				, shell = True)
+				check_call("sudo cp /usr/share/organon/etc/mirrors /etc/organon/mirrors", shell = True)
 				
-				print(" [+] Mirror list updated")
+				print("\n [+] Mirror list updated")
 
 			print(" [+] Organon was successfully updated")
 		except Exception:
