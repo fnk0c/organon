@@ -216,18 +216,38 @@ sudo chmod 777 /usr/share/pkgname
 				symlink.write(script_template.replace("pkgname", self.pkg_name)\
 				.replace("python", self.Type).replace(".py", ".%s" % ext[self.Type]))
 
-		elif self.install == "symlink":
-			link_template = \
+		elif "symlink" in self.installer:
+			try:
+				symlink_split = self.installer.split("=")
+				addpath = symlink_split[1]
+				
+				link_template = \
 """#!/bin/bash
 
 #Copy organon to /usr/share
-cp -R /tmp/pkgname /usr/share
+sudo cp -R /tmp/pkgname /usr/share
 
-ln -s /usr/share/pkgname/pkgname* /usr/bin/pkgname
+sudo ln -s /usr/share/pkgname/path/pkgname* /usr/bin/
+"""
+				link_template = link_template.replace("pkgname", self.pkg_name)\
+				.replace("path", addpath)
+
+				with open("/tmp/install_%s.sh" % self.pkg_name, "w") as symlink:
+					symlink.write(link_template)
+
+			except Exception as e:
+				print(e)
+				link_template = \
+"""#!/bin/bash
+
+#Copy organon to /usr/share
+sudo cp -R /tmp/pkgname /usr/share
+
+sudo ln -s /usr/share/pkgname/pkgname* /usr/bin/pkgname
 """
 
 			with open("/tmp/install_%s.sh" % self.pkg_name, "w") as symlink:
-				symlink.write(link_template)
+				symlink.write(link_template.replace("pkgname", self.pkg_name))
 		
 		try:
 			check_call("sh /tmp/install_%s.sh" % self.pkg_name, shell = True)
