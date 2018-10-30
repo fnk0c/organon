@@ -9,7 +9,7 @@ Tool developed for Linux systems (APT and Pacman)
 Authors:
 --------
 * [Franco Colombino (Fnkoc)](https://github.com/fnk0c)  
-***Special thanks to [Ygor Máximo (Maximoz)](https://github.com/maximozsec) for support on the beginning***
+***Special thanks to [Ygor Maximo (mxmzs)](https://github.com/maximozsec) for support on the beginning***
 
 Requirements
 -------------
